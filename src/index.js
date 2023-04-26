@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import reportWebVitals from "./reportWebVitals";
 import { createStore } from "redux";
 
 import "./index.css";
@@ -19,5 +18,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
-reportWebVitals();
