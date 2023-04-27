@@ -1,0 +1,18 @@
+footer {
+  width: 100%;
+  padding: 10px;
+}
+
+footer div {
+  display: flex;
+  justify-content: center;
+}
+footer a {
+  text-decoration: none;
+  color: #f57f17;
+  margin: 0 5px;
+}
+
+footer a:hover {
+  color: black;
+}
