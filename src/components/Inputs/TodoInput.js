@@ -5,22 +5,26 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
   const [showError, setShowError] = useState(false);
 
   function handleChange(event) {
-    const regex = /^[^`~!?@#$%^&*()_+=[\]{};':"\\|,.<>/?]*$/;
+    const str = event.target.value;
+    const regex = /^[^`~!?@#$%^&*()_+=[\]{};':"\\|,.<>/]*$/;
 
-    if (regex.test(event.target.value)) {
+    if (regex.test(str) && str.trim().length !== 0) {
       setInputValue(event.target.value);
     } else {
       setShowError(true);
+      setInputValue("");
       setTimeout(() => {
         setShowError(false);
-      }, 3000);
+      }, 4000);
     }
   }
 
   function handleKeyDown(event) {
-    if (event.keyCode === 13 && inputValue !== "") {
+    if (event.keyCode === 13) {
       event.preventDefault();
-      onKeyDown();
+      if (inputValue !== "") {
+        onKeyDown();
+      }
     }
   }
 
@@ -38,7 +42,9 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
       </form>
 
       {showError ? (
-        <div className="input__error">Special symbols are not allowed!</div>
+        <div className="input__error">
+          {`~!?@#$%^&*()_+=[\\]{};':"\\\\|,.<>\\/"`} are not allowed!
+        </div>
       ) : null}
     </span>
   );

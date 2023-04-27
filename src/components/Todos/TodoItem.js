@@ -10,7 +10,6 @@ export default function TodoItem({ todo }) {
         </div>
         <span>{todo.title}</span>
       </div>
-      <button>remove</button>
     </li>
   );
 }

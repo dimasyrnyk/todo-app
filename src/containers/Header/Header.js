@@ -1,34 +1,26 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import moment from "moment";
 
 import "./Header.css";
 import { createTodo } from "../../store/todos/actions";
 import AddTodoModal from "../../components/Modals/AddTodoModal";
 import TodoInput from "../../components/Inputs/TodoInput";
 
-const formatDate = (date) => {
-  const ye = new Intl.DateTimeFormat("ua", { year: "numeric" }).format(date);
-  const mo = new Intl.DateTimeFormat("ua", { month: "2-digit" }).format(date);
-  const da = new Intl.DateTimeFormat("ua", { day: "2-digit" }).format(date);
-  const ho = new Intl.DateTimeFormat("ua", { hour: "2-digit" }).format(date);
-  const mi = new Intl.DateTimeFormat("ua", { minute: "2-digit" }).format(date);
-
-  return `${da}.${mo}.${ye} ${ho}:${mi}`;
-};
-const date = new Date();
-const nextDay = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-
 export default function Header() {
   const [value, setValue] = useState("");
   const dispatch = useDispatch();
 
   function handleSubmit() {
+    const date = moment().format("DD.MM.YYYY HH:mm");
+    const nextDay = moment().add(1, "days").format("DD.MM.YYYY HH:mm");
+
     const newItem = {
       id: Date.now(),
       title: value,
       isDone: false,
-      creationDate: formatDate(date),
-      expirationDate: formatDate(nextDay),
+      creationDate: date,
+      expirationDate: nextDay,
     };
 
     dispatch(createTodo(newItem));
@@ -47,8 +39,6 @@ export default function Header() {
         <AddTodoModal
           inputTitle={value}
           setInputTitle={setValue}
-          creationDate={formatDate(date)}
-          expirationDate={formatDate(nextDay)}
         />
       </span>
     </header>
