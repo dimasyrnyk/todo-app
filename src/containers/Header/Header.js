@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 import "./Header.scss";
 import { createTodo } from "../../store/todos/actions";
@@ -12,14 +12,15 @@ export default function Header() {
   const dispatch = useDispatch();
 
   function handleSubmit() {
-    const date = moment().format("DD.MM.YYYY HH:mm");
-    const nextDay = moment().add(1, "days").format("DD.MM.YYYY HH:mm");
+    const now = DateTime.local();
+    const dateNow = now.toFormat("dd.MM.yyyy HH:mm");
+    const nextDay = now.plus({ days: 1 }).toFormat("dd.MM.yyyy HH:mm");
 
     const newItem = {
       id: Date.now(),
       title: value,
       isDone: false,
-      creationDate: date,
+      creationDate: dateNow,
       expirationDate: nextDay,
     };
 

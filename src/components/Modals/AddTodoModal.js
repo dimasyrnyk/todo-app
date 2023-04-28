@@ -2,33 +2,42 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
-import moment from "moment";
+import { DateTime } from "luxon";
 
 import "./Modals.scss";
 import { createTodo } from "../../store/todos/actions";
 import TodoInput from "../Inputs/TodoInput";
 
-const isValid = (current) => {
-  const yesterday = moment().subtract(1, "day");
-  return current.isAfter(yesterday);
+const now = DateTime.local();
+const nextDay = now.plus({ days: 1 });
+
+const isValid = (selectedDate) => {
+  const selectedDateTime = DateTime.fromJSDate(selectedDate._d);
+  return selectedDateTime > now.plus({ days: -1 });
 };
 
-const isValidEndDate = (currentDate, selectedDate) => {
-  return currentDate.isAfter(selectedDate);
+const isValidEndDate = (selectedDate, startDate) => {
+  const selectedDateTime = DateTime.fromJSDate(selectedDate._d);
+  return selectedDateTime > startDate;
 };
 
 export default function AddTodoModal({ inputTitle, setInputTitle }) {
-  const [startDate, setStartDate] = useState(moment());
-  const [endDate, setEndDate] = useState(moment().add(1, "day"));
+  const [startDate, setStartDate] = useState(now);
+  const [endDate, setEndDate] = useState(nextDay);
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
 
-  function handleStartDate(date) {
+  function handleStartDate(moment) {
+    const date = DateTime.fromJSDate(moment._d);
     setStartDate(date);
-    if (!endDate.isAfter(date)) {
-      const newDate = moment(date);
-      setEndDate(newDate.add(1, "day"));
+    if (date > endDate) {
+      setEndDate(date.plus({ days: 1 }));
     }
+  }
+
+  function handleEndDate(moment) {
+    const date = DateTime.fromJSDate(moment._d);
+    setEndDate(date);
   }
 
   function handleSubmit() {
@@ -36,20 +45,20 @@ export default function AddTodoModal({ inputTitle, setInputTitle }) {
       id: Date.now(),
       title: inputTitle,
       isDone: false,
-      creationDate: startDate.format("DD.MM.YYYY HH:mm"),
-      expirationDate: endDate.format("DD.MM.YYYY HH:mm"),
+      creationDate: startDate.toFormat("dd.MM.yyyy HH:mm"),
+      expirationDate: endDate.toFormat("dd.MM.yyyy HH:mm"),
     };
 
     dispatch(createTodo(newItem));
-    setStartDate(moment());
-    setEndDate(moment().add(1, "day"));
+    setStartDate(now);
+    setEndDate(nextDay);
     setInputTitle("");
     setIsOpen(false);
   }
 
   function handleClose() {
-    setStartDate(moment());
-    setEndDate(moment().add(1, "day"));
+    setStartDate(now);
+    setEndDate(nextDay);
     setIsOpen(false);
   }
 
@@ -77,7 +86,7 @@ export default function AddTodoModal({ inputTitle, setInputTitle }) {
             <span className="modal__row">
               <span className="row__title">Creation date: </span>
               <Datetime
-                value={startDate}
+                value={startDate.toFormat("dd.MM.yyyy HH:mm")}
                 dateFormat="DD.MM.YYYY"
                 timeFormat="HH:mm"
                 isValidDate={isValid}
@@ -88,11 +97,11 @@ export default function AddTodoModal({ inputTitle, setInputTitle }) {
             <span className="modal__row">
               <span className="row__title">Expiration date: </span>
               <Datetime
-                value={endDate}
+                value={endDate.toFormat("dd.MM.yyyy HH:mm")}
                 dateFormat="DD.MM.YYYY"
                 timeFormat="HH:mm"
-                isValidDate={(current) => isValidEndDate(current, startDate)}
-                onChange={setEndDate}
+                isValidDate={(selected) => isValidEndDate(selected, startDate)}
+                onChange={handleEndDate}
                 inputProps={{ className: "modal__datetime", readOnly: true }}
               />
             </span>
@@ -100,7 +109,7 @@ export default function AddTodoModal({ inputTitle, setInputTitle }) {
               <button
                 className="modal__controls-btn"
                 onClick={handleSubmit}
-                disabled={inputTitle === ""}
+                disabled={!inputTitle}
               >
                 Save
               </button>

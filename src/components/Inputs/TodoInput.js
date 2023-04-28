@@ -24,7 +24,7 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
 
     if (!regex.test(str)) {
       handleError(messages.specialSymbolsMsg);
-    } else if (str.trim().length === 0 && str.length !== 0) {
+    } else if (!str.trim() && str) {
       handleError(messages.spacesMsg);
       setInputValue("");
     } else {
@@ -35,7 +35,7 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
   function handleKeyDown(event) {
     if (event.keyCode === 13) {
       event.preventDefault();
-      if (inputValue !== "") {
+      if (inputValue) {
         onKeyDown();
       }
     }
