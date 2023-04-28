@@ -22,25 +22,25 @@
   border-radius: 5px;
   padding: 5px 10px;
   margin: 10px 0;
-}
 
-.todo-item {
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
+  .todo-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
 
-.todo-item__dates {
-  display: flex;
-  flex-direction: column;
-  margin-right: 20px;
-  font-size: 12px;
-}
+    .todo-item__dates {
+      display: flex;
+      flex-direction: column;
+      margin-right: 20px;
+      font-size: 12px;
+    }
 
-.todo-item__title {
-  overflow: hidden;
-  word-break: break-all;
-  flex: 1;
+    .todo-item__title {
+      overflow: hidden;
+      word-break: break-all;
+      flex: 1;
+    }
+  }
 }
 
 .todo-items__empty-page {
