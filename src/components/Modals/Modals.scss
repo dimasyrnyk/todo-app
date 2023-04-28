@@ -13,7 +13,7 @@
   .modal {
     padding-top: 5rem;
 
-    .modal__body {
+    &__body {
       width: 500px;
       height: 450px;
       border-radius: 5px;
@@ -32,18 +32,18 @@
   justify-content: center;
   overflow-y: scroll;
 
-  .modal__body {
+  &__body {
     padding: 7vmin;
     background: $background_color_white;
   }
 
-  .modal__title {
+  &__title {
     color: $text_color_orange;
     text-align: center;
     font-size: 18px;
   }
 
-  .modal__row {
+  &__row {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -58,14 +58,14 @@
     }
   }
 
-  .modal__datetime {
+  &__datetime {
     border: 1px solid $border_color_light;
     border-radius: 5px;
     padding: 5px 10px;
     width: 100%;
   }
 
-  .modal__btn-add {
+  &__btn-add {
     margin-left: 5px;
     padding: 6px 14px;
     border-radius: 5px;
@@ -73,29 +73,31 @@
     background-color: $background_color_orange;
     color: $text_color_white;
     font-size: 24px;
+
     &:hover {
       background-color: $background_color_white;
       color: $text_color_orange;
     }
   }
 
-  .modal__controls-wrapper {
+  &__controls-wrapper {
     display: flex;
     justify-content: space-evenly;
     width: 80%;
     margin: 25px auto;
+  }
 
-    .modal__controls-btn {
-      padding: 0px 16px;
-      border-radius: 5px;
-      border: 2px solid $border_color_orange;
-      background-color: $background_color_orange;
-      color: $text_color_white;
-      font-size: 18px;
-      &:hover {
-        background-color: $background_color_white;
-        color: $text_color_orange;
-      }
+  &__controls-btn {
+    padding: 0px 16px;
+    border-radius: 5px;
+    border: 2px solid $border_color_orange;
+    background-color: $background_color_orange;
+    color: $text_color_white;
+    font-size: 18px;
+
+    &:hover {
+      background-color: $background_color_white;
+      color: $text_color_orange;
     }
   }
 }

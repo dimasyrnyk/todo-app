@@ -3,19 +3,19 @@
 footer {
   width: 100%;
   padding: 10px;
+}
 
-  .footer__container {
-    display: flex;
-    justify-content: center;
+.footer {
+  display: flex;
+  justify-content: center;
 
-    .footer__link {
-      text-decoration: none;
-      color: $text_color_orange;
-      margin: 0 5px;
+  &__link {
+    text-decoration: none;
+    color: $text_color_orange;
+    margin: 0 5px;
 
-      &:hover {
-        color: $text_color_black;
-      }
+    &:hover {
+      color: $text_color_black;
     }
   }
 }

@@ -3,7 +3,7 @@ import "./Footer.scss";
 export default function Footer() {
   return (
     <footer>
-      <div className="footer__container">
+      <div className="footer">
         by{" "}
         <a
           href="https://www.instagram.com/dimasyrnyk/"

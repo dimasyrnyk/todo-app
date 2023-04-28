@@ -2,8 +2,8 @@ import "./Todos.scss";
 
 export default function TodoItem({ todo }) {
   return (
-    <li className="todo-item__wrapper">
-      <div className="todo-item">
+    <li className="todo-item">
+      <div className="todo-item__container">
         <div className="todo-item__dates">
           <span>Created at: {todo.creationDate}</span>
           <span>Expired at: {todo.expirationDate}</span>

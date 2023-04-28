@@ -14,7 +14,7 @@
   }
 }
 
-.todo-item__wrapper {
+.todo-item {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -23,23 +23,23 @@
   padding: 5px 10px;
   margin: 10px 0;
 
-  .todo-item {
+  &__container {
     display: flex;
     align-items: center;
     flex: 1;
+  }
 
-    .todo-item__dates {
-      display: flex;
-      flex-direction: column;
-      margin-right: 20px;
-      font-size: 12px;
-    }
+  &__dates {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    font-size: 12px;
+  }
 
-    .todo-item__title {
-      overflow: hidden;
-      word-break: break-all;
-      flex: 1;
-    }
+  &__title {
+    overflow: hidden;
+    word-break: break-all;
+    flex: 1;
   }
 }
 

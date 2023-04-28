@@ -42,7 +42,7 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
   }
 
   return (
-    <span className="input__container">
+    <span className="input">
       <form className="input__wrapper">
         <input
           className="input__body"
