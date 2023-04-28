@@ -1,4 +1,4 @@
-import { ADD_TODO } from "../../types/todos";
+import { ADD_TODO } from "./../types/todos";
 
 const initialState = [];
 

@@ -1,21 +1,34 @@
 import { useState } from "react";
-import "./Input.css";
+import "./Input.scss";
+
+const messages = {
+  specialSymbolsMsg: `~!?@#$%^&*()_+=[\\]{};':"\\\\|,.<>\\/" are not allowed!`,
+  spacesMsg: "You can't start with space!",
+};
 
 export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  function handleError(message) {
+    setShowError(true);
+    setErrorMessage(message);
+    setTimeout(() => {
+      setShowError(false);
+    }, 4000);
+  }
 
   function handleChange(event) {
     const str = event.target.value;
     const regex = /^[^`~!?@#$%^&*()_+=[\]{};':"\\|,.<>/]*$/;
 
-    if (regex.test(str) && str.trim().length !== 0) {
-      setInputValue(event.target.value);
-    } else {
-      setShowError(true);
+    if (!regex.test(str)) {
+      handleError(messages.specialSymbolsMsg);
+    } else if (str.trim().length === 0 && str.length !== 0) {
+      handleError(messages.spacesMsg);
       setInputValue("");
-      setTimeout(() => {
-        setShowError(false);
-      }, 4000);
+    } else {
+      setInputValue(event.target.value);
     }
   }
 
@@ -41,11 +54,7 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
         />
       </form>
 
-      {showError ? (
-        <div className="input__error">
-          {`~!?@#$%^&*()_+=[\\]{};':"\\\\|,.<>\\/"`} are not allowed!
-        </div>
-      ) : null}
+      {showError ? <div className="input__error">{errorMessage}</div> : null}
     </span>
   );
 }

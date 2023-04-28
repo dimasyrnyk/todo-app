@@ -1,4 +1,4 @@
-import "./Todos.css";
+import "./Todos.scss";
 
 export default function TodoItem({ todo }) {
   return (
@@ -8,7 +8,7 @@ export default function TodoItem({ todo }) {
           <span>Created at: {todo.creationDate}</span>
           <span>Expired at: {todo.expirationDate}</span>
         </div>
-        <span>{todo.title}</span>
+        <div className="todo-item__title">{todo.title}</div>
       </div>
     </li>
   );

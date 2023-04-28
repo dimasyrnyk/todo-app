@@ -1,4 +1,4 @@
-import "./Todos.css";
+import "./Todos.scss";
 import TodoItem from "./TodoItem";
 
 export default function TodosList({ todos }) {

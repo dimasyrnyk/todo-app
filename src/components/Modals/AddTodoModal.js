@@ -4,7 +4,7 @@ import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import moment from "moment";
 
-import "./Modals.css";
+import "./Modals.scss";
 import { createTodo } from "../../store/todos/actions";
 import TodoInput from "../Inputs/TodoInput";
 

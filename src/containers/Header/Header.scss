@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 /* ---------- MEDIA SCREEN -- MOBILE ---------- */
 @media (max-width: 600px) {
   header {
@@ -29,7 +31,7 @@ header {
 }
 
 header h1 {
-  color: #f57f17;
+  color: $text_color_orange;
 }
 
 .header__body {

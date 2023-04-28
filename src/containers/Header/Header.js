@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import moment from "moment";
 
-import "./Header.css";
+import "./Header.scss";
 import { createTodo } from "../../store/todos/actions";
 import AddTodoModal from "../../components/Modals/AddTodoModal";
 import TodoInput from "../../components/Inputs/TodoInput";

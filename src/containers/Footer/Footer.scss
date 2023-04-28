@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 footer {
   width: 100%;
   padding: 10px;
@@ -9,10 +11,10 @@ footer div {
 }
 footer a {
   text-decoration: none;
-  color: #f57f17;
+  color: $text_color_orange;
   margin: 0 5px;
 }
 
 footer a:hover {
-  color: black;
+  color: $text_color_black;
 }

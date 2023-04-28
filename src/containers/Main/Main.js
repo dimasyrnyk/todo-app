@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-import "./Main.css";
+import "./Main.scss";
 import TodosList from "../../components/Todos/TodosList";
 
 export default function Main() {

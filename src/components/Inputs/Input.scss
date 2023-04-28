@@ -1,3 +1,5 @@
+@import "../../styles/colors.scss";
+
 .input__container {
   display: flex;
   flex: 1;
@@ -6,7 +8,7 @@
 }
 
 .input__wrapper {
-  border: 1px solid lightgrey;
+  border: 1px solid $border_color_light;
   border-radius: 5px;
   padding: 5px 10px;
   width: 100%;
@@ -20,6 +22,6 @@
 }
 
 .input__error {
-  background-color: blanchedalmond;
+  background-color: $background_color_error;
   padding: 2px 5px;
 }
