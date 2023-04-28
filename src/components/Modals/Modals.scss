@@ -83,17 +83,16 @@
 
 .modal__btn-add {
   margin-left: 5px;
-  padding: 0px 16px;
+  padding: 6px 14px;
   border-radius: 5px;
   border: 2px solid $border_color_orange;
   background-color: $background_color_orange;
   color: $text_color_white;
   font-size: 24px;
-}
-
-.modal__btn-add:hover {
-  background-color: $background_color_white;
-  color: $text_color_orange;
+  &:hover {
+    background-color: $background_color_white;
+    color: $text_color_orange;
+  }
 }
 
 .modal__controls-wrapper {
@@ -110,4 +109,8 @@
   background-color: $background_color_orange;
   color: $text_color_white;
   font-size: 18px;
+  &:hover {
+    background-color: $background_color_white;
+    color: $text_color_orange;
+  }
 }

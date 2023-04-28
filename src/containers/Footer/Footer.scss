@@ -5,16 +5,15 @@ footer {
   padding: 10px;
 }
 
-footer div {
+.footer__container {
   display: flex;
   justify-content: center;
 }
-footer a {
+.footer__link {
   text-decoration: none;
   color: $text_color_orange;
   margin: 0 5px;
-}
-
-footer a:hover {
-  color: $text_color_black;
+  &:hover {
+    color: $text_color_black;
+  }
 }

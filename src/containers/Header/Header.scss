@@ -28,10 +28,9 @@ header {
   display: flex;
   justify-content: flex start;
   padding: 15px;
-}
-
-header h1 {
-  color: $text_color_orange;
+  h1 {
+    color: $text_color_orange;
+  }
 }
 
 .header__body {

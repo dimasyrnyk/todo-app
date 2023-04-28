@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import { DateTime } from "luxon";
+import { FaPlus } from "react-icons/fa";
 
 import "./Modals.scss";
 import { createTodo } from "../../store/todos/actions";
@@ -68,7 +69,7 @@ export default function AddTodoModal({ inputTitle, setInputTitle }) {
         className="modal__btn-add"
         onClick={() => setIsOpen(true)}
       >
-        +
+        <FaPlus />
       </button>
 
       {isOpen && (
