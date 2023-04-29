@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Input.scss";
 
 const messages = {
-  specialSymbolsMsg: `~!?@#$%^&*()_+=[\\]{};':"\\\\|,.<>\\/" are not allowed!`,
+  specialSymbolsMsg: `~!?@#$%^&*()_+=[]{};':"|<>\\/ are not allowed!`,
   spacesMsg: "You can't start with space!",
 };
 
@@ -20,7 +20,7 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
 
   function handleChange(event) {
     const str = event.target.value;
-    const regex = /^[^`~!?@#$%^&*()_+=[\]{};':"\\|,.<>/]*$/;
+    const regex = /^[^`~!?@#$%^&*()_+=[\]{};':"\\|<>/]*$/;
 
     if (!regex.test(str)) {
       handleError(messages.specialSymbolsMsg);

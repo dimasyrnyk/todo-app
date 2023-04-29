@@ -17,9 +17,9 @@ export default function Header() {
     const nextDay = now.plus({ days: 1 }).toFormat("dd.MM.yyyy HH:mm");
 
     const newItem = {
-      id: Date.now(),
+      id: Date.now().toString(),
       title: value,
-      isDone: false,
+      isCompleted: false,
       creationDate: dateNow,
       expirationDate: nextDay,
     };
