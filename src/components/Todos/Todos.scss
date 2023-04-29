@@ -1,0 +1,48 @@
+@import "../../styles/colors.scss";
+
+/* ---------- MEDIA SCREEN -- MOBILE ---------- */
+@media (max-width: 600px) {
+  .todo-item__dates {
+    width: 30%;
+  }
+}
+
+/* ---------- MEDIA SCREEN -- TABLET && DESKTOP ---------- */
+@media (min-width: 601px) {
+  .todo-item__dates {
+    width: 160px;
+  }
+}
+
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  border: 1px solid $border_color_light;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 10px 0;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
+  &__dates {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    font-size: 12px;
+  }
+
+  &__title {
+    overflow: hidden;
+    word-break: break-all;
+    flex: 1;
+  }
+}
+
+.todo-items__empty-page {
+  text-align: center;
+}
