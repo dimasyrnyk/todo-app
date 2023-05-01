@@ -1,7 +1,14 @@
+import { FC } from "react";
+
 import "./Todos.scss";
 import TodoItem from "./TodoItem";
+import { ITodo } from "../../types/todo";
 
-export default function TodosList({ todos }) {
+type Props = {
+  todos: ITodo[];
+};
+
+const TodosList: FC<Props> = ({ todos }) => {
   if (!todos.length) {
     return <div className="todo-items__empty-page">No todos...</div>;
   }
@@ -16,4 +23,6 @@ export default function TodosList({ todos }) {
       ))}
     </ul>
   );
-}
+};
+
+export default TodosList;

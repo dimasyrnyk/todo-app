@@ -1,9 +1,11 @@
-import "./App.css";
+import { FC } from "react";
+
+import "./App.scss";
 import Header from "./containers/Header/Header";
 import Main from "./containers/Main/Main";
 import Footer from "./containers/Footer/Footer";
 
-function App() {
+const App: FC = () => {
   return (
     <div className="App__container">
       <Header />
@@ -11,6 +13,6 @@ function App() {
       <Footer />
     </div>
   );
-}
+};
 
 export default App;

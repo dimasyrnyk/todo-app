@@ -56,6 +56,17 @@
       width: 100%;
       color: $text_color_grey;
     }
+
+    .row__datetime-input {
+      border: 1px solid $border_color_light;
+      border-radius: 5px;
+      padding: 5px 10px;
+
+      &:focus {
+        border: 1px solid $border_color_grey;
+        outline: none;
+      }
+    }
   }
 
   &__datetime {
@@ -98,6 +109,12 @@
     &:hover {
       background-color: $background_color_white;
       color: $text_color_orange;
+    }
+
+    &:disabled {
+      background-color: $background_color_orange;
+      color: $text_color_white;
+      opacity: 0.7;
     }
   }
 }

@@ -1,13 +1,20 @@
+import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { TfiTrash } from "react-icons/tfi";
 
 import "./Todos.scss";
 import { completeTodo, deleteTodo } from "../../store/todos/actions";
 import TodoBtn from "../TodoBtn/TodoBtn";
+import { ITodo } from "../../types/todo";
+import { AppDispatch } from "../../store";
 
-export default function TodoItem({ todo }) {
+type Props = {
+  todo: ITodo;
+};
+
+const TodoItem: FC<Props> = ({ todo }) => {
   const classes = todo.isCompleted ? " checked" : "";
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   function toggleCheckbox() {
     dispatch(completeTodo(todo.id));
@@ -20,7 +27,7 @@ export default function TodoItem({ todo }) {
   return (
     <li className={"todo-item" + classes}>
       <div className="todo-item__container">
-        <label class="todo-item__checkbox_label">
+        <label className="todo-item__checkbox_label">
           <input
             className="todo-item__checkbox"
             aria-label="an appropriate label"
@@ -41,4 +48,6 @@ export default function TodoItem({ todo }) {
       </div>
     </li>
   );
-}
+};
+
+export default TodoItem;
