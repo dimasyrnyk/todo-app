@@ -1,14 +1,20 @@
 import { useDispatch } from "react-redux";
+import { TfiTrash } from "react-icons/tfi";
 
 import "./Todos.scss";
-import { completeTodo } from "../../store/todos/actions";
+import { completeTodo, deleteTodo } from "../../store/todos/actions";
+import TodoBtn from "../TodoBtn/TodoBtn";
 
 export default function TodoItem({ todo }) {
   const classes = todo.isCompleted ? " checked" : "";
   const dispatch = useDispatch();
 
-  function hendleCheckbox() {
+  function toggleCheckbox() {
     dispatch(completeTodo(todo.id));
+  }
+
+  function hendleRemove() {
+    dispatch(deleteTodo(todo.id));
   }
 
   return (
@@ -20,7 +26,7 @@ export default function TodoItem({ todo }) {
             aria-label="an appropriate label"
             type="checkbox"
             checked={todo.isCompleted}
-            onChange={hendleCheckbox}
+            onChange={toggleCheckbox}
           />
         </label>
 
@@ -29,6 +35,9 @@ export default function TodoItem({ todo }) {
           <span>Expired at: {todo.expirationDate}</span>
         </div>
         <div className={"todo-item__title" + classes}>{todo.title}</div>
+        <TodoBtn onClick={hendleRemove}>
+          <TfiTrash />
+        </TodoBtn>
       </div>
     </li>
   );

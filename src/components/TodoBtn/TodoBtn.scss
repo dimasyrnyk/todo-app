@@ -1,0 +1,19 @@
+@import "../../styles/colors.scss";
+
+.todo-btn {
+  background-color: $background_color_white;
+  color: $text_color_grey;
+  border: 1px solid $border_color_grey;
+  border-radius: 6px;
+  padding: 5px 6px;
+  margin: 3px;
+  font-size: 18px;
+
+  &:hover {
+    scale: 1.2;
+  }
+
+  &:focus {
+    scale: 0.9;
+  }
+}
