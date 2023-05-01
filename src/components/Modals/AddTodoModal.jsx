@@ -31,9 +31,9 @@ export default function AddTodoModal({ inputTitle, setInputTitle }) {
 
   function handleSubmit() {
     const newItem = {
-      id: Date.now(),
+      id: Date.now().toString(),
       title: inputTitle,
-      isDone: false,
+      isCompleted: false,
       creationDate: startDate.toFormat("dd.MM.yyyy HH:mm"),
       expirationDate: endDate.toFormat("dd.MM.yyyy HH:mm"),
     };
