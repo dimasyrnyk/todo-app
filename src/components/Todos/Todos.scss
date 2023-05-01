@@ -34,7 +34,12 @@
   }
 
   &__checkbox {
-    margin: 5px 15px 5px 5px;
+    cursor: pointer;
+    margin: 10px 15px 10px 10px;
+
+    &_label {
+      cursor: pointer;
+    }
   }
 
   &__dates {
