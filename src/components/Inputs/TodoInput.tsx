@@ -1,16 +1,19 @@
-import { useState } from "react";
-import "./Input.scss";
+import { FC, useState } from "react";
 
-const messages = {
-  specialSymbolsMsg: `~!?@#$%^&*()_+=[]{};':"|<>\\/ are not allowed!`,
-  spacesMsg: "You can't start with space!",
+import "./Input.scss";
+import { InputMessage } from "../../types/app";
+
+type Props = {
+  inputValue: string;
+  setInputValue: (value: string) => void;
+  onKeyDown: () => void;
 };
 
-export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+const TodoInput: FC<Props> = ({ inputValue, setInputValue, onKeyDown }) => {
+  const [showError, setShowError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
-  function handleError(message) {
+  function handleError(message: string) {
     setShowError(true);
     setErrorMessage(message);
     setTimeout(() => {
@@ -18,21 +21,21 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
     }, 4000);
   }
 
-  function handleChange(event) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const str = event.target.value;
     const regex = /^[^`~!?@#$%^&*()_+=[\]{};':"\\|<>/]*$/;
 
     if (!regex.test(str)) {
-      handleError(messages.specialSymbolsMsg);
+      handleError(InputMessage.specialSymbolsMsg);
     } else if (!str.trim() && str) {
-      handleError(messages.spacesMsg);
+      handleError(InputMessage.spacesMsg);
       setInputValue("");
     } else {
-      setInputValue(event.target.value);
+      setInputValue(str);
     }
   }
 
-  function handleKeyDown(event) {
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (event.keyCode === 13) {
       event.preventDefault();
       if (inputValue) {
@@ -57,4 +60,6 @@ export default function TodoInput({ inputValue, setInputValue, onKeyDown }) {
       {showError ? <div className="input__error">{errorMessage}</div> : null}
     </span>
   );
-}
+};
+
+export default TodoInput;

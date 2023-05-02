@@ -1,6 +1,11 @@
+import { FC, PropsWithChildren } from "react";
 import "./TodoBtn.scss";
 
-const TodoBtn = ({ children, onClick }) => {
+type Props = {
+  onClick: () => void;
+};
+
+const TodoBtn: FC<PropsWithChildren<Props>> = ({ children, onClick }) => {
   return (
     <button
       className="todo-btn"
