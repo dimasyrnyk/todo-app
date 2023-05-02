@@ -7,6 +7,8 @@
   &__wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    height: 68px;
   }
 
   &__btn-remove {
@@ -14,7 +16,7 @@
     border-radius: 5px;
     background-color: $background_color_white;
     align-self: flex-end;
-    margin: 10px;
+    margin-bottom: 5px;
 
     &:hover {
       scale: 1.05;

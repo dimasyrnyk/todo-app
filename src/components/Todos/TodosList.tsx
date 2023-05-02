@@ -15,6 +15,7 @@ type Props = {
 const TodosList: FC<Props> = ({ todos }) => {
   const [showedTodos, setShowedTodos] = useState<ITodo[]>(todos);
   const [activeTab, setActiveTab] = useState<string>("all");
+  const [prevTodosLength, setPrevTodosLength] = useState<number>(0);
   const activeTodos = todos.filter((todo) => !todo.isCompleted);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
   const dispatch: AppDispatch = useDispatch();
@@ -39,6 +40,13 @@ const TodosList: FC<Props> = ({ todos }) => {
     }
   }, [todos, activeTab]);
 
+  useEffect(() => {
+    if (todos.length > prevTodosLength) {
+      setActiveTab("all");
+    }
+    setPrevTodosLength(todos.length);
+  }, [todos.length, prevTodosLength]);
+
   if (!todos.length) {
     return <div className="todo-items__empty-page">No todos...</div>;
   }
@@ -52,12 +60,16 @@ const TodosList: FC<Props> = ({ todos }) => {
         handleRemove={handleRemoveTodos}
       />
       <ul>
-        {showedTodos.map((i) => (
-          <TodoItem
-            key={i.id}
-            todo={i}
-          />
-        ))}
+        {showedTodos.length ? (
+          showedTodos.map((i) => (
+            <TodoItem
+              key={i.id}
+              todo={i}
+            />
+          ))
+        ) : (
+          <div className="todo-items__empty-page">No {activeTab} todos</div>
+        )}
       </ul>
     </>
   );
