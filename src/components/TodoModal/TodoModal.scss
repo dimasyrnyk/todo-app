@@ -76,21 +76,6 @@
     width: 100%;
   }
 
-  &__btn-add {
-    margin-left: 5px;
-    padding: 6px 14px;
-    border-radius: 5px;
-    border: 2px solid $border_color_orange;
-    background-color: $background_color_orange;
-    color: $text_color_white;
-    font-size: 24px;
-
-    &:hover {
-      background-color: $background_color_white;
-      color: $text_color_orange;
-    }
-  }
-
   &__controls-wrapper {
     display: flex;
     justify-content: space-evenly;

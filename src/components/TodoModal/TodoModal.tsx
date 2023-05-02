@@ -1,6 +1,5 @@
 import { useState, FC, useEffect } from "react";
 import { DateTime } from "luxon";
-import { FaPlus } from "react-icons/fa";
 
 import "./TodoModal.scss";
 import TodoInput from "../Inputs/TodoInput";
@@ -11,14 +10,18 @@ import {
 } from "../../utils/dateUtils";
 
 type Props = {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   start: string;
   end: string;
-  onSave: (arg1: string, arg2: string) => void;
+  onSave: (startDate: string, endDate: string) => void;
   inputTitle: string;
   setInputTitle: (value: string) => void;
 };
 
 const TodoModal: FC<Props> = ({
+  isOpen,
+  setIsOpen,
   start,
   end,
   onSave,
@@ -27,7 +30,6 @@ const TodoModal: FC<Props> = ({
 }) => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setStartDate(start);
@@ -65,77 +67,66 @@ const TodoModal: FC<Props> = ({
   }
 
   return (
-    <div>
-      <button
-        className="modal__btn-add"
-        onClick={() => setIsOpen(true)}
-      >
-        <FaPlus />
-      </button>
+    <div className="modal">
+      <div className="modal__body">
+        <h3 className="modal__title">Add todo</h3>
+        <span className="modal__row">
+          <span className="row__title">Title:</span>
+          <TodoInput
+            inputValue={inputTitle}
+            setInputValue={setInputTitle}
+            onKeyDown={handleSave}
+          />
+        </span>
 
-      {isOpen && (
-        <div className="modal">
-          <div className="modal__body">
-            <h3 className="modal__title">Add todo</h3>
-            <span className="modal__row">
-              <span className="row__title">Title:</span>
-              <TodoInput
-                inputValue={inputTitle}
-                setInputValue={setInputTitle}
-                onKeyDown={handleSave}
-              />
-            </span>
-
-            <span className="modal__row">
-              <label
-                className="row__title"
-                htmlFor="startDate"
-              >
-                Creation date:{" "}
-              </label>
-              <input
-                id="startDate"
-                className="row__datetime-input"
-                type="datetime-local"
-                value={formatLocaleToISO(startDate)}
-                onChange={handleStartDateChange}
-                min={formatLocaleToISO(start)}
-              />
-            </span>
-            <span className="modal__row">
-              <label
-                className="row__title"
-                htmlFor="endDate"
-              >
-                Expiration date:{" "}
-              </label>
-              <input
-                id="endDate"
-                className="row__datetime-input"
-                type="datetime-local"
-                value={formatLocaleToISO(endDate)}
-                onChange={handleEndDateChange}
-                min={formatLocaleToISO(nextDay(startDate))}
-              />
-            </span>
-            <div className="modal__controls-wrapper">
-              <button
-                className="modal__controls-btn"
-                onClick={handleSave}
-                disabled={!inputTitle}
-              >
-                Save
-              </button>
-              <button
-                className="modal__controls-btn"
-                onClick={handleClose}
-              >
-                Close
-              </button>
-            </div>
-          </div>
+        <span className="modal__row">
+          <label
+            className="row__title"
+            htmlFor="startDate"
+          >
+            Creation date:{" "}
+          </label>
+          <input
+            id="startDate"
+            className="row__datetime-input"
+            type="datetime-local"
+            value={formatLocaleToISO(startDate)}
+            onChange={handleStartDateChange}
+            min={formatLocaleToISO(start)}
+          />
+        </span>
+        <span className="modal__row">
+          <label
+            className="row__title"
+            htmlFor="endDate"
+          >
+            Expiration date:{" "}
+          </label>
+          <input
+            id="endDate"
+            className="row__datetime-input"
+            type="datetime-local"
+            value={formatLocaleToISO(endDate)}
+            onChange={handleEndDateChange}
+            min={formatLocaleToISO(nextDay(startDate))}
+          />
+        </span>
+        <div className="modal__controls-wrapper">
+          <button
+            className="modal__controls-btn"
+            onClick={handleSave}
+            disabled={!inputTitle}
+          >
+            Save
+          </button>
+          <button
+            className="modal__controls-btn"
+            onClick={handleClose}
+          >
+            Close
+          </button>
         </div>
-      )}
+      </div>
     </div>
   );
 };

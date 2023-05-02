@@ -38,8 +38,25 @@ header {
     color: $text_color_orange;
   }
 
-  .header__body {
-    display: flex;
-    justify-content: space-between;
+  .header {
+    &__body {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &__btn-add {
+      margin-left: 5px;
+      padding: 0 12px;
+      border-radius: 5px;
+      border: 2px solid $border_color_orange;
+      background-color: $background_color_orange;
+      color: $text_color_white;
+      font-size: 20px;
+
+      &:hover {
+        background-color: $background_color_white;
+        color: $text_color_orange;
+      }
+    }
   }
 }
