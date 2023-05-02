@@ -36,7 +36,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
     dispatch(completeTodo(todo.id));
   }
 
-  function hendleRemove() {
+  function handleRemove() {
     dispatch(deleteTodo(todo.id));
   }
 
@@ -46,45 +46,45 @@ const TodoItem: FC<Props> = ({ todo }) => {
 
   return (
     <li className={"todo-item" + classes}>
+      <label className="todo-item__checkbox_label">
+        <input
+          className="todo-item__checkbox"
+          aria-label="an appropriate label"
+          type="checkbox"
+          checked={todo.isCompleted}
+          onChange={toggleCheckbox}
+        />
+      </label>
       <div className="todo-item__container">
-        <label className="todo-item__checkbox_label">
-          <input
-            className="todo-item__checkbox"
-            aria-label="an appropriate label"
-            type="checkbox"
-            checked={todo.isCompleted}
-            onChange={toggleCheckbox}
-          />
-        </label>
-
         <div className="todo-item__dates">
           <span>Created at: {todo.creationDate}</span>
           <span>Expired at: {todo.expirationDate}</span>
         </div>
         <div className={"todo-item__title" + classes}>{todo.title}</div>
+        <span>
+          <TodoBtn
+            showButton={!todo.isCompleted}
+            onClick={handleOpen}
+          >
+            <TfiPencil />
+          </TodoBtn>
 
-        <TodoBtn
-          showButton={!todo.isCompleted}
-          onClick={handleOpen}
-        >
-          <TfiPencil />
-        </TodoBtn>
+          {isOpen && (
+            <TodoModal
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              inputTitle={title}
+              setInputTitle={setTitle}
+              start={todo.creationDate}
+              end={todo.expirationDate}
+              onSave={handleSubmit}
+            />
+          )}
 
-        {isOpen && (
-          <TodoModal
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            inputTitle={title}
-            setInputTitle={setTitle}
-            start={todo.creationDate}
-            end={todo.expirationDate}
-            onSave={handleSubmit}
-          />
-        )}
-
-        <TodoBtn onClick={hendleRemove}>
-          <TfiTrash />
-        </TodoBtn>
+          <TodoBtn onClick={handleRemove}>
+            <TfiTrash />
+          </TodoBtn>
+        </span>
       </div>
     </li>
   );
