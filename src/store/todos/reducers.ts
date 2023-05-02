@@ -19,6 +19,10 @@ export default function todosReducer(
       return newTodos;
     case TodosTypes.DELETE_TODO:
       return state.filter((todo) => todo.id !== action.payload);
+    case TodosTypes.EDIT_TODO:
+      return state.map((todo) =>
+        todo.id === action.payload.id ? action.payload : todo
+      );
     default:
       return state;
   }

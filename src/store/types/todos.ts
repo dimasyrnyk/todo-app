@@ -4,6 +4,7 @@ export enum TodosTypes {
   ADD_TODO = "todos/ADD",
   TOGGLE_COMPLETE_TODO = "todos/TOGGLE_COMPLETE",
   DELETE_TODO = "todos/DELETE",
+  EDIT_TODO = "todos/EDIT",
 }
 
 interface AddAction {
@@ -21,4 +22,13 @@ interface DeleteAction {
   payload: string;
 }
 
-export type TodosAction = AddAction | ToggleCompleteAction | DeleteAction;
+interface EditAction {
+  type: TodosTypes.EDIT_TODO;
+  payload: ITodo;
+}
+
+export type TodosAction =
+  | AddAction
+  | ToggleCompleteAction
+  | DeleteAction
+  | EditAction;
