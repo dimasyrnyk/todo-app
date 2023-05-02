@@ -2,8 +2,8 @@
 
 /* ---------- MEDIA SCREEN -- MOBILE ---------- */
 @media (max-width: 600px) {
-  .todo-item__dates {
-    width: 30%;
+  .todo-item__container {
+    flex-direction: column;
   }
 }
 
