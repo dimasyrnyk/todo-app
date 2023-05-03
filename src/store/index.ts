@@ -1,15 +1,24 @@
-import { combineReducers, Dispatch, AnyAction } from "redux";
-import { createStore } from "redux";
+import { Dispatch, AnyAction, Store } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import todosReducer from "./todos/reducers";
+import { persistStore, persistReducer, Persistor } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { createStore } from "redux";
 
-const rootReducer = combineReducers({
-  todos: todosReducer,
-});
+import rootReducer from "./reducers";
 
-const store = createStore(rootReducer, composeWithDevTools());
+const persistConfig = {
+  key: "root",
+  storage,
+};
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export type RootState = ReturnType<typeof rootReducer>;
+export const store: Store = createStore(
+  persistedReducer,
+  composeWithDevTools()
+);
+
+export const persistor: Persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof persistedReducer>;
 export type AppDispatch = Dispatch<AnyAction>;
