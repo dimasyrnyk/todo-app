@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 
 import "./Header.scss";
@@ -7,12 +7,17 @@ import { timeNow, tomorrow } from "../../utils/dateUtils";
 import TodoModal from "../../components/TodoModal/TodoModal";
 import TodoInput from "../../components/Inputs/TodoInput";
 import { createTodo } from "../../store/todos/actions";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { ITodo } from "../../types/todo";
+import { InputPlaceholder } from "../../types/app";
+import Search from "../../components/Search/Search";
 
 const Header: FC = () => {
   const [value, setValue] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const searchValue = useSelector(
+    (state: RootState) => state.todos.searchValue
+  );
   const dispatch: AppDispatch = useDispatch();
 
   function handleSubmit(start = timeNow(), end = tomorrow()) {
@@ -36,19 +41,21 @@ const Header: FC = () => {
     <header>
       <h1>Todo App</h1>
       <span className="header__body">
-        <TodoInput
-          inputValue={value}
-          setInputValue={setValue}
-          onKeyDown={handleSubmit}
-        />
-
-        <button
-          className="header__btn-add"
-          onClick={handleOpen}
-        >
-          <FaPlus />
-        </button>
-
+        <div className="header__add-todo-section">
+          <TodoInput
+            inputValue={value}
+            setInputValue={setValue}
+            onKeyDown={handleSubmit}
+            placeholder={InputPlaceholder.EnterTodo}
+          />
+          <button
+            className="header__btn-add"
+            onClick={handleOpen}
+          >
+            <FaPlus />
+          </button>
+        </div>
+        <Search />
         {isOpen && (
           <TodoModal
             modalTitle="Add todo"

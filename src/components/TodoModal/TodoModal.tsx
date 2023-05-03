@@ -8,6 +8,7 @@ import {
   formatLocaleToISO,
   formatISOToLocale,
 } from "../../utils/dateUtils";
+import { InputPlaceholder } from "../../types/app";
 
 type Props = {
   modalTitle: string;
@@ -78,6 +79,7 @@ const TodoModal: FC<Props> = ({
             inputValue={inputTitle}
             setInputValue={setInputTitle}
             onKeyDown={handleSave}
+            placeholder={InputPlaceholder.EnterTodo}
           />
         </span>
 

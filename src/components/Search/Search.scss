@@ -1,0 +1,26 @@
+@import "../../styles/colors.scss";
+
+.search {
+  &__wrapper {
+    flex: 1;
+  }
+
+  &__btn-close {
+    border: 1px solid $border_color_orange;
+    border-radius: 5px;
+    background-color: $background_color_white;
+    color: $text_color_orange;
+    font-size: 10px;
+    width: 24px;
+    height: 24px;
+    align-self: center;
+
+    &:hover {
+      scale: 1.1;
+    }
+
+    &:focus {
+      scale: 0.9;
+    }
+  }
+}

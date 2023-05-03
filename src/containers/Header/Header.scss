@@ -10,21 +10,54 @@
       margin-bottom: 10px;
     }
 
-    .header__body {
-      width: 100%;
+    .header {
+      &__body {
+        width: 100%;
+        flex-direction: column;
+      }
+
+      &__add-todo-section {
+        margin-bottom: 10px;
+      }
     }
   }
 }
 
-/* ---------- MEDIA SCREEN -- TABLET && DESKTOP ---------- */
-@media (min-width: 601px) {
+/* ---------- MEDIA SCREEN -- TABLET ---------- */
+@media (min-width: 601px) and (max-width: 965px) {
   header {
     h1 {
       margin-right: 20px;
     }
 
-    .header__body {
-      flex: 1;
+    .header {
+      &__body {
+        flex-direction: column;
+        flex: 1;
+      }
+
+      &__add-todo-section {
+        margin-bottom: 10px;
+      }
+    }
+  }
+}
+
+/* ---------- MEDIA SCREEN -- DESKTOP ---------- */
+@media (min-width: 968px) {
+  header {
+    h1 {
+      margin-right: 20px;
+    }
+
+    .header {
+      &__body {
+        flex: 1;
+      }
+
+      &__add-todo-section {
+        margin-right: 50px;
+      }
     }
   }
 }
@@ -36,6 +69,7 @@ header {
 
   h1 {
     color: $text_color_orange;
+    width: 148px;
   }
 
   .header {
@@ -44,9 +78,15 @@ header {
       justify-content: space-between;
     }
 
+    &__add-todo-section {
+      display: flex;
+      flex: 2;
+      align-items: flex-start;
+    }
+
     &__btn-add {
-      margin-left: 5px;
-      padding: 0 12px;
+      margin-left: 10px;
+      padding: 9px 22px;
       border-radius: 5px;
       border: 2px solid $border_color_orange;
       background-color: $background_color_orange;
