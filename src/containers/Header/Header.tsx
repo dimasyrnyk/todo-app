@@ -51,6 +51,7 @@ const Header: FC = () => {
 
         {isOpen && (
           <TodoModal
+            modalTitle="Add todo"
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             inputTitle={value}

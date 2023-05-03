@@ -17,6 +17,8 @@ export default function todosReducer(
           : todo;
       });
       return newTodos;
+    case TodosTypes.DELETE_ALL_COMPLETED_TODO:
+      return state.filter((todo) => !todo.isCompleted);
     case TodosTypes.DELETE_TODO:
       return state.filter((todo) => todo.id !== action.payload);
     case TodosTypes.EDIT_TODO:

@@ -1,0 +1,42 @@
+@import "../../styles/colors.scss";
+
+.nav-bar {
+  display: flex;
+  justify-content: space-around;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 78px;
+  }
+
+  &__btn-remove {
+    border: 1px solid $border_color_grey;
+    border-radius: 5px;
+    background-color: $background_color_white;
+    align-self: flex-end;
+    margin-bottom: 5px;
+    color: $text_color_black;
+
+    &:hover {
+      scale: 1.05;
+    }
+
+    &:focus {
+      scale: 0.95;
+    }
+  }
+
+  &__tab {
+    margin: 5px;
+    padding-bottom: 10px;
+    text-align: center;
+    width: 100%;
+    cursor: pointer;
+
+    &.active {
+      border-bottom: 2px solid $border_color_orange;
+    }
+  }
+}

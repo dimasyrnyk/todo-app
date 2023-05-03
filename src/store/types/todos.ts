@@ -3,6 +3,7 @@ import { ITodo } from "../../types/todo";
 export enum TodosTypes {
   ADD_TODO = "todos/ADD",
   TOGGLE_COMPLETE_TODO = "todos/TOGGLE_COMPLETE",
+  DELETE_ALL_COMPLETED_TODO = "todos/DELETE_ALL_COMPLETED",
   DELETE_TODO = "todos/DELETE",
   EDIT_TODO = "todos/EDIT",
 }
@@ -22,6 +23,10 @@ interface DeleteAction {
   payload: string;
 }
 
+interface DeleteAllCompletedAction {
+  type: TodosTypes.DELETE_ALL_COMPLETED_TODO;
+}
+
 interface EditAction {
   type: TodosTypes.EDIT_TODO;
   payload: ITodo;
@@ -30,5 +35,6 @@ interface EditAction {
 export type TodosAction =
   | AddAction
   | ToggleCompleteAction
+  | DeleteAllCompletedAction
   | DeleteAction
   | EditAction;

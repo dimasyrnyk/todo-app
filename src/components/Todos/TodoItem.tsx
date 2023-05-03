@@ -61,31 +61,32 @@ const TodoItem: FC<Props> = ({ todo }) => {
           <span>Expired at: {todo.expirationDate}</span>
         </div>
         <div className={"todo-item__title" + classes}>{todo.title}</div>
-        <span>
-          <TodoBtn
-            showButton={!todo.isCompleted}
-            onClick={handleOpen}
-          >
-            <TfiPencil />
-          </TodoBtn>
-
-          {isOpen && (
-            <TodoModal
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              inputTitle={title}
-              setInputTitle={setTitle}
-              start={todo.creationDate}
-              end={todo.expirationDate}
-              onSave={handleSubmit}
-            />
-          )}
-
-          <TodoBtn onClick={handleRemove}>
-            <TfiTrash />
-          </TodoBtn>
-        </span>
       </div>
+      <span className="todo-item__btn-wrapper">
+        <TodoBtn
+          showButton={!todo.isCompleted}
+          onClick={handleOpen}
+        >
+          <TfiPencil />
+        </TodoBtn>
+
+        {isOpen && (
+          <TodoModal
+            modalTitle="Edit todo"
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            inputTitle={title}
+            setInputTitle={setTitle}
+            start={todo.creationDate}
+            end={todo.expirationDate}
+            onSave={handleSubmit}
+          />
+        )}
+
+        <TodoBtn onClick={handleRemove}>
+          <TfiTrash />
+        </TodoBtn>
+      </span>
     </li>
   );
 };
