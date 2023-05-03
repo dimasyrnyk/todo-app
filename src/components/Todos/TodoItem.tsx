@@ -72,6 +72,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
 
         {isOpen && (
           <TodoModal
+            modalTitle="Edit todo"
             isOpen={isOpen}
             setIsOpen={setIsOpen}
             inputTitle={title}

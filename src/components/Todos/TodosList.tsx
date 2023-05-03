@@ -7,6 +7,7 @@ import { ITodo } from "../../types/todo";
 import NavBar from "../NavBar/NavBar";
 import { deleteAllCompletedTodo } from "../../store/todos/actions";
 import { AppDispatch } from "../../store";
+import { NavBarTabs } from "../../types/app";
 
 type Props = {
   todos: ITodo[];
@@ -14,8 +15,9 @@ type Props = {
 
 const TodosList: FC<Props> = ({ todos }) => {
   const [showedTodos, setShowedTodos] = useState<ITodo[]>(todos);
-  const [activeTab, setActiveTab] = useState<string>("all");
+  const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
   const [prevTodosLength, setPrevTodosLength] = useState<number>(0);
+
   const activeTodos = todos.filter((todo) => !todo.isCompleted);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
   const dispatch: AppDispatch = useDispatch();
@@ -25,24 +27,29 @@ const TodosList: FC<Props> = ({ todos }) => {
   }
 
   function handleRemoveTodos() {
-    dispatch(deleteAllCompletedTodo());
-    setActiveTab("all");
-    setShowedTodos(todos);
+    const confirmed = window.confirm(
+      "Are you sure you want to delete all completed todos?"
+    );
+    if (confirmed) {
+      dispatch(deleteAllCompletedTodo());
+      setActiveTab(NavBarTabs.All);
+      setShowedTodos(todos);
+    }
   }
 
   useEffect(() => {
-    if (activeTab === "all") {
+    if (activeTab === NavBarTabs.All) {
       setShowedTodos(todos);
-    } else if (activeTab === "active") {
+    } else if (activeTab === NavBarTabs.Active) {
       setShowedTodos(activeTodos);
-    } else if (activeTab === "completed") {
+    } else if (activeTab === NavBarTabs.Completed) {
       setShowedTodos(completedTodos);
     }
   }, [todos, activeTab]);
 
   useEffect(() => {
     if (todos.length > prevTodosLength) {
-      setActiveTab("all");
+      setActiveTab(NavBarTabs.All);
     }
     setPrevTodosLength(todos.length);
   }, [todos.length, prevTodosLength]);

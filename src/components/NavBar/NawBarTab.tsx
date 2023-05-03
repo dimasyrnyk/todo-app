@@ -9,13 +9,15 @@ type Props = {
 };
 
 const NavBarTab: FC<Props> = ({ activeTab, tabName, handleClick }) => {
+  const classes = "nav-bar__tab" + (activeTab === tabName ? " active" : "");
+
   function handleTabClick() {
     handleClick(tabName);
   }
 
   return (
     <span
-      className={"nav-bar__tab" + (activeTab === tabName ? " active" : "")}
+      className={classes}
       onClick={handleTabClick}
     >
       {tabName.charAt(0).toUpperCase() + tabName.slice(1)}

@@ -10,6 +10,7 @@ import {
 } from "../../utils/dateUtils";
 
 type Props = {
+  modalTitle: string;
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   start: string;
@@ -20,6 +21,7 @@ type Props = {
 };
 
 const TodoModal: FC<Props> = ({
+  modalTitle,
   isOpen,
   setIsOpen,
   start,
@@ -69,7 +71,7 @@ const TodoModal: FC<Props> = ({
   return (
     <div className="modal">
       <div className="modal__body">
-        <h3 className="modal__title">Add todo</h3>
+        <h3 className="modal__title">{modalTitle}</h3>
         <span className="modal__row">
           <span className="row__title">Title:</span>
           <TodoInput
