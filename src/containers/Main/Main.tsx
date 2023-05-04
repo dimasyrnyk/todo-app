@@ -7,15 +7,22 @@ import { RootState } from "../../store";
 import { ITodo } from "../../types/todo";
 
 const Main: FC = () => {
-  const todosFilteredByValue = useSelector((state: RootState) => {
-    return state.todos.allTodos.filter((todo: ITodo) =>
+  const { todosFilteredByValue, allTodos } = useSelector((state: RootState) => {
+    const filteredTodos = state.todos.allTodos.filter((todo: ITodo) =>
       todo.title.toLowerCase().includes(state.todos.searchValue)
     );
+    return {
+      todosFilteredByValue: filteredTodos,
+      allTodos: state.todos.allTodos,
+    };
   });
 
   return (
     <main>
-      <TodosList todos={todosFilteredByValue} />
+      <TodosList
+        filteredTodos={todosFilteredByValue}
+        allTodos={allTodos}
+      />
     </main>
   );
 };
