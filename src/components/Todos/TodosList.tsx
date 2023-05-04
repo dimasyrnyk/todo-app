@@ -1,20 +1,24 @@
 import { FC, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Todos.scss";
 import TodoItem from "./TodoItem";
 import { ITodo } from "../../types/todo";
 import NavBar from "../NavBar/NavBar";
 import { deleteAllCompletedTodo } from "../../store/todos/actions";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { NavBarTabs } from "../../types/app";
 
-type Props = {
-  filteredTodos: ITodo[];
-  allTodos: ITodo[];
-};
-
-const TodosList: FC<Props> = ({ filteredTodos, allTodos }) => {
+const TodosList: FC = () => {
+  const { filteredTodos, allTodos } = useSelector((state: RootState) => {
+    const todosFilteredByValue = state.todos.allTodos.filter((todo: ITodo) =>
+      todo.title.toLowerCase().includes(state.todos.searchValue)
+    );
+    return {
+      filteredTodos: todosFilteredByValue,
+      allTodos: state.todos.allTodos,
+    };
+  });
   const [showedTodos, setShowedTodos] = useState<ITodo[]>(filteredTodos);
   const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
   const [prevTodosLength, setPrevTodosLength] = useState<number>(0);
