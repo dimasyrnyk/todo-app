@@ -5,6 +5,12 @@
     flex: 1;
   }
 
+  &__icon {
+    align-self: center;
+    color: $text_color_grey;
+    font-size: 18px;
+  }
+
   &__btn-close {
     border: 1px solid $border_color_orange;
     border-radius: 5px;

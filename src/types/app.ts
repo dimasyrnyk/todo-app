@@ -10,6 +10,6 @@ export enum NavBarTabs {
 }
 
 export enum InputPlaceholder {
-  Search = "Search",
+  Search = "Search todos",
   EnterTodo = "Enter your todo...",
 }

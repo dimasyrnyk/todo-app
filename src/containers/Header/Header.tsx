@@ -6,7 +6,7 @@ import "./Header.scss";
 import { timeNow, tomorrow } from "../../utils/dateUtils";
 import TodoModal from "../../components/TodoModal/TodoModal";
 import TodoInput from "../../components/Inputs/TodoInput";
-import { createTodo } from "../../store/todos/actions";
+import { createTodo, searchTodos } from "../../store/todos/actions";
 import { AppDispatch, RootState } from "../../store";
 import { ITodo } from "../../types/todo";
 import { InputPlaceholder } from "../../types/app";
@@ -31,6 +31,9 @@ const Header: FC = () => {
 
     dispatch(createTodo(newItem));
     setValue("");
+    if (searchValue) {
+      dispatch(searchTodos(""));
+    }
   }
 
   function handleOpen() {

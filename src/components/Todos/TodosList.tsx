@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Todos.scss";
 import TodoItem from "./TodoItem";
 import { ITodo } from "../../types/todo";
 import NavBar from "../NavBar/NavBar";
 import { deleteAllCompletedTodo } from "../../store/todos/actions";
-import { AppDispatch } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import { NavBarTabs } from "../../types/app";
 
 type Props = {
@@ -17,6 +17,7 @@ const TodosList: FC<Props> = ({ todos }) => {
   const [showedTodos, setShowedTodos] = useState<ITodo[]>(todos);
   const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
   const [prevTodosLength, setPrevTodosLength] = useState<number>(0);
+  const allTodos = useSelector((state: RootState) => state.todos.allTodos);
 
   const activeTodos = todos.filter((todo) => !todo.isCompleted);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
@@ -48,11 +49,11 @@ const TodosList: FC<Props> = ({ todos }) => {
   }, [todos, activeTab]);
 
   useEffect(() => {
-    if (todos.length > prevTodosLength) {
+    if (allTodos.length > prevTodosLength) {
       setActiveTab(NavBarTabs.All);
     }
     setPrevTodosLength(todos.length);
-  }, [todos.length, prevTodosLength]);
+  }, [allTodos.length, prevTodosLength]);
 
   if (!todos.length) {
     return <div className="todo-items__empty-page">No todos...</div>;

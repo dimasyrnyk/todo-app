@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { ImSearch } from "react-icons/im";
 import { ImCross } from "react-icons/im";
 
 import "./Search.scss";
@@ -33,13 +34,17 @@ const Search: FC = () => {
         onKeyDown={handleSearch}
         placeholder={InputPlaceholder.Search}
       >
-        {!!searchValue && (
+        {!!searchValue ? (
           <button
             className="search__btn-close"
             onClick={handleSearchReset}
           >
             <ImCross />
           </button>
+        ) : (
+          <span className="search__icon">
+            <ImSearch />
+          </span>
         )}
       </TodoInput>
     </div>
