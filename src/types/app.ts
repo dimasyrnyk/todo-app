@@ -8,3 +8,8 @@ export enum NavBarTabs {
   Active = "active",
   Completed = "completed",
 }
+
+export enum InputPlaceholder {
+  Search = "Search todos",
+  EnterTodo = "Enter your todo...",
+}

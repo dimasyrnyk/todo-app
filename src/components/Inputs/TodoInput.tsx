@@ -1,15 +1,22 @@
-import { FC, useState } from "react";
+import { FC, PropsWithChildren, useState } from "react";
 
 import "./Input.scss";
 import { InputMessage } from "../../types/app";
 
 type Props = {
+  placeholder: string;
   inputValue: string;
   setInputValue: (value: string) => void;
   onKeyDown: () => void;
 };
 
-const TodoInput: FC<Props> = ({ inputValue, setInputValue, onKeyDown }) => {
+const TodoInput: FC<PropsWithChildren<Props>> = ({
+  children,
+  placeholder,
+  inputValue,
+  setInputValue,
+  onKeyDown,
+}) => {
   const [showError, setShowError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -51,10 +58,11 @@ const TodoInput: FC<Props> = ({ inputValue, setInputValue, onKeyDown }) => {
           className="input__body"
           type="text"
           value={inputValue}
-          placeholder="Enter your todo..."
+          placeholder={placeholder}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
+        {children}
       </form>
 
       {showError ? <div className="input__error">{errorMessage}</div> : null}

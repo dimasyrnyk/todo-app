@@ -24,3 +24,8 @@ export const editTodo = (todo: ITodo) => ({
   type: TodosTypes.EDIT_TODO,
   payload: todo,
 });
+
+export const searchTodos = (value: string) => ({
+  type: TodosTypes.SEARCH_TODO,
+  payload: value,
+});
