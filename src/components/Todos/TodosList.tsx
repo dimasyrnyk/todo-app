@@ -55,6 +55,8 @@ const TodosList: FC = () => {
       setActiveTab(NavBarTabs.All);
       setPrevTodosLength(todos.length);
     } else if (todos.length < prevTodosLength && !filteredTodos.length) {
+      setActiveTab(NavBarTabs.All);
+      setPrevTodosLength(todos.length);
       dispatch(searchTodos(""));
     }
   }, [todos.length]);
