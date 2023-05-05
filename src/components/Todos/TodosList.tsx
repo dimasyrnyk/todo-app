@@ -5,24 +5,22 @@ import "./Todos.scss";
 import TodoItem from "./TodoItem";
 import { ITodo } from "../../types/todo";
 import NavBar from "../NavBar/NavBar";
-import { deleteAllCompletedTodo } from "../../store/todos/actions";
+import { deleteAllCompletedTodo, searchTodos } from "../../store/todos/actions";
 import { AppDispatch, RootState } from "../../store";
 import { NavBarTabs } from "../../types/app";
 
 const TodosList: FC = () => {
-  const { filteredTodos, allTodos } = useSelector((state: RootState) => {
-    const todosFilteredByValue = state.todos.allTodos.filter((todo: ITodo) =>
-      todo.title.toLowerCase().includes(state.todos.searchValue)
-    );
-    return {
-      filteredTodos: todosFilteredByValue,
-      allTodos: state.todos.allTodos,
-    };
-  });
+  const { todos, searchValue } = useSelector((state: RootState) => ({
+    todos: state.todos.todos,
+    searchValue: state.todos.searchValue,
+  }));
+
+  const filteredTodos = todos.filter((todo: ITodo) =>
+    todo.title.toLowerCase().includes(searchValue)
+  );
   const [showedTodos, setShowedTodos] = useState<ITodo[]>(filteredTodos);
   const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
-  const [prevTodosLength, setPrevTodosLength] = useState<number>(0);
-
+  const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
   const activeTodos = filteredTodos.filter((todo) => !todo.isCompleted);
   const completedTodos = filteredTodos.filter((todo) => todo.isCompleted);
   const dispatch: AppDispatch = useDispatch();
@@ -50,14 +48,18 @@ const TodosList: FC = () => {
     } else if (activeTab === NavBarTabs.Completed) {
       setShowedTodos(completedTodos);
     }
-  }, [filteredTodos, activeTab]);
+  }, [todos, activeTab, searchValue]);
 
   useEffect(() => {
-    if (allTodos.length > prevTodosLength) {
+    if (
+      todos.length > prevTodosLength ||
+      (todos.length < prevTodosLength && !filteredTodos.length)
+    ) {
       setActiveTab(NavBarTabs.All);
+      setPrevTodosLength(todos.length);
+      dispatch(searchTodos(""));
     }
-    setPrevTodosLength(allTodos.length);
-  }, [allTodos.length, prevTodosLength]);
+  }, [todos.length]);
 
   if (!filteredTodos.length) {
     return <div className="todo-items__empty-page">No todos...</div>;
@@ -80,7 +82,9 @@ const TodosList: FC = () => {
             />
           ))
         ) : (
-          <div className="todo-items__empty-page">No {activeTab} todos</div>
+          <div className="todo-items__empty-page">
+            No {activeTab.toLowerCase()} todos
+          </div>
         )}
       </ul>
     </>

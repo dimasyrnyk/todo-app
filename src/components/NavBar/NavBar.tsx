@@ -29,21 +29,14 @@ const NavBar: FC<Props> = ({
       )}
 
       <nav className="nav-bar">
-        <NavBarTab
-          activeTab={activeTab}
-          tabName={NavBarTabs.All}
-          handleClick={handleClick}
-        />
-        <NavBarTab
-          activeTab={activeTab}
-          tabName={NavBarTabs.Active}
-          handleClick={handleClick}
-        />
-        <NavBarTab
-          activeTab={activeTab}
-          tabName={NavBarTabs.Completed}
-          handleClick={handleClick}
-        />
+        {Object.values(NavBarTabs).map((tabName) => (
+          <NavBarTab
+            key={tabName}
+            tabName={tabName}
+            activeTab={activeTab}
+            handleClick={handleClick}
+          />
+        ))}
       </nav>
     </div>
   );

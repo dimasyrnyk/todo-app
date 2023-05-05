@@ -84,22 +84,7 @@
   }
 
   &__controls-btn {
-    padding: 0px 16px;
-    border-radius: 5px;
-    border: 2px solid $border_color_orange;
-    background-color: $background_color_orange;
-    color: $text_color_white;
+    padding: 2px 22px;
     font-size: 18px;
-
-    &:hover {
-      background-color: $background_color_white;
-      color: $text_color_orange;
-    }
-
-    &:disabled {
-      background-color: $background_color_orange;
-      color: $text_color_white;
-      opacity: 0.7;
-    }
   }
 }

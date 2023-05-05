@@ -4,11 +4,12 @@ import { DateTime } from "luxon";
 import "./TodoModal.scss";
 import TodoInput from "../Inputs/TodoInput";
 import {
-  nextDay,
+  getDate,
   formatLocaleToISO,
   formatISOToLocale,
 } from "../../utils/dateUtils";
-import { InputPlaceholder } from "../../types/app";
+import { DateFormats, InputPlaceholder } from "../../types/app";
+import AppBtn from "../Buttons/AppBtn/AppBtn";
 
 type Props = {
   modalTitle: string;
@@ -43,15 +44,15 @@ const TodoModal: FC<Props> = ({
     const startDateObj: DateTime = DateTime.fromISO(e.target.value);
     const endDateObj: DateTime = DateTime.fromFormat(
       endDate,
-      "dd.MM.yyyy HH:mm"
+      DateFormats.localFormat
     );
 
-    setStartDate(startDateObj.toFormat("dd.MM.yyyy HH:mm"));
+    setStartDate(startDateObj.toFormat(DateFormats.localFormat));
 
     if (startDateObj > endDateObj) {
       const newEndDate: string = startDateObj
         .plus({ days: 1 })
-        .toFormat("dd.MM.yyyy HH:mm");
+        .toFormat(DateFormats.localFormat);
       setEndDate(newEndDate);
     }
   }
@@ -112,23 +113,21 @@ const TodoModal: FC<Props> = ({
             type="datetime-local"
             value={formatLocaleToISO(endDate)}
             onChange={handleEndDateChange}
-            min={formatLocaleToISO(nextDay(startDate))}
+            min={formatLocaleToISO(getDate(1, startDate))}
           />
         </span>
         <div className="modal__controls-wrapper">
-          <button
+          <AppBtn
             className="modal__controls-btn"
+            title="Save"
             onClick={handleSave}
             disabled={!inputTitle}
-          >
-            Save
-          </button>
-          <button
+          />
+          <AppBtn
             className="modal__controls-btn"
+            title="Close"
             onClick={handleClose}
-          >
-            Close
-          </button>
+          />
         </div>
       </div>
     </div>

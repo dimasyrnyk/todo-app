@@ -1,7 +1,7 @@
 import { ITodo } from "../../types/todo";
 
 export interface TodosState {
-  allTodos: ITodo[];
+  todos: ITodo[];
   searchValue: string;
 }
 
