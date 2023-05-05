@@ -16,7 +16,7 @@ const Search: FC = () => {
   }));
   const dispatch: AppDispatch = useDispatch();
 
-  function handleSearch(value: string = "") {
+  function handleSearch(value: string = searchValue) {
     if (todos.length) {
       dispatch(searchTodos(value.toLowerCase()));
     }

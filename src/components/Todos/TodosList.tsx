@@ -5,7 +5,7 @@ import "./Todos.scss";
 import TodoItem from "./TodoItem";
 import { ITodo } from "../../types/todo";
 import NavBar from "../NavBar/NavBar";
-import { deleteAllCompletedTodo } from "../../store/todos/actions";
+import { deleteAllCompletedTodo, searchTodos } from "../../store/todos/actions";
 import { AppDispatch, RootState } from "../../store";
 import { NavBarTabs } from "../../types/app";
 
@@ -48,12 +48,14 @@ const TodosList: FC = () => {
     } else if (activeTab === NavBarTabs.Completed) {
       setShowedTodos(completedTodos);
     }
-  }, [todos, activeTab]);
+  }, [todos, activeTab, searchValue]);
 
   useEffect(() => {
     if (todos.length > prevTodosLength) {
       setActiveTab(NavBarTabs.All);
       setPrevTodosLength(todos.length);
+    } else if (todos.length < prevTodosLength && !filteredTodos.length) {
+      dispatch(searchTodos(""));
     }
   }, [todos.length]);
 
