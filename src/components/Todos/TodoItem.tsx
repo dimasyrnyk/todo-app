@@ -5,7 +5,7 @@ import { TfiPencil } from "react-icons/tfi";
 
 import "./Todos.scss";
 import { completeTodo, deleteTodo, editTodo } from "../../store/todos/actions";
-import TodoBtn from "../TodoBtn/TodoBtn";
+import TodoBtn from "../Buttons/TodoBtn/TodoBtn";
 import { ITodo } from "../../types/todo";
 import { AppDispatch } from "../../store";
 import TodoModal from "../TodoModal/TodoModal";

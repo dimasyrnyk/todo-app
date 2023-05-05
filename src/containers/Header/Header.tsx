@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 
 import "./Header.scss";
-import { timeNow, tomorrow } from "../../utils/dateUtils";
+import { getDate } from "../../utils/dateUtils";
 import TodoModal from "../../components/TodoModal/TodoModal";
 import TodoInput from "../../components/Inputs/TodoInput";
 import { createTodo, searchTodos } from "../../store/todos/actions";
@@ -11,6 +11,7 @@ import { AppDispatch, RootState } from "../../store";
 import { ITodo } from "../../types/todo";
 import { InputPlaceholder } from "../../types/app";
 import Search from "../../components/Search/Search";
+import AppBtn from "../../components/Buttons/AppBtn/AppBtn";
 
 const Header: FC = () => {
   const [value, setValue] = useState<string>("");
@@ -20,7 +21,7 @@ const Header: FC = () => {
   );
   const dispatch: AppDispatch = useDispatch();
 
-  function handleSubmit(start = timeNow(), end = tomorrow()) {
+  function handleSubmit(start = getDate(), end = getDate(1)) {
     const newItem: ITodo = {
       id: Date.now().toString(),
       title: value,
@@ -51,12 +52,12 @@ const Header: FC = () => {
             onKeyDown={handleSubmit}
             placeholder={InputPlaceholder.EnterTodo}
           />
-          <button
+          <AppBtn
             className="header__btn-add"
             onClick={handleOpen}
           >
             <FaPlus />
-          </button>
+          </AppBtn>
         </div>
         <Search />
         {isOpen && (
@@ -66,8 +67,8 @@ const Header: FC = () => {
             setIsOpen={setIsOpen}
             inputTitle={value}
             setInputTitle={setValue}
-            start={timeNow()}
-            end={tomorrow()}
+            start={getDate()}
+            end={getDate(1)}
             onSave={handleSubmit}
           />
         )}

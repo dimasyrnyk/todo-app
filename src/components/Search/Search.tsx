@@ -1,23 +1,23 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ImSearch } from "react-icons/im";
-import { ImCross } from "react-icons/im";
 
 import "./Search.scss";
 import TodoInput from "../../components/Inputs/TodoInput";
+import CloseBtn from "../Buttons/CloseBtn/CloseBtn";
 import { searchTodos } from "../../store/todos/actions";
 import { AppDispatch, RootState } from "../../store";
 import { InputPlaceholder } from "../../types/app";
 
 const Search: FC = () => {
-  const { alltodos, searchValue } = useSelector((state: RootState) => ({
-    alltodos: state.todos.allTodos,
+  const { todos, searchValue } = useSelector((state: RootState) => ({
+    todos: state.todos.todos,
     searchValue: state.todos.searchValue,
   }));
   const dispatch: AppDispatch = useDispatch();
 
   function handleSearch(value: string = "") {
-    if (alltodos.length) {
+    if (todos.length) {
       dispatch(searchTodos(value.toLowerCase()));
     }
   }
@@ -35,12 +35,7 @@ const Search: FC = () => {
         placeholder={InputPlaceholder.Search}
       >
         {!!searchValue ? (
-          <button
-            className="search__btn-close"
-            onClick={handleSearchReset}
-          >
-            <ImCross />
-          </button>
+          <CloseBtn onClick={handleSearchReset} />
         ) : (
           <span className="search__icon">
             <ImSearch />
