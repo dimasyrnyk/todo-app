@@ -51,10 +51,10 @@ const TodosList: FC = () => {
   }, [todos, activeTab, searchValue]);
 
   useEffect(() => {
-    if (todos.length > prevTodosLength) {
-      setActiveTab(NavBarTabs.All);
-      setPrevTodosLength(todos.length);
-    } else if (todos.length < prevTodosLength && !filteredTodos.length) {
+    if (
+      todos.length > prevTodosLength ||
+      (todos.length < prevTodosLength && !filteredTodos.length)
+    ) {
       setActiveTab(NavBarTabs.All);
       setPrevTodosLength(todos.length);
       dispatch(searchTodos(""));

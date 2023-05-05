@@ -32,9 +32,6 @@ const Header: FC = () => {
 
     dispatch(createTodo(newItem));
     setValue("");
-    if (searchValue) {
-      dispatch(searchTodos(""));
-    }
   }
 
   function handleOpen() {
