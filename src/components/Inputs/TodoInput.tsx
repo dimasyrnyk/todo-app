@@ -1,7 +1,9 @@
-import { FC, PropsWithChildren, useState } from "react";
+import { FC, PropsWithChildren, useContext, useState } from "react";
 
 import "./Input.scss";
 import { InputMessage } from "../../types/app";
+import { ThemeContext } from "../../context/ThemeContext";
+import { inputRegex } from "../../utils/inputUtils";
 
 type Props = {
   placeholder: string;
@@ -19,6 +21,7 @@ const TodoInput: FC<PropsWithChildren<Props>> = ({
 }) => {
   const [showError, setShowError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const { theme } = useContext(ThemeContext);
 
   function handleError(message: string) {
     setShowError(true);
@@ -30,9 +33,8 @@ const TodoInput: FC<PropsWithChildren<Props>> = ({
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const str = event.target.value;
-    const regex = /^[^`~!?@#$%^&*()_+=[\]{};':"\\|<>/]*$/;
 
-    if (!regex.test(str)) {
+    if (!inputRegex.test(str)) {
       handleError(InputMessage.specialSymbolsMsg);
     } else if (!str.trim() && str) {
       handleError(InputMessage.spacesMsg);
@@ -53,9 +55,9 @@ const TodoInput: FC<PropsWithChildren<Props>> = ({
 
   return (
     <span className="input">
-      <form className="input__wrapper">
+      <form className="input__wrapper ">
         <input
-          className="input__body"
+          className={"input__body " + theme}
           type="text"
           value={inputValue}
           placeholder={placeholder}

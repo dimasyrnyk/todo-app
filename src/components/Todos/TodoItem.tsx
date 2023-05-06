@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 import { TfiTrash } from "react-icons/tfi";
 import { TfiPencil } from "react-icons/tfi";
@@ -9,6 +9,7 @@ import TodoBtn from "../Buttons/TodoBtn/TodoBtn";
 import { ITodo } from "../../types/todo";
 import { AppDispatch } from "../../store";
 import TodoModal from "../TodoModal/TodoModal";
+import { ThemeContext } from "../../context/ThemeContext";
 
 type Props = {
   todo: ITodo;
@@ -19,6 +20,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const classes = todo.isCompleted ? " checked" : "";
   const dispatch: AppDispatch = useDispatch();
+  const { theme } = useContext(ThemeContext);
 
   function handleSubmit(start: string, end: string) {
     const newItem: ITodo = {
@@ -45,7 +47,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
   }
 
   return (
-    <li className={"todo-item" + classes}>
+    <li className={"todo-item item-" + theme + classes}>
       <label className="todo-item__checkbox_label">
         <input
           className="todo-item__checkbox"
@@ -56,9 +58,9 @@ const TodoItem: FC<Props> = ({ todo }) => {
         />
       </label>
       <div className="todo-item__container">
-        <div className="todo-item__dates">
-          <span>Created at: {todo.creationDate}</span>
-          <span>Expired at: {todo.expirationDate}</span>
+        <div className={"todo-item__dates dates-" + theme}>
+          <span>Created on: {todo.creationDate}</span>
+          <span>Expires on: {todo.expirationDate}</span>
         </div>
         <div className={"todo-item__title" + classes}>{todo.title}</div>
       </div>

@@ -1,9 +1,6 @@
 @import "../../../styles/colors.scss";
 
 .todo-btn {
-  background-color: $background_color_white;
-  color: $text_color_grey;
-  border: 1px solid $border_color_grey;
   border-radius: 6px;
   padding: 5px 6px;
   margin: 3px;
@@ -16,4 +13,16 @@
   &:focus {
     scale: 0.9;
   }
+}
+
+.todo-light {
+  background-color: $background_color_white;
+  color: $text_color_grey;
+  border: 1px solid $border_color_grey;
+}
+
+.todo-dark {
+  background-color: $background_color_grey;
+  color: $text_color_white;
+  border: 1px solid $border_color_white;
 }

@@ -31,3 +31,23 @@
     padding: 2px 5px;
   }
 }
+
+.light {
+  background-color: $background_color_white;
+  color: $text_color_black;
+  transition: all 1.5s;
+
+  &::placeholder {
+    color: $text_color_grey;
+  }
+}
+
+.dark {
+  background-color: $background_color_grey;
+  color: $text_color_white;
+  transition: all 1.5s;
+
+  &::placeholder {
+    color: $text_color_lightgrey;
+  }
+}

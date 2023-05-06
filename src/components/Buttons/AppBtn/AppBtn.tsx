@@ -1,6 +1,7 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useContext } from "react";
 
 import "./AppBtn.scss";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 type Props = {
   onClick: () => void;
@@ -16,9 +17,11 @@ const AppBtn: FC<PropsWithChildren<Props>> = ({
   className,
   disabled,
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
     <button
-      className={className + " app-btn"}
+      className={className + " app-btn app-" + theme}
       onClick={onClick}
       disabled={disabled}
     >

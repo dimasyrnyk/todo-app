@@ -1,13 +1,13 @@
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { FaPlus } from "react-icons/fa";
 
 import "./Header.scss";
 import { getDate } from "../../utils/dateUtils";
 import TodoModal from "../../components/TodoModal/TodoModal";
 import TodoInput from "../../components/Inputs/TodoInput";
-import { createTodo, searchTodos } from "../../store/todos/actions";
-import { AppDispatch, RootState } from "../../store";
+import { createTodo } from "../../store/todos/actions";
+import { AppDispatch } from "../../store";
 import { ITodo } from "../../types/todo";
 import { InputPlaceholder } from "../../types/app";
 import Search from "../../components/Search/Search";
@@ -16,9 +16,6 @@ import AppBtn from "../../components/Buttons/AppBtn/AppBtn";
 const Header: FC = () => {
   const [value, setValue] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const searchValue = useSelector(
-    (state: RootState) => state.todos.searchValue
-  );
   const dispatch: AppDispatch = useDispatch();
 
   function handleSubmit(start = getDate(), end = getDate(1)) {
