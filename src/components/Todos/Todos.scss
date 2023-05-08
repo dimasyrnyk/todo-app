@@ -77,27 +77,31 @@
 }
 
 .item-light {
+  transition: 1s;
+  color: $text_color_black;
+
   &.checked {
     background-color: $background_color_completed;
-    transition: all 1.5s;
   }
 }
 
 .item-dark {
+  transition: 1s;
+  color: $text_color_white;
+
   &.checked {
     background-color: $background_color_greylighter;
-    transition: all 1.5s;
   }
 }
 
 .dates-light {
   color: $text_color_grey;
-  transition: all 1.5s;
+  transition: all 1s;
 }
 
 .dates-dark {
   color: $text_color_white;
-  transition: all 1.5s;
+  transition: all 1s;
 }
 
 .todo-items__empty-page {

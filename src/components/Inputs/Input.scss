@@ -35,7 +35,7 @@
 .light {
   background-color: $background_color_white;
   color: $text_color_black;
-  transition: all 1.5s;
+  transition: all 1s;
 
   &::placeholder {
     color: $text_color_grey;
@@ -45,7 +45,7 @@
 .dark {
   background-color: $background_color_grey;
   color: $text_color_white;
-  transition: all 1.5s;
+  transition: all 1s;
 
   &::placeholder {
     color: $text_color_lightgrey;

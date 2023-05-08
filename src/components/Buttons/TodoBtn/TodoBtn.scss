@@ -19,10 +19,12 @@
   background-color: $background_color_white;
   color: $text_color_grey;
   border: 1px solid $border_color_grey;
+  transition: 1s;
 }
 
 .todo-dark {
   background-color: $background_color_grey;
   color: $text_color_white;
   border: 1px solid $border_color_white;
+  transition: 1s;
 }
