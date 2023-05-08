@@ -1,4 +1,4 @@
-import { useState, FC, useEffect } from "react";
+import { useState, FC, useEffect, useContext } from "react";
 import { DateTime } from "luxon";
 
 import "./TodoModal.scss";
@@ -10,6 +10,7 @@ import {
 } from "../../utils/dateUtils";
 import { DateFormats, InputPlaceholder } from "../../types/app";
 import AppBtn from "../Buttons/AppBtn/AppBtn";
+import { ThemeContext } from "../../context/ThemeContext";
 
 type Props = {
   modalTitle: string;
@@ -34,6 +35,7 @@ const TodoModal: FC<Props> = ({
 }) => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     setStartDate(start);
@@ -71,8 +73,8 @@ const TodoModal: FC<Props> = ({
   }
 
   return (
-    <div className="modal">
-      <div className="modal__body">
+    <div className="modal ">
+      <div className="modal__body background">
         <h3 className="modal__title">{modalTitle}</h3>
         <span className="modal__row">
           <span className="row__title">Title:</span>
@@ -93,7 +95,7 @@ const TodoModal: FC<Props> = ({
           </label>
           <input
             id="startDate"
-            className="row__datetime-input"
+            className="row__datetime-input background text"
             type="datetime-local"
             value={formatLocaleToISO(startDate)}
             onChange={handleStartDateChange}
@@ -109,7 +111,7 @@ const TodoModal: FC<Props> = ({
           </label>
           <input
             id="endDate"
-            className="row__datetime-input"
+            className="row__datetime-input background text"
             type="datetime-local"
             value={formatLocaleToISO(endDate)}
             onChange={handleEndDateChange}

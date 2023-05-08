@@ -36,10 +36,6 @@
   padding: 5px 10px;
   margin: 10px 0;
 
-  &.checked {
-    background-color: $background_color_completed;
-  }
-
   &__container {
     display: flex;
     flex: 1;
@@ -60,7 +56,6 @@
     flex-direction: column;
     margin-right: 20px;
     font-size: 12px;
-    color: $text_color_grey;
   }
 
   &__title {
@@ -79,6 +74,34 @@
     align-items: center;
     align-self: center;
   }
+}
+
+.item-light {
+  transition: 1s;
+  color: $text_color_black;
+
+  &.checked {
+    background-color: $background_color_completed;
+  }
+}
+
+.item-dark {
+  transition: 1s;
+  color: $text_color_white;
+
+  &.checked {
+    background-color: $background_color_greylighter;
+  }
+}
+
+.dates-light {
+  color: $text_color_grey;
+  transition: all 1s;
+}
+
+.dates-dark {
+  color: $text_color_white;
+  transition: all 1s;
 }
 
 .todo-items__empty-page {

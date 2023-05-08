@@ -1,5 +1,7 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, useContext } from "react";
+
 import "./TodoBtn.scss";
+import { ThemeContext } from "../../../context/ThemeContext";
 
 type Props = {
   onClick: () => void;
@@ -11,10 +13,12 @@ const TodoBtn: FC<PropsWithChildren<Props>> = ({
   onClick,
   showButton = true,
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   if (showButton) {
     return (
       <button
-        className="todo-btn"
+        className={"todo-btn todo-" + theme}
         onClick={onClick}
       >
         {children}

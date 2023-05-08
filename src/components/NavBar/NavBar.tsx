@@ -1,8 +1,9 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 
 import "./NavBar.scss";
 import NavBarTab from "./NawBarTab";
 import { NavBarTabs } from "../../types/app";
+import { ThemeContext } from "../../context/ThemeContext";
 
 type Props = {
   activeTab: string;
@@ -17,11 +18,13 @@ const NavBar: FC<Props> = ({
   handleClick,
   handleRemove,
 }) => {
+  const { theme } = useContext(ThemeContext);
+
   return (
-    <div className="nav-bar__wrapper">
+    <div className={"nav-bar__wrapper " + theme}>
       {showRemoveButton && (
         <button
-          className="nav-bar__btn-remove"
+          className="nav-bar__btn-remove border background text"
           onClick={handleRemove}
         >
           Remove completed todos

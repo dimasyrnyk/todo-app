@@ -7,13 +7,29 @@
   color: $text_color_white;
 
   &:hover {
-    background-color: $background_color_white;
     color: $text_color_orange;
   }
 
   &:disabled {
-    background-color: $background_color_orange;
     color: $text_color_white;
     opacity: 0.7;
+  }
+}
+
+.app-light {
+  &:hover {
+    background-color: $background_color_white;
+  }
+  &:disabled {
+    background-color: $background_color_orange;
+  }
+}
+
+.app-dark {
+  &:hover {
+    background-color: $background_color_grey;
+  }
+  &:disabled {
+    background-color: $background_color_orange;
   }
 }

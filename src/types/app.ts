@@ -1,3 +1,8 @@
+export enum Themes {
+  Light = "light",
+  Dark = "dark",
+}
+
 export enum DateFormats {
   localFormat = "dd.MM.yyyy HH:mm",
   ISOFormat = "yyyy-MM-dd'T'HH:mm",

@@ -1,3 +1,5 @@
+@import "./styles/colors";
+
 /* ---------- MEDIA SCREEN -- MOBILE ---------- */
 @media (max-width: 600px) {
   body {
@@ -25,7 +27,34 @@ code {
     monospace;
 }
 
-.App__container {
+.app__container {
   max-width: 968px;
   margin: 0 auto;
+  min-height: 100vh;
+}
+
+.light {
+  .text {
+    color: $text_color_black;
+    transition: all 1s;
+  }
+  .background {
+    background-color: $background_color_white;
+    transition: all 1s;
+  }
+}
+
+.dark {
+  .text {
+    color: $text_color_white;
+    transition: all 1s;
+  }
+  .background {
+    background-color: $background_color_grey;
+    transition: all 1s;
+  }
+  .border {
+    border: 1px solid $border_color_white;
+    transition: all 1s;
+  }
 }
