@@ -1,8 +1,8 @@
 import { FC, useContext } from "react";
-import { ImCross } from "react-icons/im";
 
 import "./CloseBtn.scss";
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "@context/ThemeContext";
+import CrossIcon from "@components/Icons/CrossIcon";
 
 type Props = {
   onClick: () => void;
@@ -16,7 +16,7 @@ const CloseBtn: FC<Props> = ({ onClick }) => {
       className={"close-btn close-" + theme}
       onClick={onClick}
     >
-      <ImCross />
+      <CrossIcon />
     </button>
   );
 };

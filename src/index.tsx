@@ -4,9 +4,9 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import "./styles/cssReset.css";
+import { store, persistor } from "@store/index";
+import { ThemeProvider } from "@context/ThemeContext";
 import App from "./App";
-import { store, persistor } from "./store";
-import { ThemeProvider } from "./context/ThemeContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

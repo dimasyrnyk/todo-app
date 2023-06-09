@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 /* ---------- MEDIA SCREEN -- MOBILE ---------- */
 @media (max-width: 600px) {
@@ -27,18 +27,18 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: $background_color_lightgrey;
+  background: $primary_lightgray;
   display: flex;
   justify-content: center;
   overflow-y: scroll;
 
   &__body {
     padding: 7vmin;
-    background: $background_color_white;
+    background: $white;
   }
 
   &__title {
-    color: $text_color_orange;
+    color: $primary_orange;
     text-align: center;
     font-size: 18px;
   }
@@ -54,23 +54,23 @@
       font-weight: bold;
       margin: 5px;
       width: 100%;
-      color: $text_color_grey;
+      color: $primary_gray;
     }
 
     .row__datetime-input {
-      border: 1px solid $border_color_light;
+      border: 1px solid $primary_lightgray;
       border-radius: 5px;
       padding: 5px 10px;
 
       &:focus {
-        border: 1px solid $border_color_grey;
+        border: 1px solid $primary_gray;
         outline: none;
       }
     }
   }
 
   &__datetime {
-    border: 1px solid $border_color_light;
+    border: 1px solid $primary_lightgray;
     border-radius: 5px;
     padding: 5px 10px;
     width: 100%;

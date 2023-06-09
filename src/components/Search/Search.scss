@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 .search {
   &__wrapper {
@@ -7,7 +7,11 @@
 
   &__icon {
     align-self: center;
-    color: $text_color_grey;
-    font-size: 18px;
+
+    img {
+      filter: invert(58%) sepia(1%) saturate(0%) hue-rotate(148deg)
+        brightness(87%) contrast(81%);
+      transform: rotate(270deg);
+    }
   }
 }

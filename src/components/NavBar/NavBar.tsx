@@ -2,8 +2,8 @@ import { FC, useContext } from "react";
 
 import "./NavBar.scss";
 import NavBarTab from "./NawBarTab";
-import { NavBarTabs } from "../../types/app";
-import { ThemeContext } from "../../context/ThemeContext";
+import { ThemeContext } from "@context/ThemeContext";
+import { NavBarTabs } from "@constants/app";
 
 type Props = {
   activeTab: string;

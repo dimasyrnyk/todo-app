@@ -1,17 +1,17 @@
 import { FC, useState } from "react";
 import { useDispatch } from "react-redux";
-import { FaPlus } from "react-icons/fa";
 
 import "./Header.scss";
-import { getDate } from "../../utils/dateUtils";
-import TodoModal from "../../components/TodoModal/TodoModal";
-import TodoInput from "../../components/Inputs/TodoInput";
-import { createTodo } from "../../store/todos/actions";
-import { AppDispatch } from "../../store";
-import { ITodo } from "../../types/todo";
-import { InputPlaceholder } from "../../types/app";
-import Search from "../../components/Search/Search";
-import AppBtn from "../../components/Buttons/AppBtn/AppBtn";
+import { AppDispatch } from "@store/index";
+import { createTodo } from "@store/todos/actions";
+import { ITodo } from "@constants/todo";
+import { InputPlaceholder } from "@constants/app";
+import { getDate } from "@utils/dateUtils";
+import TodoModal from "@components/TodoModal/TodoModal";
+import TodoInput from "@components/Inputs/TodoInput";
+import Search from "@components/Search/Search";
+import PrimaryBtn from "@components/Buttons/PrimaryBtn/PrimaryBtn";
+import PlusIcon from "@components/Icons/PlusIcon";
 
 const Header: FC = () => {
   const [value, setValue] = useState<string>("");
@@ -46,12 +46,12 @@ const Header: FC = () => {
             onKeyDown={handleSubmit}
             placeholder={InputPlaceholder.EnterTodo}
           />
-          <AppBtn
+          <PrimaryBtn
             className="header__btn-add"
             onClick={handleOpen}
           >
-            <FaPlus />
-          </AppBtn>
+            <PlusIcon />
+          </PrimaryBtn>
         </div>
         <Search />
         {isOpen && (

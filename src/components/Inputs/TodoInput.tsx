@@ -1,9 +1,9 @@
-import { FC, PropsWithChildren, useContext, useState } from "react";
+import React, { FC, PropsWithChildren, useContext, useState } from "react";
 
 import "./Input.scss";
-import { InputMessage } from "../../types/app";
-import { ThemeContext } from "../../context/ThemeContext";
-import { inputRegex } from "../../utils/inputUtils";
+import { ThemeContext } from "@context/ThemeContext";
+import { InputMessage } from "@constants/app";
+import { inputRegex } from "@utils/inputUtils";
 
 type Props = {
   placeholder: string;

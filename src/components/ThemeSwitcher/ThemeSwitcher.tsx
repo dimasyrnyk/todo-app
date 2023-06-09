@@ -1,8 +1,8 @@
 import React, { FC, useContext } from "react";
 
 import "./ThemeSwitcher.scss";
-import { ThemeContext } from "../../context/ThemeContext";
-import { Themes } from "../../types/app";
+import { ThemeContext } from "@context/ThemeContext";
+import { Themes } from "@constants/app";
 
 const ThemeSwitcher: FC = () => {
   const { theme, setTheme } = useContext(ThemeContext);

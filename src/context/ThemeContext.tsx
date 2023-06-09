@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren, createContext, useState } from "react";
-import { Themes } from "../types/app";
+
+import { Themes } from "@constants/app";
 
 type ContextTypes = {
   theme: string;

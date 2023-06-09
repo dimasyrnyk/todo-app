@@ -69,9 +69,8 @@ ol {
   padding: 0;
 }
 /*
-  10. Create a root stacking context
+  10. Added cursor pointer to button by deafault
 */
-#root,
-#__next {
-  isolation: isolate;
+button {
+  cursor: pointer;
 }

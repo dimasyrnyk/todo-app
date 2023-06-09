@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 .switcher {
   position: relative;
@@ -31,7 +31,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: $background_color_lightgrey;
+  background-color: $primary_lightgray;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 
@@ -42,13 +42,13 @@
     width: 18px;
     left: 4px;
     bottom: 3px;
-    background-color: $background_color_orange;
+    background-color: $primary_orange;
     -webkit-transition: 0.4s;
     transition: 0.4s;
   }
 
   input:checked + .slider {
-    background-color: $background_color_greylighter;
+    background-color: $secondary_gray;
   }
 
   &.round {
@@ -62,7 +62,7 @@
 
 input {
   &:focus + .slider {
-    box-shadow: 0 0 1px $background_color_greylighter;
+    box-shadow: 0 0 1px $secondary_gray;
   }
 
   &:checked + .slider:before {

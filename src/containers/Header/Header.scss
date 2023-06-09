@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 /* ---------- MEDIA SCREEN -- MOBILE ---------- */
 @media (max-width: 600px) {
@@ -68,7 +68,7 @@ header {
   padding: 15px 15px 5px 15px;
 
   h1 {
-    color: $text_color_orange;
+    color: $primary_orange;
     width: 148px;
   }
 

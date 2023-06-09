@@ -1,5 +1,5 @@
 import { DateTime } from "luxon";
-import { DateFormats } from "../types/app";
+import { DateFormats } from "@constants/app";
 
 const DateNow = (): string => {
   return DateTime.local().toFormat(DateFormats.localFormat);
