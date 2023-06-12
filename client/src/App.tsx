@@ -12,12 +12,14 @@ import SignIn from "@pages/SignIn";
 import Header from "@containers/Header/Header";
 import Footer from "@containers/Footer/Footer";
 import NavBar from "@components/NavBar/NavBar";
+import Alert from "@components/Alert/Alert";
 
 const App: FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { pathname } = useLocation();
   const { theme } = useContext(ThemeContext);
   const { isAuth, user } = useSelector((state: RootState) => state.auth);
+  const { alert } = useSelector((state: RootState) => state.app);
 
   useEffect(() => {
     if (user) {
@@ -28,6 +30,12 @@ const App: FC = () => {
   return (
     <div className={theme}>
       <div className="app__container background text">
+        {alert ? (
+          <Alert
+            text={alert.text}
+            error={alert.error}
+          />
+        ) : null}
         <NavBar />
         {pathname === "/" && <Header />}
         <main className="main__container">

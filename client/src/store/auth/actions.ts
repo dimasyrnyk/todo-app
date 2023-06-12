@@ -1,3 +1,4 @@
+import { showAlert } from "@store/app/actions";
 import { AppDispatch } from "..";
 import { AuthTypes, AuthAction, ILoginUserDto } from "../types/auth";
 
@@ -13,7 +14,12 @@ export const userSignIn = (user: ILoginUserDto) => {
     const json = await response.json();
 
     if (!response.ok) {
-      console.log(json.message || "Something went wrong, try again");
+      dispatch(
+        showAlert({
+          text: json.message || "Something went wrong, try again",
+          error: true,
+        })
+      );
     } else {
       dispatch({ type: AuthTypes.USER_LOGIN, payload: json });
     }

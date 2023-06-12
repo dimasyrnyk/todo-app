@@ -1,4 +1,8 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Injectable,
+  HttpException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -21,19 +25,13 @@ export class UserService {
       .exec();
 
     if (!foundUser) {
-      return new HttpException(
-        'Incorrect username or password',
-        HttpStatus.UNAUTHORIZED,
-      );
+      throw new UnauthorizedException('Incorrect username or password');
     }
 
-    const isMatch = bcrypt.compare(user.password, foundUser.password);
+    const isMatch = await bcrypt.compare(user.password, foundUser.password);
 
     if (!isMatch) {
-      return new HttpException(
-        'Incorrect username or password',
-        HttpStatus.UNAUTHORIZED,
-      );
+      throw new UnauthorizedException('Incorrect username or password');
     }
 
     const userDto = new UserDto(foundUser);
