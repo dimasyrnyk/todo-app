@@ -1,41 +1,30 @@
-@import "@styles/colors.scss";
+@import "@styles/colors";
 
 .nav-bar {
-  display: flex;
-  justify-content: space-around;
-
-  &__wrapper {
+  &__container {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    height: 78px;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 10px;
   }
 
-  &__btn-remove {
-    border: 1px solid $primary_gray;
-    border-radius: 5px;
-    align-self: flex-end;
-    margin-bottom: 5px;
-    color: $black;
+  &__signin-btn {
+    cursor: pointer;
+    border: none;
 
     &:hover {
-      scale: 1.05;
-    }
-
-    &:focus {
-      scale: 0.95;
+      color: $primary_orange;
     }
   }
+}
 
-  &__tab {
-    margin: 5px;
-    padding-bottom: 10px;
-    text-align: center;
-    width: 100%;
-    cursor: pointer;
+.signin-btn-light {
+  background-color: $white;
+  transition: 1s;
+}
 
-    &.active {
-      border-bottom: 2px solid $primary_orange;
-    }
-  }
+.signin-btn-dark {
+  background-color: $secondary_gray;
+  color: $white;
+  transition: 1s;
 }

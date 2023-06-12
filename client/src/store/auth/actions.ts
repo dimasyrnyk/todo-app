@@ -1,0 +1,25 @@
+import { AppDispatch } from "..";
+import { AuthTypes, AuthAction, ILoginUserDto } from "../types/auth";
+
+export const userSignIn = (user: ILoginUserDto) => {
+  return async (dispatch: AppDispatch) => {
+    const response = await fetch("/api/user/signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json.message || "Something went wrong, try again");
+    } else {
+      dispatch({ type: AuthTypes.USER_LOGIN, payload: json });
+    }
+  };
+};
+
+export const userSignOut = (): AuthAction => ({
+  type: AuthTypes.USER_LOGOUT,
+});

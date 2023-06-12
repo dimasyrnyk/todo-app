@@ -1,8 +1,8 @@
 import { FC, useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import "./Todos.scss";
-import { AppDispatch } from "@store/index";
+import "./TodoItem.scss";
+import { AppDispatch, RootState } from "@store/index";
 import { completeTodo, deleteTodo, editTodo } from "@store/todos/actions";
 import { ThemeContext } from "@context/ThemeContext";
 import { ITodo } from "@constants/todo";
@@ -16,30 +16,34 @@ type Props = {
 };
 
 const TodoItem: FC<Props> = ({ todo }) => {
+  const { theme } = useContext(ThemeContext);
+  const dispatch: AppDispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState<string>(todo.title);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const classes = todo.isCompleted ? " checked" : "";
-  const dispatch: AppDispatch = useDispatch();
-  const { theme } = useContext(ThemeContext);
 
   function handleSubmit(start: string, end: string) {
-    const newItem: ITodo = {
-      id: todo.id,
-      title: title,
-      isCompleted: false,
-      creationDate: start,
-      expirationDate: end,
-    };
+    if (user) {
+      const newItem: ITodo = {
+        _id: todo._id,
+        title: title,
+        isCompleted: false,
+        creationDate: start,
+        expirationDate: end,
+        creator: user.id,
+      };
 
-    dispatch(editTodo(newItem));
+      dispatch(editTodo(newItem));
+    }
   }
 
-  function toggleCheckbox() {
-    dispatch(completeTodo(todo.id));
+  function toggleComplete() {
+    dispatch(completeTodo(todo._id));
   }
 
   function handleRemove() {
-    dispatch(deleteTodo(todo.id));
+    dispatch(deleteTodo(todo._id));
   }
 
   function handleOpen() {
@@ -54,7 +58,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
           aria-label="an appropriate label"
           type="checkbox"
           checked={todo.isCompleted}
-          onChange={toggleCheckbox}
+          onChange={toggleComplete}
         />
       </label>
       <div className="todo-item__container">

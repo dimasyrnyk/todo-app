@@ -1,5 +1,22 @@
-import { ITodo } from "@constants/todo";
+import { AppDispatch } from "..";
 import { TodosTypes } from "@store/types/todos";
+import { ITodo, ITodoDto } from "@constants/todo";
+
+export const getUserTodos = (userId: string) => {
+  return async (dispatch: AppDispatch) => {
+    const response = await fetch(`/api/todo/${userId}`);
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json.message || "Something went wrong, try again");
+    } else {
+      dispatch({
+        type: TodosTypes.GET_USER_TODOS,
+        payload: json,
+      });
+    }
+  };
+};
 
 export const createTodo = (todo: ITodo) => ({
   type: TodosTypes.ADD_TODO,

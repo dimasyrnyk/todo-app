@@ -3,6 +3,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import * as path from 'path';
+import { UserModule } from './user/user.module';
+import { TodoModule } from './todo/todo.module';
 
 @Module({
   imports: [
@@ -12,6 +14,8 @@ import * as path from 'path';
       exclude: ['/api*'],
     }),
     MongooseModule.forRoot(process.env.MONGO_DB_URI),
+    UserModule,
+    TodoModule,
   ],
   providers: [],
 })

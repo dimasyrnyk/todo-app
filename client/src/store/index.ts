@@ -1,4 +1,6 @@
-import { Dispatch, AnyAction, Store } from "redux";
+import { AnyAction, Store, applyMiddleware } from "redux";
+import { ThunkDispatch } from "redux-thunk";
+import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { persistStore, persistReducer, Persistor } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -15,10 +17,10 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store: Store = createStore(
   persistedReducer,
-  composeWithDevTools()
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
 export const persistor: Persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof persistedReducer>;
-export type AppDispatch = Dispatch<AnyAction>;
+export type AppDispatch = ThunkDispatch<RootState, undefined, AnyAction>;

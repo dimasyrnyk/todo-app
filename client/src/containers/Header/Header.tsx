@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./Header.scss";
-import { AppDispatch } from "@store/index";
+import { AppDispatch, RootState } from "@store/index";
 import { createTodo } from "@store/todos/actions";
 import { ITodo } from "@constants/todo";
 import { InputPlaceholder } from "@constants/app";
@@ -14,21 +14,25 @@ import PrimaryBtn from "@components/Buttons/PrimaryBtn/PrimaryBtn";
 import PlusIcon from "@components/Icons/PlusIcon";
 
 const Header: FC = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.auth);
   const [value, setValue] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const dispatch: AppDispatch = useDispatch();
 
   function handleSubmit(start = getDate(), end = getDate(1)) {
-    const newItem: ITodo = {
-      id: Date.now().toString(),
-      title: value,
-      isCompleted: false,
-      creationDate: start,
-      expirationDate: end,
-    };
+    if (user) {
+      const newItem: ITodo = {
+        _id: Date.now().toString(),
+        title: value,
+        isCompleted: false,
+        creationDate: start,
+        expirationDate: end,
+        creator: user.id,
+      };
 
-    dispatch(createTodo(newItem));
-    setValue("");
+      dispatch(createTodo(newItem));
+      setValue("");
+    }
   }
 
   function handleOpen() {

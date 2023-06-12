@@ -33,6 +33,12 @@ code {
   min-height: 100vh;
 }
 
+.main__container {
+  padding: 10px 15px 10px 15px;
+  width: 100%;
+  min-height: 80vh;
+}
+
 .light {
   .text {
     color: $black;
