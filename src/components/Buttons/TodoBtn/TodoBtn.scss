@@ -1,4 +1,4 @@
-@import "../../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 .todo-btn {
   border-radius: 6px;
@@ -16,15 +16,25 @@
 }
 
 .todo-light {
-  background-color: $background_color_white;
-  color: $text_color_grey;
-  border: 1px solid $border_color_grey;
+  background-color: $white;
+  color: $primary_gray;
+  border: 1px solid $primary_gray;
   transition: 1s;
+
+  img {
+    filter: invert(58%) sepia(1%) saturate(0%) hue-rotate(148deg)
+      brightness(87%) contrast(81%);
+  }
 }
 
 .todo-dark {
-  background-color: $background_color_grey;
-  color: $text_color_white;
-  border: 1px solid $border_color_white;
+  background-color: $secondary_gray;
+  color: $white;
+  border: 1px solid $white;
   transition: 1s;
+
+  img {
+    filter: invert(98%) sepia(2%) saturate(7%) hue-rotate(21deg)
+      brightness(104%) contrast(102%);
+  }
 }

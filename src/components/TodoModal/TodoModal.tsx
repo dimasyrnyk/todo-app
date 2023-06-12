@@ -1,16 +1,15 @@
-import { useState, FC, useEffect, useContext } from "react";
+import React, { useState, FC, useEffect } from "react";
 import { DateTime } from "luxon";
 
 import "./TodoModal.scss";
-import TodoInput from "../Inputs/TodoInput";
+import { DateFormats, InputPlaceholder } from "@constants/app";
 import {
   getDate,
   formatLocaleToISO,
   formatISOToLocale,
-} from "../../utils/dateUtils";
-import { DateFormats, InputPlaceholder } from "../../types/app";
-import AppBtn from "../Buttons/AppBtn/AppBtn";
-import { ThemeContext } from "../../context/ThemeContext";
+} from "@utils/dateUtils";
+import PrimaryBtn from "@components/Buttons/PrimaryBtn/PrimaryBtn";
+import TodoInput from "../Inputs/TodoInput";
 
 type Props = {
   modalTitle: string;
@@ -35,7 +34,6 @@ const TodoModal: FC<Props> = ({
 }) => {
   const [startDate, setStartDate] = useState<string>("");
   const [endDate, setEndDate] = useState<string>("");
-  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     setStartDate(start);
@@ -119,13 +117,13 @@ const TodoModal: FC<Props> = ({
           />
         </span>
         <div className="modal__controls-wrapper">
-          <AppBtn
+          <PrimaryBtn
             className="modal__controls-btn"
             title="Save"
             onClick={handleSave}
             disabled={!inputTitle}
           />
-          <AppBtn
+          <PrimaryBtn
             className="modal__controls-btn"
             title="Close"
             onClick={handleClose}

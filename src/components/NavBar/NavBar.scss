@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 .nav-bar {
   display: flex;
@@ -12,11 +12,11 @@
   }
 
   &__btn-remove {
-    border: 1px solid $border_color_grey;
+    border: 1px solid $primary_gray;
     border-radius: 5px;
     align-self: flex-end;
     margin-bottom: 5px;
-    color: $text_color_black;
+    color: $black;
 
     &:hover {
       scale: 1.05;
@@ -35,7 +35,7 @@
     cursor: pointer;
 
     &.active {
-      border-bottom: 2px solid $border_color_orange;
+      border-bottom: 2px solid $primary_orange;
     }
   }
 }

@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 footer {
   width: 100%;
@@ -11,11 +11,11 @@ footer {
 
   &__link {
     text-decoration: none;
-    color: $text_color_orange;
+    color: $primary_orange;
     margin: 0 5px;
 
     &:hover {
-      color: $text_color_black;
+      color: $black;
     }
   }
 }

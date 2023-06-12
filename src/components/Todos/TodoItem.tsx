@@ -1,15 +1,15 @@
 import { FC, useContext, useState } from "react";
 import { useDispatch } from "react-redux";
-import { TfiTrash } from "react-icons/tfi";
-import { TfiPencil } from "react-icons/tfi";
 
 import "./Todos.scss";
-import { completeTodo, deleteTodo, editTodo } from "../../store/todos/actions";
-import TodoBtn from "../Buttons/TodoBtn/TodoBtn";
-import { ITodo } from "../../types/todo";
-import { AppDispatch } from "../../store";
-import TodoModal from "../TodoModal/TodoModal";
-import { ThemeContext } from "../../context/ThemeContext";
+import { AppDispatch } from "@store/index";
+import { completeTodo, deleteTodo, editTodo } from "@store/todos/actions";
+import { ThemeContext } from "@context/ThemeContext";
+import { ITodo } from "@constants/todo";
+import TodoBtn from "@components/Buttons/TodoBtn/TodoBtn";
+import TodoModal from "@components/TodoModal/TodoModal";
+import PencilIcon from "@components/Icons/PencilIcon";
+import TrashIcon from "@components/Icons/TrashIcon";
 
 type Props = {
   todo: ITodo;
@@ -69,7 +69,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
           showButton={!todo.isCompleted}
           onClick={handleOpen}
         >
-          <TfiPencil />
+          <PencilIcon />
         </TodoBtn>
 
         {isOpen && (
@@ -86,7 +86,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
         )}
 
         <TodoBtn onClick={handleRemove}>
-          <TfiTrash />
+          <TrashIcon />
         </TodoBtn>
       </span>
     </li>

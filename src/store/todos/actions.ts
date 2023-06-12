@@ -1,5 +1,5 @@
-import { ITodo } from "../../types/todo";
-import { TodosTypes } from "../types/todos";
+import { ITodo } from "@constants/todo";
+import { TodosTypes } from "@store/types/todos";
 
 export const createTodo = (todo: ITodo) => ({
   type: TodosTypes.ADD_TODO,

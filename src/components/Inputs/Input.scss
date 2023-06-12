@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 .input {
   position: relative;
@@ -9,7 +9,7 @@
 
   &__wrapper {
     display: flex;
-    border: 1px solid $border_color_light;
+    border: 1px solid $primary_lightgray;
     border-radius: 5px;
     padding: 5px 10px;
     width: 100%;
@@ -27,28 +27,28 @@
     position: absolute;
     top: 8px;
     left: 10px;
-    background-color: $background_color_error;
-    color: $text_color_black;
+    background-color: $secondary_orange;
+    color: $black;
     padding: 2px 5px;
   }
 }
 
 .light {
-  background-color: $background_color_white;
-  color: $text_color_black;
+  background-color: $white;
+  color: $black;
   transition: all 1s;
 
   &::placeholder {
-    color: $text_color_grey;
+    color: $primary_gray;
   }
 }
 
 .dark {
-  background-color: $background_color_grey;
-  color: $text_color_white;
+  background-color: $secondary_gray;
+  color: $white;
   transition: all 1s;
 
   &::placeholder {
-    color: $text_color_lightgrey;
+    color: $primary_lightgray;
   }
 }

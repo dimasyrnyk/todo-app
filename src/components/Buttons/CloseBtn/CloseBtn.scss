@@ -1,9 +1,9 @@
-@import "../../../styles/colors.scss";
+@import "@styles/colors.scss";
 
 .close-btn {
-  border: 1px solid $border_color_orange;
+  border: 1px solid $primary_orange;
   border-radius: 5px;
-  color: $text_color_orange;
+  color: $primary_orange;
   font-size: 10px;
   padding: 5px;
   align-self: center;
@@ -15,15 +15,20 @@
   &:focus {
     scale: 0.9;
   }
+
+  img {
+    filter: invert(55%) sepia(66%) saturate(1061%) hue-rotate(346deg)
+      brightness(94%) contrast(104%);
+  }
 }
 
 .close-light {
-  background-color: $background_color_white;
+  background-color: $white;
   transition: all 1.5s;
 }
 
 .close-dark {
-  background-color: $background_color_lightgrey;
-  outline: 1px solid $background_color_lightgrey;
+  background-color: $primary_lightgray;
+  outline: 1px solid $primary_lightgray;
   transition: all 1.5s;
 }

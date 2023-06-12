@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useContext } from "react";
 
 import "./TodoBtn.scss";
-import { ThemeContext } from "../../../context/ThemeContext";
+import { ThemeContext } from "@context/ThemeContext";
 
 type Props = {
   onClick: () => void;

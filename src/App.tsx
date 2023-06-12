@@ -1,11 +1,11 @@
 import { FC, useContext } from "react";
 
 import "./App.scss";
-import Header from "./containers/Header/Header";
-import Main from "./containers/Main/Main";
-import Footer from "./containers/Footer/Footer";
-import { ThemeContext } from "./context/ThemeContext";
-import ThemeSwitcher from "./components/ThemeSwitcher/ThemeSwitcher";
+import { ThemeContext } from "@context/ThemeContext";
+import Header from "@containers/Header/Header";
+import Main from "@containers/Main/Main";
+import Footer from "@containers/Footer/Footer";
+import ThemeSwitcher from "@components/ThemeSwitcher/ThemeSwitcher";
 
 const App: FC = () => {
   const { theme } = useContext(ThemeContext);

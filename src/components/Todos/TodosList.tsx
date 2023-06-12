@@ -2,12 +2,12 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./Todos.scss";
+import { AppDispatch, RootState } from "@store/index";
+import { deleteAllCompletedTodo, searchTodos } from "@store/todos/actions";
+import { NavBarTabs } from "@constants/app";
+import { DELETE_TODOS_CONFIRM_MESSAGE, ITodo } from "@constants/todo";
+import NavBar from "@components/NavBar/NavBar";
 import TodoItem from "./TodoItem";
-import { ITodo } from "../../types/todo";
-import NavBar from "../NavBar/NavBar";
-import { deleteAllCompletedTodo, searchTodos } from "../../store/todos/actions";
-import { AppDispatch, RootState } from "../../store";
-import { NavBarTabs } from "../../types/app";
 
 const TodosList: FC = () => {
   const { todos, searchValue } = useSelector((state: RootState) => ({
@@ -30,9 +30,7 @@ const TodosList: FC = () => {
   }
 
   function handleRemoveTodos() {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete all completed todos?"
-    );
+    const confirmed = window.confirm(DELETE_TODOS_CONFIRM_MESSAGE);
     if (confirmed) {
       dispatch(deleteAllCompletedTodo());
       setActiveTab(NavBarTabs.All);
