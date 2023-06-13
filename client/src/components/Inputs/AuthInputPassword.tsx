@@ -1,28 +1,17 @@
 import { FC, useState } from "react";
+import { ErrorMessage, Field } from "formik";
 
 import "./Inputs.scss";
-import AuthInputError from "./AuthInputError";
+import LockIcon from "@components/Icons/LockIcon";
 import HidePasswordIcon from "@components/Icons/HidePasswordIcon";
 import ShowPasswordIcon from "@components/Icons/ShowPasswordIcon";
-import LockIcon from "@components/Icons/LockIcon";
 
 type Props = {
   inputName: string;
-  inputValue: string;
-  inputPlaceholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showError?: boolean;
-  errorText?: string;
+  placeholder: string;
 };
 
-const AuthInputPassword: FC<Props> = ({
-  inputName,
-  inputValue,
-  inputPlaceholder,
-  onChange,
-  showError,
-  errorText,
-}) => {
+const AuthInputPassword: FC<Props> = ({ inputName, placeholder }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const hadleShowPassword = () => {
@@ -31,27 +20,31 @@ const AuthInputPassword: FC<Props> = ({
 
   return (
     <div className="auth-input__wrapper">
-      <span className="auth-input__icon">
+      <label
+        className="auth-input__icon"
+        htmlFor={inputName}
+      >
         <LockIcon />
-      </span>
-      <span className="auth-input">
-        <input
+      </label>
+      <div className="auth-input">
+        <Field
           className="auth-input__body"
           type={showPassword ? "text" : "password"}
-          value={inputValue}
-          onChange={onChange}
+          id={inputName}
           name={inputName}
-          placeholder={inputPlaceholder}
+          placeholder={placeholder}
+          autoComplete="off"
         />
         {showPassword ? (
           <HidePasswordIcon onClick={hadleShowPassword} />
         ) : (
           <ShowPasswordIcon onClick={hadleShowPassword} />
         )}
-      </span>
-      <AuthInputError
-        errorText={errorText}
-        showError={showError}
+      </div>
+      <ErrorMessage
+        className="auth-input__error"
+        name={inputName}
+        component="div"
       />
     </div>
   );

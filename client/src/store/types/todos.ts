@@ -6,7 +6,7 @@ export interface TodosState {
 }
 
 export enum TodosTypes {
-  GET_USER_TODOS = "todos/GET_USER_TODOS",
+  GET_USER_TODOS = "todos/GET_ALL",
   ADD_TODO = "todos/ADD",
   TOGGLE_COMPLETE_TODO = "todos/TOGGLE_COMPLETE",
   DELETE_ALL_COMPLETED_TODO = "todos/DELETE_ALL_COMPLETED",

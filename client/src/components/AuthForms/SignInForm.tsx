@@ -1,64 +1,65 @@
-import React, { FC, useState } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Form, useFormik, FormikProvider } from "formik";
 
 import "./AuthForm.scss";
 import { AppDispatch, RootState } from "@store/index";
 import { userSignIn } from "@store/auth/actions";
+import { ILoginUserDto } from "@store/types/auth";
+import { validationSignIn } from "@utils/validationSchema";
 import AppLoader from "@components/AppLoader/AppLoader";
 import AuthInput from "@components/Inputs/AuthInput";
 import AuthInputPassword from "@components/Inputs/AuthInputPassword";
 
+const initialValues: ILoginUserDto = {
+  email: "",
+  password: "",
+};
+
 const SignInForm: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { isLoading } = useSelector((state: RootState) => state.auth);
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const handleUserInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setUserData({ ...userData, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = () => {
     dispatch(
       userSignIn({
-        email: userData.email.toLowerCase(),
-        password: userData.password,
+        email: values.email.toLowerCase(),
+        password: values.password,
       })
     );
   };
 
+  const formik = useFormik<ILoginUserDto>({
+    initialValues: initialValues,
+    validationSchema: validationSignIn,
+    onSubmit: onSubmit,
+    validateOnChange: true,
+  });
+  const dispatch: AppDispatch = useDispatch();
+  const { isLoading } = useSelector((state: RootState) => state.auth);
+  const { values } = formik;
+  const isFormValid = formik.dirty && !formik.isSubmitting && formik.isValid;
+
   if (isLoading) return <AppLoader />;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <fieldset className="auth-form">
+    <FormikProvider value={formik}>
+      <Form className="auth-form">
         <AuthInput
           inputName="email"
-          inputValue={userData.email}
-          inputPlaceholder={"Email"}
-          onChange={handleUserInput}
+          type="email"
+          placeholder="Email"
         />
         <AuthInputPassword
           inputName="password"
-          inputValue={userData.password}
-          inputPlaceholder={"Password"}
-          onChange={handleUserInput}
+          placeholder="Password"
         />
-        <p>
-          <button
-            className="auth-form__button button"
-            type="submit"
-          >
-            Sign in
-          </button>
-        </p>
-      </fieldset>
-    </form>
+        <button
+          className="auth-form__button button"
+          type="submit"
+          disabled={!isFormValid}
+        >
+          Sign in
+        </button>
+      </Form>
+    </FormikProvider>
   );
 };
 

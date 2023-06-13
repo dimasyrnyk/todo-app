@@ -1,6 +1,6 @@
 export interface IAlert {
   text: string;
-  error: boolean;
+  error?: boolean;
 }
 
 export interface AppState {

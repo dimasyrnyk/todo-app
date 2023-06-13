@@ -18,14 +18,14 @@ const App: FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { pathname } = useLocation();
   const { theme } = useContext(ThemeContext);
-  const { isAuth, user } = useSelector((state: RootState) => state.auth);
+  const { isAuth } = useSelector((state: RootState) => state.auth);
   const { alert } = useSelector((state: RootState) => state.app);
 
   useEffect(() => {
-    if (user) {
-      dispatch(getUserTodos(user.id));
+    if (isAuth) {
+      dispatch(getUserTodos());
     }
-  }, [user]);
+  }, [isAuth]);
 
   return (
     <div className={theme}>

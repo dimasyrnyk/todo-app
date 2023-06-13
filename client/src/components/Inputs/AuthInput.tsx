@@ -1,45 +1,41 @@
-import React, { FC } from "react";
+import { FC } from "react";
+import { ErrorMessage, Field } from "formik";
 
 import "./Inputs.scss";
-import AuthInputError from "./AuthInputError";
 import EmailIcon from "@components/Icons/EmailIcon";
 import UserIcon from "@components/Icons/UserIcon";
 
 type Props = {
   inputName: string;
-  inputValue: string;
-  inputPlaceholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  showError?: boolean;
-  errorText?: string;
+  placeholder: string;
+  type?: string;
 };
 
-const AuthInput: FC<Props> = ({
-  inputName,
-  inputValue,
-  inputPlaceholder,
-  onChange,
-  showError,
-  errorText,
-}) => {
+const AuthInput: FC<Props> = ({ inputName, placeholder, type = "text" }) => {
   const inputIcon = inputName === "name" ? <UserIcon /> : <EmailIcon />;
 
   return (
     <div className="auth-input__wrapper">
-      <span className="auth-input__icon">{inputIcon}</span>
-      <span className="auth-input">
-        <input
+      <label
+        className="auth-input__icon"
+        htmlFor={inputName}
+      >
+        {inputIcon}
+      </label>
+      <div className="auth-input">
+        <Field
           className="auth-input__body"
-          type="text"
-          value={inputValue}
-          onChange={onChange}
+          type={type}
+          id={inputName}
           name={inputName}
-          placeholder={inputPlaceholder}
+          placeholder={placeholder}
+          autoComplete="off"
         />
-      </span>
-      <AuthInputError
-        errorText={errorText}
-        showError={showError}
+      </div>
+      <ErrorMessage
+        className="auth-input__error"
+        name={inputName}
+        component="div"
       />
     </div>
   );

@@ -1,10 +1,13 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import * as path from 'path';
 import { UserModule } from './user/user.module';
 import { TodoModule } from './todo/todo.module';
+import { isAuthenticated } from './app.middleware';
+import { TodoController } from './todo/todo.controller';
+import { TokenService } from './token/token.service';
 
 @Module({
   imports: [
@@ -17,6 +20,10 @@ import { TodoModule } from './todo/todo.module';
     UserModule,
     TodoModule,
   ],
-  providers: [],
+  providers: [TokenService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(isAuthenticated).forRoutes(TodoController);
+  }
+}

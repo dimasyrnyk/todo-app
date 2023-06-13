@@ -15,10 +15,7 @@ export const userSignIn = (user: ILoginUserDto) => {
 
     if (!response.ok) {
       dispatch(
-        showAlert({
-          text: json.message || "Something went wrong, try again",
-          error: true,
-        })
+        showAlert({ text: json.message || "Something went wrong, try again" })
       );
     } else {
       dispatch({ type: AuthTypes.USER_LOGIN, payload: json });
