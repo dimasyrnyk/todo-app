@@ -35,7 +35,7 @@ const SignInForm: FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const { isLoading } = useSelector((state: RootState) => state.auth);
   const { values } = formik;
-  const isFormValid = formik.dirty && !formik.isSubmitting && formik.isValid;
+  const isFormValid = formik.dirty && formik.isValid;
 
   if (isLoading) return <AppLoader />;
 

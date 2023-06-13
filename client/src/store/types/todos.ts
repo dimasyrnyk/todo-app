@@ -1,4 +1,4 @@
-import { ITodo, ITodoDto } from "@constants/todo";
+import { ITodo } from "@constants/todo";
 
 export interface TodosState {
   todos: ITodo[];
