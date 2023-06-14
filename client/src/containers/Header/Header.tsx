@@ -22,7 +22,7 @@ const Header: FC = () => {
   function handleSubmit(start = getDate(), end = getDate(1)) {
     if (user) {
       const newItem: ITodo = {
-        _id: Date.now().toString(),
+        id: Date.now().toString(),
         title: value,
         isCompleted: false,
         creationDate: start,

@@ -76,7 +76,7 @@ const TodosList: FC = () => {
         {showedTodos.length ? (
           showedTodos.map((i) => (
             <TodoItem
-              key={i._id}
+              key={i.id}
               todo={i}
             />
           ))

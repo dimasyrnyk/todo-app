@@ -26,7 +26,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
   function handleSubmit(start: string, end: string) {
     if (user) {
       const newItem: ITodo = {
-        _id: todo._id,
+        id: todo.id,
         title: title,
         isCompleted: false,
         creationDate: start,
@@ -39,11 +39,11 @@ const TodoItem: FC<Props> = ({ todo }) => {
   }
 
   function toggleComplete() {
-    dispatch(completeTodo(todo._id));
+    dispatch(completeTodo(todo.id));
   }
 
   function handleRemove() {
-    dispatch(deleteTodo(todo._id));
+    dispatch(deleteTodo(todo.id));
   }
 
   function handleOpen() {

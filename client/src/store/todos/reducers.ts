@@ -16,7 +16,7 @@ export default function todosReducer(
       return { ...state, todos: [action.payload, ...state.todos] };
     case TodosTypes.TOGGLE_COMPLETE_TODO:
       const newTodos = state.todos.map((todo) => {
-        return todo._id === action.payload
+        return todo.id === action.payload
           ? { ...todo, isCompleted: !todo.isCompleted }
           : todo;
       });
@@ -29,13 +29,13 @@ export default function todosReducer(
     case TodosTypes.DELETE_TODO:
       return {
         ...state,
-        todos: state.todos.filter((todo) => todo._id !== action.payload),
+        todos: state.todos.filter((todo) => todo.id !== action.payload),
       };
     case TodosTypes.EDIT_TODO:
       return {
         ...state,
         todos: state.todos.map((todo) =>
-          todo._id === action.payload._id ? action.payload : todo
+          todo.id === action.payload.id ? action.payload : todo
         ),
       };
     case TodosTypes.SEARCH_TODO:
