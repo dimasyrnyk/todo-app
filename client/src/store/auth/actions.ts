@@ -1,9 +1,18 @@
 import { showAlert } from "@store/app/actions";
 import { AppDispatch } from "..";
-import { AuthTypes, AuthAction, ILoginUserDto } from "../types/auth";
+import { AuthActionTypes, AuthAction, ILoginUserDto } from "../types/auth";
+
+export const showLoader = () => ({
+  type: AuthActionTypes.USER_START_LOADING,
+});
+
+export const hideLoader = () => ({
+  type: AuthActionTypes.USER_END_LOADING,
+});
 
 export const userSignIn = (user: ILoginUserDto) => {
   return async (dispatch: AppDispatch) => {
+    dispatch(showLoader());
     const response = await fetch("/api/user/signin", {
       method: "POST",
       headers: {
@@ -17,12 +26,14 @@ export const userSignIn = (user: ILoginUserDto) => {
       dispatch(
         showAlert({ text: json.message || "Something went wrong, try again" })
       );
+      dispatch(hideLoader());
     } else {
-      dispatch({ type: AuthTypes.USER_LOGIN, payload: json });
+      dispatch({ type: AuthActionTypes.USER_LOGIN, payload: json });
+      dispatch(hideLoader());
     }
   };
 };
 
 export const userSignOut = (): AuthAction => ({
-  type: AuthTypes.USER_LOGOUT,
+  type: AuthActionTypes.USER_LOGOUT,
 });

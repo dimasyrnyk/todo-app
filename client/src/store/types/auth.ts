@@ -19,13 +19,23 @@ export interface AuthState {
   isLoading: boolean;
 }
 
-export enum AuthTypes {
+export enum AuthActionTypes {
+  USER_START_LOADING = "auth/START_LOADING",
+  USER_END_LOADING = "auth/END_LOADING",
   USER_LOGIN = "auth/LOGIN",
   USER_LOGOUT = "auth/LOGOUT",
 }
 
+interface StartLoadingAction {
+  type: AuthActionTypes.USER_START_LOADING;
+}
+
+interface EndLoadingAction {
+  type: AuthActionTypes.USER_END_LOADING;
+}
+
 interface LoginUserAction {
-  type: AuthTypes.USER_LOGIN;
+  type: AuthActionTypes.USER_LOGIN;
   payload: {
     accessToken: string;
     user: IUser;
@@ -33,7 +43,11 @@ interface LoginUserAction {
 }
 
 interface LogoutUserAction {
-  type: AuthTypes.USER_LOGOUT;
+  type: AuthActionTypes.USER_LOGOUT;
 }
 
-export type AuthAction = LoginUserAction | LogoutUserAction;
+export type AuthAction =
+  | StartLoadingAction
+  | EndLoadingAction
+  | LoginUserAction
+  | LogoutUserAction;

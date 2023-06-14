@@ -1,4 +1,4 @@
-import { AuthState, AuthTypes, AuthAction } from "../types/auth";
+import { AuthState, AuthActionTypes, AuthAction } from "../types/auth";
 
 const initialState: AuthState = {
   isAuth: false,
@@ -12,14 +12,18 @@ export default function productsReducer(
   action: AuthAction
 ): AuthState {
   switch (action.type) {
-    case AuthTypes.USER_LOGIN:
+    case AuthActionTypes.USER_START_LOADING:
+      return { ...state, isLoading: true };
+    case AuthActionTypes.USER_END_LOADING:
+      return { ...state, isLoading: false };
+    case AuthActionTypes.USER_LOGIN:
       return {
         ...state,
         isAuth: true,
         token: action.payload.accessToken,
         user: action.payload.user,
       };
-    case AuthTypes.USER_LOGOUT:
+    case AuthActionTypes.USER_LOGOUT:
       return { ...initialState };
     default:
       return state;
