@@ -1,46 +1,36 @@
 import { FC, useContext } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./NavBar.scss";
-import NavBarTab from "./NawBarTab";
+import { AppDispatch, RootState } from "@store/index";
+import { userSignOut } from "@store/auth/actions";
 import { ThemeContext } from "@context/ThemeContext";
-import { NavBarTabs } from "@constants/app";
+import ThemeSwitcher from "@components/ThemeSwitcher/ThemeSwitcher";
+import { useNavigate } from "react-router-dom";
 
-type Props = {
-  activeTab: string;
-  showRemoveButton: boolean;
-  handleClick: (tabName: string) => void;
-  handleRemove: () => void;
-};
-
-const NavBar: FC<Props> = ({
-  activeTab,
-  showRemoveButton,
-  handleClick,
-  handleRemove,
-}) => {
+const NavBar: FC = () => {
   const { theme } = useContext(ThemeContext);
+  const navigate = useNavigate();
+  const dispatch: AppDispatch = useDispatch();
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  const handleClick = () => {
+    if (user) {
+      dispatch(userSignOut());
+    } else {
+      navigate("/signin");
+    }
+  };
 
   return (
-    <div className={"nav-bar__wrapper " + theme}>
-      {showRemoveButton && (
-        <button
-          className="nav-bar__btn-remove border background text"
-          onClick={handleRemove}
-        >
-          Remove completed todos
-        </button>
-      )}
-
-      <nav className="nav-bar">
-        {Object.values(NavBarTabs).map((tabName) => (
-          <NavBarTab
-            key={tabName}
-            tabName={tabName}
-            activeTab={activeTab}
-            handleClick={handleClick}
-          />
-        ))}
-      </nav>
+    <div className="nav-bar__container">
+      <ThemeSwitcher />
+      <button
+        className={"nav-bar__signin-btn signin-btn-" + theme}
+        onClick={handleClick}
+      >
+        {user ? "Sign out" : "Sign in"}
+      </button>
     </div>
   );
 };

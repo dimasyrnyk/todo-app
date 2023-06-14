@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import "./NavBar.scss";
+import "./TodosNavBar.scss";
 
 type Props = {
   activeTab: string;
@@ -9,7 +9,8 @@ type Props = {
 };
 
 const NavBarTab: FC<Props> = ({ activeTab, tabName, handleClick }) => {
-  const classes = "nav-bar__tab" + (activeTab === tabName ? " active" : "");
+  const classes =
+    "todos-nav-bar__tab" + (activeTab === tabName ? " active" : "");
 
   function handleTabClick() {
     handleClick(tabName);

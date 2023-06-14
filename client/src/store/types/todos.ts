@@ -6,12 +6,18 @@ export interface TodosState {
 }
 
 export enum TodosTypes {
+  GET_USER_TODOS = "todos/GET_ALL",
   ADD_TODO = "todos/ADD",
   TOGGLE_COMPLETE_TODO = "todos/TOGGLE_COMPLETE",
   DELETE_ALL_COMPLETED_TODO = "todos/DELETE_ALL_COMPLETED",
   DELETE_TODO = "todos/DELETE",
   EDIT_TODO = "todos/EDIT",
   SEARCH_TODO = "todos/SEARCH",
+}
+
+interface GetUserAction {
+  type: TodosTypes.GET_USER_TODOS;
+  payload: ITodo[];
 }
 
 interface AddAction {
@@ -44,6 +50,7 @@ interface SearchAction {
 }
 
 export type TodosAction =
+  | GetUserAction
   | AddAction
   | ToggleCompleteAction
   | DeleteAllCompletedAction

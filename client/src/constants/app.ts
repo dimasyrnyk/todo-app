@@ -23,3 +23,8 @@ export enum InputPlaceholder {
   Search = "Search todos",
   EnterTodo = "Enter your todo...",
 }
+
+export enum AlertColor {
+  RED = "red",
+  GREEN = "green",
+}

@@ -1,6 +1,6 @@
 import React, { FC, PropsWithChildren, useContext, useState } from "react";
 
-import "./Input.scss";
+import "./Inputs.scss";
 import { ThemeContext } from "@context/ThemeContext";
 import { InputMessage } from "@constants/app";
 import { inputRegex } from "@utils/inputUtils";

@@ -1,13 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import "./Todos.scss";
+import "./TodosList.scss";
 import { AppDispatch, RootState } from "@store/index";
 import { deleteAllCompletedTodo, searchTodos } from "@store/todos/actions";
+import { ITodo } from "@constants/todo";
 import { NavBarTabs } from "@constants/app";
-import { DELETE_TODOS_CONFIRM_MESSAGE, ITodo } from "@constants/todo";
-import NavBar from "@components/NavBar/NavBar";
-import TodoItem from "./TodoItem";
+import TodoItem from "@components/TodoItem/TodoItem";
+import TodosNavBar from "@components/TodosNavBar/TodosNavBar";
+import { ModalMessage } from "@constants/auth";
 
 const TodosList: FC = () => {
   const { todos, searchValue } = useSelector((state: RootState) => ({
@@ -30,7 +31,7 @@ const TodosList: FC = () => {
   }
 
   function handleRemoveTodos() {
-    const confirmed = window.confirm(DELETE_TODOS_CONFIRM_MESSAGE);
+    const confirmed = window.confirm(ModalMessage.REMOVE_ALL_COMPLETED);
     if (confirmed) {
       dispatch(deleteAllCompletedTodo());
       setActiveTab(NavBarTabs.All);
@@ -60,12 +61,12 @@ const TodosList: FC = () => {
   }, [todos.length]);
 
   if (!filteredTodos.length) {
-    return <div className="todo-items__empty-page">No todos...</div>;
+    return <div className="todos-list__empty-page">No todos...</div>;
   }
 
   return (
     <>
-      <NavBar
+      <TodosNavBar
         activeTab={activeTab}
         showRemoveButton={!!completedTodos.length}
         handleClick={handleTabClick}
@@ -80,7 +81,7 @@ const TodosList: FC = () => {
             />
           ))
         ) : (
-          <div className="todo-items__empty-page">
+          <div className="todos-list__empty-page">
             No {activeTab.toLowerCase()} todos
           </div>
         )}

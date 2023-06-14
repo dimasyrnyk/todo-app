@@ -4,6 +4,15 @@ export interface ITodo {
   isCompleted: boolean;
   creationDate: string;
   expirationDate: string;
+  creator: string;
+}
+
+export interface ITodoDto {
+  title: string;
+  isCompleted: boolean;
+  creationDate: string;
+  expirationDate: string;
+  creator: string;
 }
 
 export const DELETE_TODOS_CONFIRM_MESSAGE =

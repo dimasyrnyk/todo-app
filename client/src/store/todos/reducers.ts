@@ -10,6 +10,8 @@ export default function todosReducer(
   action: TodosAction
 ): TodosState {
   switch (action.type) {
+    case TodosTypes.GET_USER_TODOS:
+      return { ...state, todos: action.payload };
     case TodosTypes.ADD_TODO:
       return { ...state, todos: [action.payload, ...state.todos] };
     case TodosTypes.TOGGLE_COMPLETE_TODO:
