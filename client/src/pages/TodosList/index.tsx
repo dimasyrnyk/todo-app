@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./TodosList.scss";
 import { AppDispatch, RootState } from "@store/index";
 import { deleteAllCompletedTodo, searchTodos } from "@store/todos/actions";
-import { ITodo } from "@constants/todo";
+import { ITodoDto } from "@constants/todo";
 import { NavBarTabs } from "@constants/app";
 import TodoItem from "@components/TodoItem/TodoItem";
 import TodosNavBar from "@components/TodosNavBar/TodosNavBar";
@@ -16,10 +16,10 @@ const TodosList: FC = () => {
     searchValue: state.todos.searchValue,
   }));
 
-  const filteredTodos = todos.filter((todo: ITodo) =>
+  const filteredTodos = todos.filter((todo: ITodoDto) =>
     todo.title.toLowerCase().includes(searchValue)
   );
-  const [showedTodos, setShowedTodos] = useState<ITodo[]>(filteredTodos);
+  const [showedTodos, setShowedTodos] = useState<ITodoDto[]>(filteredTodos);
   const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
   const activeTodos = filteredTodos.filter((todo) => !todo.isCompleted);
