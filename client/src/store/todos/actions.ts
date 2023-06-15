@@ -1,7 +1,7 @@
 import { AppDispatch } from "..";
 import { TodosTypes } from "@store/types/todos";
 import { showAlert } from "@store/app/actions";
-import { ITodo, ICreateTodoDto } from "@constants/todo";
+import { ICreateTodoDto, ITodoDto } from "@constants/todo";
 import ClientAPI from "src/middleware/ClientAPI";
 
 export const getUserTodos = () => {
@@ -11,7 +11,9 @@ export const getUserTodos = () => {
     );
 
     if (!response.ok) {
-      showAlert({ text: data.message || "Something went wrong, try again" });
+      dispatch(
+        showAlert({ text: data.message || "Something went wrong, try again" })
+      );
     } else {
       dispatch({ type: TodosTypes.GET_USER_TODOS, payload: data });
     }
@@ -20,31 +22,39 @@ export const getUserTodos = () => {
 
 export const createTodo = (todo: ICreateTodoDto) => {
   return async (dispatch: AppDispatch) => {
-    const { response, data } = await ClientAPI.interceptedFetch(`/api/todo`, {
+    const { response, data } = await ClientAPI.interceptedFetch("/api/todo", {
       method: "POST",
       body: JSON.stringify(todo),
     });
 
     if (!response.ok) {
-      showAlert({ text: data.message || "Something went wrong, try again" });
+      dispatch(
+        showAlert({ text: data.message || "Something went wrong, try again" })
+      );
     } else {
       dispatch({ type: TodosTypes.ADD_TODO, payload: data });
+      dispatch(showAlert({ text: "Task has been created", error: false }));
     }
   };
 };
 
-export const editTodo = (todo: ITodo) => {
+export const editTodo = (todo: ITodoDto) => {
   return async (dispatch: AppDispatch) => {
-    const { response, data } = await ClientAPI.interceptedFetch("/api/todo", {
-      method: "PATCH",
-      body: JSON.stringify(todo),
-    });
+    const { response, data } = await ClientAPI.interceptedFetch(
+      `/api/todos/${todo.id}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(todo),
+      }
+    );
 
     if (!response.ok) {
-      showAlert({ text: data.message || "Something went wrong, try again" });
+      dispatch(
+        showAlert({ text: data.message || "Something went wrong, try again" })
+      );
     } else {
       dispatch({ type: TodosTypes.EDIT_TODO, payload: data });
-      showAlert({ text: "Task has been edited", error: false });
+      dispatch(showAlert({ text: "Task has been edited", error: false }));
     }
   };
 };

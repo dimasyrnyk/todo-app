@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Patch,
   Post,
   Req,
@@ -36,9 +37,13 @@ export class TodoController {
   }
 
   @UseGuards(TokenAuthGuard)
-  @Patch('todo')
+  @Patch('todos/:id')
   @HttpCode(HttpStatus.OK)
-  update(@Body() updateTodo: TodoDto): Promise<TodoDto> {
-    return this.todosServise.update(updateTodo);
+  update(
+    @Param('id') id: string,
+    @Body() updateTodoDto: TodoDto,
+  ): Promise<TodoDto> {
+    updateTodoDto.id = id;
+    return this.todosServise.update(updateTodoDto);
   }
 }

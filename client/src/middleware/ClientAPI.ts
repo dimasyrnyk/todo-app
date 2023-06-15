@@ -21,7 +21,6 @@ class ClientAPI {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        credentials: "include",
       };
     } else {
       newConfig = {
@@ -30,7 +29,6 @@ class ClientAPI {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        credentials: "include",
       };
     }
 
