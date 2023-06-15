@@ -1,6 +1,6 @@
 import { AppDispatch } from "..";
 import { TodosTypes } from "@store/types/todos";
-import { showAlert } from "@store/app/actions";
+import { showAlertWithTimeout } from "@store/app/actions";
 import { ICreateTodoDto, ITodoDto } from "@constants/todo";
 import ClientAPI from "src/middleware/ClientAPI";
 
@@ -12,7 +12,9 @@ export const getUserTodos = () => {
 
     if (!response.ok) {
       dispatch(
-        showAlert({ text: data.message || "Something went wrong, try again" })
+        showAlertWithTimeout({
+          text: data.message || "Something went wrong, try again",
+        })
       );
     } else {
       dispatch({ type: TodosTypes.GET_USER_TODOS, payload: data });
@@ -29,11 +31,15 @@ export const createTodo = (todo: ICreateTodoDto) => {
 
     if (!response.ok) {
       dispatch(
-        showAlert({ text: data.message || "Something went wrong, try again" })
+        showAlertWithTimeout({
+          text: data.message || "Something went wrong, try again",
+        })
       );
     } else {
       dispatch({ type: TodosTypes.ADD_TODO, payload: data });
-      dispatch(showAlert({ text: "Task has been created", error: false }));
+      dispatch(
+        showAlertWithTimeout({ text: "Task has been created", error: false })
+      );
     }
   };
 };
@@ -50,11 +56,18 @@ export const editTodo = (todo: ITodoDto) => {
 
     if (!response.ok) {
       dispatch(
-        showAlert({ text: data.message || "Something went wrong, try again" })
+        showAlertWithTimeout({
+          text: data.message || "Something went wrong, try again",
+        })
       );
     } else {
       dispatch({ type: TodosTypes.EDIT_TODO, payload: data });
-      dispatch(showAlert({ text: "Task has been edited", error: false }));
+      dispatch(
+        showAlertWithTimeout({
+          text: "Task has been edited",
+          error: false,
+        })
+      );
     }
   };
 };
