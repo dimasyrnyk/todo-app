@@ -19,4 +19,17 @@ export class TodoService {
     const todoDto = new TodoDto(createdTodo);
     return todoDto;
   }
+
+  async update(updateTodo: TodoDto): Promise<TodoDto> {
+    const { id, ...updatedFields } = updateTodo;
+
+    const updatedTodo = await this.todoModel.findByIdAndUpdate(
+      id,
+      updatedFields,
+      { new: true },
+    );
+
+    const todoDto = new TodoDto(updatedTodo);
+    return todoDto;
+  }
 }

@@ -1,4 +1,4 @@
-import { ITodo, ITodoDto } from "@constants/todo";
+import { ITodoDto } from "@constants/todo";
 
 export interface TodosState {
   todos: ITodoDto[];
@@ -8,7 +8,6 @@ export interface TodosState {
 export enum TodosTypes {
   GET_USER_TODOS = "todos/GET_ALL",
   ADD_TODO = "todos/ADD",
-  TOGGLE_COMPLETE_TODO = "todos/TOGGLE_COMPLETE",
   DELETE_ALL_COMPLETED_TODO = "todos/DELETE_ALL_COMPLETED",
   DELETE_TODO = "todos/DELETE",
   EDIT_TODO = "todos/EDIT",
@@ -23,11 +22,6 @@ interface GetUserAction {
 interface AddAction {
   type: TodosTypes.ADD_TODO;
   payload: ITodoDto;
-}
-
-interface ToggleCompleteAction {
-  type: TodosTypes.TOGGLE_COMPLETE_TODO;
-  payload: string;
 }
 
 interface DeleteAction {
@@ -52,7 +46,6 @@ interface SearchAction {
 export type TodosAction =
   | GetUserAction
   | AddAction
-  | ToggleCompleteAction
   | DeleteAllCompletedAction
   | DeleteAction
   | EditAction

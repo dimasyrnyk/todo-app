@@ -1,4 +1,4 @@
-import { showAlert } from "@store/app/actions";
+import { showAlertWithTimeout } from "@store/app/actions";
 import { AppDispatch } from "..";
 import { AuthActionTypes, AuthAction, ILoginUserDto } from "../types/auth";
 
@@ -24,7 +24,9 @@ export const userSignIn = (user: ILoginUserDto) => {
 
     if (!response.ok) {
       dispatch(
-        showAlert({ text: json.message || "Something went wrong, try again" })
+        showAlertWithTimeout({
+          text: json.message || "Something went wrong, try again",
+        })
       );
       dispatch(hideLoader());
     } else {

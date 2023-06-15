@@ -14,13 +14,6 @@ export default function todosReducer(
       return { ...state, todos: action.payload };
     case TodosTypes.ADD_TODO:
       return { ...state, todos: [action.payload, ...state.todos] };
-    case TodosTypes.TOGGLE_COMPLETE_TODO:
-      const newTodos = state.todos.map((todo) => {
-        return todo.id === action.payload
-          ? { ...todo, isCompleted: !todo.isCompleted }
-          : todo;
-      });
-      return { ...state, todos: newTodos };
     case TodosTypes.DELETE_ALL_COMPLETED_TODO:
       return {
         ...state,
