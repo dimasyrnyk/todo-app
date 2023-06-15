@@ -49,6 +49,9 @@
       "last 1 safari version"
     ]
   },
+  "overrides": {
+    "@svgr/webpack": "$@svgr/webpack"
+  },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "@svgr/webpack": "^8.0.1",

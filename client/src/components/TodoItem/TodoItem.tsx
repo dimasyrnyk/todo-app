@@ -1,9 +1,9 @@
 import { FC, useContext, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import "./TodoItem.scss";
-import { AppDispatch, RootState } from "@store/index";
-import { completeTodo, deleteTodo, editTodo } from "@store/todos/actions";
+import { AppDispatch } from "@store/index";
+import { deleteTodo, editTodo } from "@store/todos/actions";
 import { ThemeContext } from "@context/ThemeContext";
 import { ITodoDto } from "@constants/todo";
 import TodoBtn from "@components/Buttons/TodoBtn/TodoBtn";
@@ -18,27 +18,28 @@ type Props = {
 const TodoItem: FC<Props> = ({ todo }) => {
   const { theme } = useContext(ThemeContext);
   const dispatch: AppDispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.auth);
   const [title, setTitle] = useState<string>(todo.title);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const classes = todo.isCompleted ? " checked" : "";
 
   function handleSubmit(start: string, end: string) {
-    if (user) {
-      const newItem: ITodoDto = {
-        id: todo.id,
-        title: title,
-        isCompleted: false,
-        creationDate: start,
-        expirationDate: end,
-      };
+    const newItem: ITodoDto = {
+      id: todo.id,
+      title: title,
+      isCompleted: false,
+      creationDate: start,
+      expirationDate: end,
+    };
 
-      dispatch(editTodo(newItem));
-    }
+    dispatch(editTodo(newItem));
   }
 
   function toggleComplete() {
-    dispatch(completeTodo(todo.id));
+    const newItem: ITodoDto = {
+      ...todo,
+      isCompleted: !todo.isCompleted,
+    };
+    dispatch(editTodo(newItem));
   }
 
   function handleRemove() {

@@ -13,10 +13,7 @@ export const getUserTodos = () => {
     if (!response.ok) {
       showAlert({ text: data.message || "Something went wrong, try again" });
     } else {
-      dispatch({
-        type: TodosTypes.GET_USER_TODOS,
-        payload: data,
-      });
+      dispatch({ type: TodosTypes.GET_USER_TODOS, payload: data });
     }
   };
 };
@@ -31,18 +28,26 @@ export const createTodo = (todo: ICreateTodoDto) => {
     if (!response.ok) {
       showAlert({ text: data.message || "Something went wrong, try again" });
     } else {
-      dispatch({
-        type: TodosTypes.ADD_TODO,
-        payload: data,
-      });
+      dispatch({ type: TodosTypes.ADD_TODO, payload: data });
     }
   };
 };
 
-export const completeTodo = (id: string) => ({
-  type: TodosTypes.TOGGLE_COMPLETE_TODO,
-  payload: id,
-});
+export const editTodo = (todo: ITodo) => {
+  return async (dispatch: AppDispatch) => {
+    const { response, data } = await ClientAPI.interceptedFetch("/api/todo", {
+      method: "PATCH",
+      body: JSON.stringify(todo),
+    });
+
+    if (!response.ok) {
+      showAlert({ text: data.message || "Something went wrong, try again" });
+    } else {
+      dispatch({ type: TodosTypes.EDIT_TODO, payload: data });
+      showAlert({ text: "Task has been edited", error: false });
+    }
+  };
+};
 
 export const deleteAllCompletedTodo = () => ({
   type: TodosTypes.DELETE_ALL_COMPLETED_TODO,
@@ -51,11 +56,6 @@ export const deleteAllCompletedTodo = () => ({
 export const deleteTodo = (id: string) => ({
   type: TodosTypes.DELETE_TODO,
   payload: id,
-});
-
-export const editTodo = (todo: ITodo) => ({
-  type: TodosTypes.EDIT_TODO,
-  payload: todo,
 });
 
 export const searchTodos = (value: string) => ({
