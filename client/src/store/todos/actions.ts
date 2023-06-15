@@ -1,7 +1,7 @@
 import { AppDispatch } from "..";
 import { TodosTypes } from "@store/types/todos";
 import { showAlert } from "@store/app/actions";
-import { ITodo } from "@constants/todo";
+import { ITodo, ICreateTodoDto } from "@constants/todo";
 import ClientAPI from "src/middleware/ClientAPI";
 
 export const getUserTodos = () => {
@@ -21,10 +21,23 @@ export const getUserTodos = () => {
   };
 };
 
-export const createTodo = (todo: ITodo) => ({
-  type: TodosTypes.ADD_TODO,
-  payload: todo,
-});
+export const createTodo = (todo: ICreateTodoDto) => {
+  return async (dispatch: AppDispatch) => {
+    const { response, data } = await ClientAPI.interceptedFetch(`/api/todo`, {
+      method: "POST",
+      body: JSON.stringify(todo),
+    });
+
+    if (!response.ok) {
+      showAlert({ text: data.message || "Something went wrong, try again" });
+    } else {
+      dispatch({
+        type: TodosTypes.ADD_TODO,
+        payload: data,
+      });
+    }
+  };
+};
 
 export const completeTodo = (id: string) => ({
   type: TodosTypes.TOGGLE_COMPLETE_TODO,

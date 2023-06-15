@@ -1,18 +1,16 @@
 export interface ITodo {
-  id: string;
   title: string;
   isCompleted: boolean;
   creationDate: string;
   expirationDate: string;
+}
+
+export interface ICreateTodoDto extends ITodo {
   creator: string;
 }
 
-export interface ITodoDto {
-  title: string;
-  isCompleted: boolean;
-  creationDate: string;
-  expirationDate: string;
-  creator: string;
+export interface ITodoDto extends ITodo {
+  id: string;
 }
 
 export const DELETE_TODOS_CONFIRM_MESSAGE =

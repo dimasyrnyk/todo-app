@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Header.scss";
 import { AppDispatch, RootState } from "@store/index";
 import { createTodo } from "@store/todos/actions";
-import { ITodo } from "@constants/todo";
+import { ICreateTodoDto } from "@constants/todo";
 import { InputPlaceholder } from "@constants/app";
 import { getDate } from "@utils/dateUtils";
 import TodoModal from "@components/TodoModal/TodoModal";
@@ -21,8 +21,7 @@ const Header: FC = () => {
 
   function handleSubmit(start = getDate(), end = getDate(1)) {
     if (user) {
-      const newItem: ITodo = {
-        id: Date.now().toString(),
+      const newItem: ICreateTodoDto = {
         title: value,
         isCompleted: false,
         creationDate: start,

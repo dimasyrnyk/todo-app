@@ -5,14 +5,14 @@ import "./TodoItem.scss";
 import { AppDispatch, RootState } from "@store/index";
 import { completeTodo, deleteTodo, editTodo } from "@store/todos/actions";
 import { ThemeContext } from "@context/ThemeContext";
-import { ITodo } from "@constants/todo";
+import { ITodoDto } from "@constants/todo";
 import TodoBtn from "@components/Buttons/TodoBtn/TodoBtn";
 import TodoModal from "@components/TodoModal/TodoModal";
 import PencilIcon from "@components/Icons/PencilIcon";
 import TrashIcon from "@components/Icons/TrashIcon";
 
 type Props = {
-  todo: ITodo;
+  todo: ITodoDto;
 };
 
 const TodoItem: FC<Props> = ({ todo }) => {
@@ -25,13 +25,12 @@ const TodoItem: FC<Props> = ({ todo }) => {
 
   function handleSubmit(start: string, end: string) {
     if (user) {
-      const newItem: ITodo = {
+      const newItem: ITodoDto = {
         id: todo.id,
         title: title,
         isCompleted: false,
         creationDate: start,
         expirationDate: end,
-        creator: user.id,
       };
 
       dispatch(editTodo(newItem));
