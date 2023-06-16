@@ -1,10 +1,12 @@
 import { store } from "@store/index";
 import { refreshTokens, userSignOut } from "@store/auth/actions";
-import { AnyAction } from "redux";
+import { AlertMessage } from "@constants/app";
 
 type Config = {
   [key: string]: string | object;
 };
+
+type Headers = { [key: string]: string };
 
 class ClientAPI {
   static async originalRequest(url: string, config: Config) {
@@ -13,49 +15,39 @@ class ClientAPI {
     return { response, data };
   }
 
+  static getNewConfig(config: Config, accessToken: string) {
+    const isGetMethod = () => !Object.keys(config).length;
+    let headers: Headers = { Authorization: `Bearer ${accessToken}` };
+
+    if (!isGetMethod()) {
+      headers = { "Content-Type": "application/json", ...headers };
+    }
+    return { ...config, headers };
+  }
+
   static async interceptedFetch(url: string, config: Config = {}) {
     const { accessToken, refreshToken } = store.getState().auth;
-    let newConfig;
 
-    if (!config) {
-      newConfig = {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
-    } else {
-      newConfig = {
-        ...config,
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      };
-    }
+    const newConfig = ClientAPI.getNewConfig(config, accessToken);
 
     let { response, data } = await ClientAPI.originalRequest(url, newConfig);
 
     if (response.status === 401) {
-      const refreshedTokens = await store.dispatch<any>(
-        refreshTokens(refreshToken)
-      );
-      const newAuthConfig = {
-        ...newConfig,
-        headers: {
-          ...newConfig.headers,
-          Authorization: `Bearer ${refreshedTokens?.accessToken}`,
-        },
-      };
+      const newTokens = await store.dispatch<any>(refreshTokens(refreshToken));
 
-      const newResponse = await ClientAPI.originalRequest(url, newAuthConfig);
-      response = newResponse.response;
-      data = newResponse.data;
-    }
+      if (newTokens) {
+        const newAuthConfig = ClientAPI.getNewConfig(
+          config,
+          newTokens?.accessToken
+        );
+        const newResponse = await ClientAPI.originalRequest(url, newAuthConfig);
 
-    if (!response.ok) {
-      data.message = "Your session is over";
-      store.dispatch(userSignOut());
+        response = newResponse.response;
+        data = newResponse.data;
+      } else {
+        store.dispatch(userSignOut());
+        data.message = AlertMessage.SESSIOIN_IS_OVER;
+      }
     }
 
     return { response, data };
