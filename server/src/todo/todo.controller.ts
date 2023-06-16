@@ -23,8 +23,8 @@ export class TodoController {
   constructor(private readonly todosServise: TodoService) {}
 
   @UseGuards(TokenAuthGuard)
-  @HttpCode(HttpStatus.OK)
   @Get('user-todos')
+  @HttpCode(HttpStatus.OK)
   getUserTodos(@Req() request: UserRequest): Promise<TodoDto[]> {
     const userId = request.user.id;
     return this.todosServise.getUserTodos(userId);

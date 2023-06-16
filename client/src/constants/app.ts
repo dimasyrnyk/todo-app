@@ -28,3 +28,12 @@ export enum AlertColor {
   RED = "red",
   GREEN = "green",
 }
+
+export enum AlertMessage {
+  TRY_AGAIN = "Something went wrong, try again",
+  SESSIOIN_IS_OVER = "Your session is over",
+  TODO_CREATED = "Todo has been created",
+  TODO_EDITED = "Todo has been edited",
+  TODO_DELETED = "Todo has been deleted",
+  COMPLETED_TODO_DELETED = "All completed todos has been deleted",
+}

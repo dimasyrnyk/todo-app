@@ -1,5 +1,6 @@
 import { store } from "@store/index";
-import { userSignOut } from "@store/auth/actions";
+import { refreshTokens, userSignOut } from "@store/auth/actions";
+import { AnyAction } from "redux";
 
 type Config = {
   [key: string]: string | object;
@@ -13,14 +14,14 @@ class ClientAPI {
   }
 
   static async interceptedFetch(url: string, config: Config = {}) {
-    const token = store.getState().auth.token;
+    const { accessToken, refreshToken } = store.getState().auth;
     let newConfig;
 
     if (!config) {
       newConfig = {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       };
     } else {
@@ -28,7 +29,7 @@ class ClientAPI {
         ...config,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       };
     }
@@ -36,6 +37,23 @@ class ClientAPI {
     let { response, data } = await ClientAPI.originalRequest(url, newConfig);
 
     if (response.status === 401) {
+      const refreshedTokens = await store.dispatch<any>(
+        refreshTokens(refreshToken)
+      );
+      const newAuthConfig = {
+        ...newConfig,
+        headers: {
+          ...newConfig.headers,
+          Authorization: `Bearer ${refreshedTokens?.accessToken}`,
+        },
+      };
+
+      const newResponse = await ClientAPI.originalRequest(url, newAuthConfig);
+      response = newResponse.response;
+      data = newResponse.data;
+    }
+
+    if (!response.ok) {
       data.message = "Your session is over";
       store.dispatch(userSignOut());
     }
