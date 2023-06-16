@@ -12,7 +12,7 @@
     "start": "nest start",
     "server:dev": "nest start --watch",
     "server:debug": "nest start --debug --watch",
-    "server:prod": "node dist/main",
+    "server:prod": "pm2 start dist/main.js --name todo-app",
     "build:prod": "npm install && npm run build && npm run client:install && npm run client:build",
     "client:dev": "npm run start --prefix ../client",
     "client:install": "npm install --prefix ../client",
@@ -32,6 +32,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/serve-static": "^3.0.1",
     "mongoose": "^7.2.3",
+    "pm2": "^5.3.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0"
   },
