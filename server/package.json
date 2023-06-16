@@ -12,7 +12,7 @@
     "start": "nest start",
     "server:dev": "nest start --watch",
     "server:debug": "nest start --debug --watch",
-    "server:prod": "start dist/main.js",
+    "server:prod": "node dist/main",
     "build:prod": "npm install && npm run build && npm run client:install && npm run client:build",
     "client:dev": "npm run start --prefix ../client",
     "client:install": "npm install --prefix ../client",
