@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -45,5 +46,20 @@ export class TodoController {
   ): Promise<TodoDto> {
     updateTodoDto.id = id;
     return this.todosServise.update(updateTodoDto);
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Delete('todos/completed')
+  @HttpCode(HttpStatus.OK)
+  removeCompleted(@Req() request: UserRequest): Promise<{ message: string }> {
+    const userId = request.user.id;
+    return this.todosServise.deleteCompleted(userId);
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Delete('todos/:id')
+  @HttpCode(HttpStatus.OK)
+  removeOne(@Param('id') id: string): Promise<{ message: string }> {
+    return this.todosServise.deleteOne(id);
   }
 }

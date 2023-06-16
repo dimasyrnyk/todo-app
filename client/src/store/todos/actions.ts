@@ -72,14 +72,59 @@ export const editTodo = (todo: ITodoDto) => {
   };
 };
 
-export const deleteAllCompletedTodo = () => ({
-  type: TodosTypes.DELETE_ALL_COMPLETED_TODO,
-});
+export const deleteTodo = (id: string) => {
+  return async (dispatch: AppDispatch) => {
+    const { response, data } = await ClientAPI.interceptedFetch(
+      `/api/todos/${id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
-export const deleteTodo = (id: string) => ({
-  type: TodosTypes.DELETE_TODO,
-  payload: id,
-});
+    if (!response.ok) {
+      dispatch(
+        showAlertWithTimeout({
+          text: data.message || "Something went wrong, try again",
+        })
+      );
+    } else {
+      dispatch({ type: TodosTypes.DELETE_TODO, payload: id });
+      dispatch(
+        showAlertWithTimeout({
+          text: data.message || "Task has been deleted",
+          error: false,
+        })
+      );
+    }
+  };
+};
+
+export const deleteAllCompletedTodo = () => {
+  return async (dispatch: AppDispatch) => {
+    const { response, data } = await ClientAPI.interceptedFetch(
+      "/api/todos/completed",
+      {
+        method: "DELETE",
+      }
+    );
+
+    if (!response.ok) {
+      dispatch(
+        showAlertWithTimeout({
+          text: data.message || "Something went wrong, try again",
+        })
+      );
+    } else {
+      dispatch({ type: TodosTypes.DELETE_ALL_COMPLETED_TODO });
+      dispatch(
+        showAlertWithTimeout({
+          text: data.message || "All completed todos has been deleted",
+          error: false,
+        })
+      );
+    }
+  };
+};
 
 export const searchTodos = (value: string) => ({
   type: TodosTypes.SEARCH_TODO,
