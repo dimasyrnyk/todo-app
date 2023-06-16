@@ -1,4 +1,5 @@
 import { store } from "@store/index";
+import { userSignOut } from "@store/auth/actions";
 
 type Config = {
   [key: string]: string | object;
@@ -33,6 +34,11 @@ class ClientAPI {
     }
 
     let { response, data } = await ClientAPI.originalRequest(url, newConfig);
+
+    if (response.status === 401) {
+      data.message = "Your session is over";
+      store.dispatch(userSignOut());
+    }
 
     return { response, data };
   }
