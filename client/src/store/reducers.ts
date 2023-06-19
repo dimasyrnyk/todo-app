@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 
-import appReducer from "./app/reducers";
-import authReducer from "./auth/reducers";
-import todosReducer from "./todos/reducers";
+import appReducer from "./app/AppSlice";
+import authReducer from "./auth/AuthSlice";
+import todosReducer from "./todos/TodosSlice";
 
 export const rootReducer = combineReducers({
   app: appReducer,

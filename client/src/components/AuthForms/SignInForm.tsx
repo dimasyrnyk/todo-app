@@ -4,12 +4,13 @@ import { Form, useFormik, FormikProvider } from "formik";
 
 import "./AuthForm.scss";
 import { AppDispatch, RootState } from "@store/index";
-import { userSignIn } from "@store/auth/actions";
+import { authSignIn } from "@store/auth/ActionCreators";
 import { ILoginUserDto } from "@store/types/auth";
 import { validationSignIn } from "@utils/validationSchema";
 import AppLoader from "@components/AppLoader/AppLoader";
 import AuthInput from "@components/Inputs/AuthInput";
 import AuthInputPassword from "@components/Inputs/AuthInputPassword";
+import { useAppDispatch } from "src/hooks/redux";
 
 const initialValues: ILoginUserDto = {
   email: "",
@@ -19,7 +20,7 @@ const initialValues: ILoginUserDto = {
 const SignInForm: FC = () => {
   const onSubmit = () => {
     dispatch(
-      userSignIn({
+      authSignIn({
         email: values.email.toLowerCase(),
         password: values.password,
       })
@@ -32,7 +33,7 @@ const SignInForm: FC = () => {
     onSubmit: onSubmit,
     validateOnChange: true,
   });
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { isLoading } = useSelector((state: RootState) => state.auth);
   const { values } = formik;
   const isFormValid = formik.dirty && formik.isValid;

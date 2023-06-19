@@ -1,57 +1,55 @@
 import { store } from "@store/index";
-import { refreshTokens, userSignOut } from "@store/auth/actions";
+import { ITokens } from "@store/types/auth";
+import { authRefreshTokens } from "@store/auth/ActionCreators";
+import { authSignOut } from "@store/auth/AuthSlice";
 import { AlertMessage } from "@constants/app";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from "axios";
 
-type Config = {
-  [key: string]: string | object;
-};
+const clientApi: AxiosInstance = axios.create();
 
-type Headers = { [key: string]: string };
+clientApi.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const { accessToken } = store.getState().auth as ITokens;
+  config.headers.Authorization = `Bearer ${accessToken}`;
 
-class ClientAPI {
-  static async originalRequest(url: string, config: Config) {
-    const response = await fetch(url, config);
-    const data = await response.json();
-    return { response, data };
-  }
+  return config;
+});
 
-  static getNewConfig(config: Config, accessToken: string) {
-    const isGetMethod = () => !Object.keys(config).length;
-    let headers: Headers = { Authorization: `Bearer ${accessToken}` };
+clientApi.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response;
+  },
+  async (error: AxiosError) => {
+    if (error.response && error.response.status === 401) {
+      const originalRequest = error.config;
 
-    if (!isGetMethod()) {
-      headers = { "Content-Type": "application/json", ...headers };
-    }
-    return { ...config, headers };
-  }
+      const { refreshToken } = store.getState().auth as ITokens;
 
-  static async interceptedFetch(url: string, config: Config = {}) {
-    const { accessToken, refreshToken } = store.getState().auth;
-
-    const newConfig = ClientAPI.getNewConfig(config, accessToken);
-
-    let { response, data } = await ClientAPI.originalRequest(url, newConfig);
-
-    if (response.status === 401) {
-      const newTokens = await store.dispatch<any>(refreshTokens(refreshToken));
-
-      if (newTokens) {
-        const newAuthConfig = ClientAPI.getNewConfig(
-          config,
-          newTokens?.accessToken
+      try {
+        const newTokens = await store.dispatch<any>(
+          authRefreshTokens(refreshToken)
         );
-        const newResponse = await ClientAPI.originalRequest(url, newAuthConfig);
 
-        response = newResponse.response;
-        data = newResponse.data;
-      } else {
-        store.dispatch(userSignOut());
-        data.message = AlertMessage.SESSIOIN_IS_OVER;
-      }
+        if (newTokens.payload.accessToken && originalRequest) {
+          originalRequest.headers.Authorization = `Bearer ${newTokens.payload.accessToken}`;
+
+          return clientApi(originalRequest);
+        } else {
+          if (error.response && error.response.data) {
+            const errorData = error.response.data as { message: string };
+            errorData.message = AlertMessage.SESSIOIN_IS_OVER;
+          }
+          store.dispatch(authSignOut());
+        }
+      } catch (err) {}
     }
 
-    return { response, data };
+    throw error;
   }
-}
+);
 
-export default ClientAPI;
+export default clientApi;

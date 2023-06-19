@@ -3,50 +3,5 @@ import { ITodoDto } from "@constants/todo";
 export interface TodosState {
   todos: ITodoDto[];
   searchValue: string;
+  isLoading: boolean;
 }
-
-export enum TodosTypes {
-  GET_USER_TODOS = "todos/GET_ALL",
-  ADD_TODO = "todos/ADD",
-  DELETE_ALL_COMPLETED_TODO = "todos/DELETE_ALL_COMPLETED",
-  DELETE_TODO = "todos/DELETE",
-  EDIT_TODO = "todos/EDIT",
-  SEARCH_TODO = "todos/SEARCH",
-}
-
-interface GetUserAction {
-  type: TodosTypes.GET_USER_TODOS;
-  payload: ITodoDto[];
-}
-
-interface AddAction {
-  type: TodosTypes.ADD_TODO;
-  payload: ITodoDto;
-}
-
-interface DeleteAction {
-  type: TodosTypes.DELETE_TODO;
-  payload: string;
-}
-
-interface DeleteAllCompletedAction {
-  type: TodosTypes.DELETE_ALL_COMPLETED_TODO;
-}
-
-interface EditAction {
-  type: TodosTypes.EDIT_TODO;
-  payload: ITodoDto;
-}
-
-interface SearchAction {
-  type: TodosTypes.SEARCH_TODO;
-  payload: string;
-}
-
-export type TodosAction =
-  | GetUserAction
-  | AddAction
-  | DeleteAllCompletedAction
-  | DeleteAction
-  | EditAction
-  | SearchAction;

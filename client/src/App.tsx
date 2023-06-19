@@ -1,10 +1,9 @@
 import { FC, useContext, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import "./App.scss";
-import { AppDispatch, RootState } from "@store/index";
-import { getUserTodos } from "@store/todos/actions";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
+import { getUserTodos } from "@store/todos/ActionCreators";
 import { ThemeContext } from "@context/ThemeContext";
 import PrivateRoute from "@utils/routes/PrivateRoute";
 import TodosList from "@pages/TodosList";
@@ -15,11 +14,10 @@ import NavBar from "@components/NavBar/NavBar";
 import Alert from "@components/Alert/Alert";
 
 const App: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const { theme } = useContext(ThemeContext);
-  const { isAuth } = useSelector((state: RootState) => state.auth);
-  const { alert } = useSelector((state: RootState) => state.app);
+  const { isAuth } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (isAuth) {
@@ -30,12 +28,7 @@ const App: FC = () => {
   return (
     <div className={theme}>
       <div className="app__container background text">
-        {alert ? (
-          <Alert
-            text={alert.text}
-            error={alert.error}
-          />
-        ) : null}
+        <Alert />
         <NavBar />
         {pathname === "/" && <Header />}
         <main className="main__container">
