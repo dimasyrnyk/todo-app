@@ -20,46 +20,13 @@ export interface AuthState {
   isLoading: boolean;
 }
 
-export enum AuthActionTypes {
-  USER_START_LOADING = "auth/START_LOADING",
-  USER_END_LOADING = "auth/END_LOADING",
-  USER_LOGIN = "auth/LOGIN",
-  USER_LOGOUT = "auth/LOGOUT",
-  USER_REFRESH_TOKEN = "auth/REFRESH_TOKEN",
+export interface AuthResponse {
+  accessToken: string;
+  refreshToken: string;
+  user: IUser;
 }
 
-interface StartLoadingAction {
-  type: AuthActionTypes.USER_START_LOADING;
+export interface ITokens {
+  accessToken: string;
+  refreshToken: string;
 }
-
-interface EndLoadingAction {
-  type: AuthActionTypes.USER_END_LOADING;
-}
-
-interface LoginUserAction {
-  type: AuthActionTypes.USER_LOGIN;
-  payload: {
-    accessToken: string;
-    refreshToken: string;
-    user: IUser;
-  };
-}
-
-interface LogoutUserAction {
-  type: AuthActionTypes.USER_LOGOUT;
-}
-
-interface RefreshTokenAction {
-  type: AuthActionTypes.USER_REFRESH_TOKEN;
-  payload: {
-    accessToken: string;
-    refreshToken: string;
-  };
-}
-
-export type AuthAction =
-  | StartLoadingAction
-  | EndLoadingAction
-  | LoginUserAction
-  | LogoutUserAction
-  | RefreshTokenAction;

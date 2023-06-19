@@ -1,9 +1,8 @@
 import { FC, useContext } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import "./NavBar.scss";
-import { AppDispatch, RootState } from "@store/index";
-import { userSignOut } from "@store/auth/actions";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { authSignOut } from "@store/auth/AuthSlice";
 import { ThemeContext } from "@context/ThemeContext";
 import ThemeSwitcher from "@components/ThemeSwitcher/ThemeSwitcher";
 import { useNavigate } from "react-router-dom";
@@ -11,12 +10,12 @@ import { useNavigate } from "react-router-dom";
 const NavBar: FC = () => {
   const { theme } = useContext(ThemeContext);
   const navigate = useNavigate();
-  const dispatch: AppDispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
 
   const handleClick = () => {
     if (user) {
-      dispatch(userSignOut());
+      dispatch(authSignOut());
     } else {
       navigate("/signin");
     }

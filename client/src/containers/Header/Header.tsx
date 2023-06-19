@@ -1,9 +1,8 @@
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import "./Header.scss";
-import { AppDispatch, RootState } from "@store/index";
-import { createTodo } from "@store/todos/actions";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { createTodo } from "@store/todos/ActionCreators";
 import { ICreateTodoDto } from "@constants/todo";
 import { InputPlaceholder } from "@constants/app";
 import { getDate } from "@utils/dateUtils";
@@ -14,8 +13,8 @@ import PrimaryBtn from "@components/Buttons/PrimaryBtn/PrimaryBtn";
 import PlusIcon from "@components/Icons/PlusIcon";
 
 const Header: FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
   const [value, setValue] = useState<string>("");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 

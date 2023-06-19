@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "./Search.scss";
 import { AppDispatch, RootState } from "@store/index";
-import { searchTodos } from "@store/todos/actions";
+import { searchTodos } from "@store/todos/TodosSlice";
 import { InputPlaceholder } from "@constants/app";
 import TodoInput from "@components/Inputs/TodoInput";
 import CloseBtn from "@components/Buttons/CloseBtn/CloseBtn";

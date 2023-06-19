@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import "./TodoItem.scss";
 import { AppDispatch } from "@store/index";
-import { deleteTodo, editTodo } from "@store/todos/actions";
+import { deleteTodo, editTodo } from "@store/todos/ActionCreators";
 import { ThemeContext } from "@context/ThemeContext";
 import { ITodoDto } from "@constants/todo";
 import TodoBtn from "@components/Buttons/TodoBtn/TodoBtn";

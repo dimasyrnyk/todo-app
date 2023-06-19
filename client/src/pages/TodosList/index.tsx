@@ -1,9 +1,9 @@
 import { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
 import "./TodosList.scss";
-import { AppDispatch, RootState } from "@store/index";
-import { deleteAllCompletedTodo, searchTodos } from "@store/todos/actions";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { deleteAllCompletedTodos } from "@store/todos/ActionCreators";
+import { searchTodos } from "@store/todos/TodosSlice";
 import { ITodoDto } from "@constants/todo";
 import { NavBarTabs } from "@constants/app";
 import TodoItem from "@components/TodoItem/TodoItem";
@@ -11,20 +11,20 @@ import TodosNavBar from "@components/TodosNavBar/TodosNavBar";
 import { ModalMessage } from "@constants/auth";
 
 const TodosList: FC = () => {
-  const { todos, searchValue } = useSelector((state: RootState) => ({
+  const dispatch = useAppDispatch();
+  const { todos, searchValue } = useAppSelector((state) => ({
     todos: state.todos.todos,
     searchValue: state.todos.searchValue,
   }));
 
-  const filteredTodos = todos.filter((todo: ITodoDto) =>
-    todo.title.toLowerCase().includes(searchValue)
-  );
+  const filteredTodos = todos
+    .filter((todo: ITodoDto) => todo.title.toLowerCase().includes(searchValue))
+    .reverse();
   const [showedTodos, setShowedTodos] = useState<ITodoDto[]>(filteredTodos);
   const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
   const activeTodos = filteredTodos.filter((todo) => !todo.isCompleted);
   const completedTodos = filteredTodos.filter((todo) => todo.isCompleted);
-  const dispatch: AppDispatch = useDispatch();
 
   function handleTabClick(tab: string) {
     setActiveTab(tab);
@@ -33,7 +33,7 @@ const TodosList: FC = () => {
   function handleRemoveTodos() {
     const confirmed = window.confirm(ModalMessage.REMOVE_ALL_COMPLETED);
     if (confirmed) {
-      dispatch(deleteAllCompletedTodo());
+      dispatch(deleteAllCompletedTodos());
       setActiveTab(NavBarTabs.All);
       setShowedTodos(filteredTodos);
     }
