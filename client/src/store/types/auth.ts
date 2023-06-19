@@ -14,7 +14,8 @@ export interface ILoginUserDto {
 
 export interface AuthState {
   isAuth: boolean;
-  token: string | null;
+  accessToken: string | null;
+  refreshToken: string | null;
   user: IUser | null;
   isLoading: boolean;
 }
@@ -24,6 +25,7 @@ export enum AuthActionTypes {
   USER_END_LOADING = "auth/END_LOADING",
   USER_LOGIN = "auth/LOGIN",
   USER_LOGOUT = "auth/LOGOUT",
+  USER_REFRESH_TOKEN = "auth/REFRESH_TOKEN",
 }
 
 interface StartLoadingAction {
@@ -38,6 +40,7 @@ interface LoginUserAction {
   type: AuthActionTypes.USER_LOGIN;
   payload: {
     accessToken: string;
+    refreshToken: string;
     user: IUser;
   };
 }
@@ -46,8 +49,17 @@ interface LogoutUserAction {
   type: AuthActionTypes.USER_LOGOUT;
 }
 
+interface RefreshTokenAction {
+  type: AuthActionTypes.USER_REFRESH_TOKEN;
+  payload: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}
+
 export type AuthAction =
   | StartLoadingAction
   | EndLoadingAction
   | LoginUserAction
-  | LogoutUserAction;
+  | LogoutUserAction
+  | RefreshTokenAction;
