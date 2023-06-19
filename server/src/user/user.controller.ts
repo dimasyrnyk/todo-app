@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { SignInUserDto } from './dto/signin-user.dto';
+import { SignUpUserDto } from './dto/signup-user.dto';
 import { ResponseUserDto } from './dto/response-user.dto';
 import { ResponseTokenDto } from 'src/token/dto/response-token.dto';
 import { RefreshTokenDto } from 'src/token/dto/refresh-token.dto';
@@ -15,6 +16,16 @@ import { RefreshTokenDto } from 'src/token/dto/refresh-token.dto';
 @Controller('user')
 export class UserController {
   constructor(private readonly userServerice: UserService) {}
+
+  @Post('/signup')
+  @HttpCode(HttpStatus.CREATED)
+  async signUp(
+    @Res() response,
+    @Body() user: SignUpUserDto,
+  ): Promise<ResponseUserDto> {
+    const userData = await this.userServerice.signUp(user);
+    return response.json(userData);
+  }
 
   @Post('/signin')
   @HttpCode(HttpStatus.OK)

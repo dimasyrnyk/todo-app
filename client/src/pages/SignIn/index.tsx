@@ -11,7 +11,7 @@ const SignIn: FC = () => {
       <SignInForm />
       <p className="signin__nav">
         <span>Don't have an account?</span>
-        <Link to="/signin">Sign Up</Link>
+        <Link to="/signup">Sign Up</Link>
       </p>
     </div>
   );

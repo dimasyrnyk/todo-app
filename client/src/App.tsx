@@ -8,6 +8,7 @@ import { ThemeContext } from "@context/ThemeContext";
 import PrivateRoute from "@utils/routes/PrivateRoute";
 import TodosList from "@pages/TodosList";
 import SignIn from "@pages/SignIn";
+import SignUp from "@pages/SignUp";
 import Header from "@containers/Header/Header";
 import Footer from "@containers/Footer/Footer";
 import NavBar from "@components/NavBar/NavBar";
@@ -41,6 +42,14 @@ const App: FC = () => {
                   redirectTo="/signin"
                 >
                   <TodosList />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                <PrivateRoute isAuth={!isAuth}>
+                  <SignUp />
                 </PrivateRoute>
               }
             />
