@@ -1,40 +1,42 @@
 import { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Form, useFormik, FormikProvider } from "formik";
 
 import "./AuthForm.scss";
-import { AppDispatch, RootState } from "@store/index";
-import { authSignIn } from "@store/auth/ActionCreators";
-import { ILoginUserDto } from "@store/types/auth";
-import { validationSignIn } from "@utils/authValidationSchema";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { authSignUp } from "@store/auth/ActionCreators";
+import { validationSignUp } from "@utils/authValidationSchema";
+import { ICreateUser, USER_PICTURE } from "@constants/auth";
 import AppLoader from "@components/AppLoader/AppLoader";
 import AuthInput from "@components/Inputs/AuthInput";
 import AuthInputPassword from "@components/Inputs/AuthInputPassword";
-import { useAppDispatch } from "src/hooks/redux";
 
-const initialValues: ILoginUserDto = {
+const initialValues: ICreateUser = {
+  name: "",
   email: "",
   password: "",
+  confirm: "",
 };
 
-const SignInForm: FC = () => {
+const SignUpForm: FC = () => {
   const onSubmit = () => {
     dispatch(
-      authSignIn({
+      authSignUp({
+        name: values.name,
         email: values.email.toLowerCase(),
         password: values.password,
+        picture: USER_PICTURE,
       })
     );
   };
 
-  const formik = useFormik<ILoginUserDto>({
+  const formik = useFormik<ICreateUser>({
     initialValues: initialValues,
-    validationSchema: validationSignIn,
+    validationSchema: validationSignUp,
     onSubmit: onSubmit,
     validateOnChange: true,
   });
   const dispatch = useAppDispatch();
-  const { isLoading } = useSelector((state: RootState) => state.auth);
+  const { isLoading } = useAppSelector((state) => state.auth);
   const { values } = formik;
   const isFormValid = formik.dirty && formik.isValid;
 
@@ -44,6 +46,10 @@ const SignInForm: FC = () => {
     <FormikProvider value={formik}>
       <Form className="auth-form">
         <AuthInput
+          inputName="name"
+          placeholder="Name"
+        />
+        <AuthInput
           inputName="email"
           type="email"
           placeholder="Email"
@@ -52,16 +58,20 @@ const SignInForm: FC = () => {
           inputName="password"
           placeholder="Password"
         />
+        <AuthInputPassword
+          inputName="confirm"
+          placeholder="Confirm password"
+        />
         <button
           className="auth-form__button button"
           type="submit"
           disabled={!isFormValid}
         >
-          Sign in
+          Sign up
         </button>
       </Form>
     </FormikProvider>
   );
 };
 
-export default SignInForm;
+export default SignUpForm;

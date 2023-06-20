@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { AuthResponse, AuthState } from "@store/types/auth";
-import { authSignIn, authRefreshTokens } from "./ActionCreators";
+import { createSlice } from "@reduxjs/toolkit";
+import { AuthState } from "@store/types/auth";
+import { authSignIn, authRefreshTokens, authSignUp } from "./ActionCreators";
 
 const initialState: AuthState = {
   isAuth: false,
@@ -20,6 +20,17 @@ export const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(authSignUp.fulfilled, (_, action) => ({
+        isAuth: true,
+        isLoading: false,
+        ...action.payload,
+      }))
+      .addCase(authSignUp.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(authSignUp.rejected, (state) => {
+        state.isLoading = false;
+      })
       .addCase(authSignIn.fulfilled, (_, action) => ({
         isAuth: true,
         isLoading: false,
@@ -28,7 +39,7 @@ export const authSlice = createSlice({
       .addCase(authSignIn.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(authSignIn.rejected, (state, action) => {
+      .addCase(authSignIn.rejected, (state) => {
         state.isLoading = false;
       })
       .addCase(authRefreshTokens.fulfilled, (state, action) => {

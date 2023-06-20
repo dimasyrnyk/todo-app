@@ -44,7 +44,7 @@ const AuthInputPassword: FC<Props> = ({ inputName, placeholder }) => {
       <ErrorMessage
         className="auth-input__error"
         name={inputName}
-        component="div"
+        component="span"
       />
     </div>
   );
