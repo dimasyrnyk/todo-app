@@ -1,29 +1,31 @@
-import { FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect } from "react";
 
 import "./Search.scss";
-import { AppDispatch, RootState } from "@store/index";
-import { searchTodos } from "@store/todos/TodosSlice";
+import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { searchTodos } from "@store/todos/ActionCreators";
+import { setSearchValue } from "@store/todos/TodosSlice";
 import { InputPlaceholder } from "@constants/app";
+import { useDebounce } from "src/hooks/useDebbounce";
 import TodoInput from "@components/Inputs/TodoInput";
 import CloseBtn from "@components/Buttons/CloseBtn/CloseBtn";
 import SearchIcon from "@components/Icons/SearchIcon";
 
 const Search: FC = () => {
-  const { todos, searchValue } = useSelector((state: RootState) => ({
-    todos: state.todos.todos,
-    searchValue: state.todos.searchValue,
-  }));
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const { searchValue } = useAppSelector((state) => state.todos);
+  const debouncedValue = useDebounce(searchValue, 500);
+
+  useEffect(() => {
+    dispatch(searchTodos({ searchTerm: debouncedValue }));
+  }, [debouncedValue]);
 
   function handleSearch(value: string = searchValue) {
-    if (todos.length) {
-      dispatch(searchTodos(value.toLowerCase()));
-    }
+    dispatch(setSearchValue(value));
   }
 
   function handleSearchReset() {
-    dispatch(searchTodos(""));
+    dispatch(setSearchValue(""));
+    dispatch(searchTodos({ searchTerm: "" }));
   }
 
   return (

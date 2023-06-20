@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from "react";
 import "./TodosList.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { deleteAllCompletedTodos } from "@store/todos/ActionCreators";
-import { searchTodos } from "@store/todos/TodosSlice";
+import { setSearchValue } from "@store/todos/TodosSlice";
 import { ITodoDto } from "@constants/todo";
 import { NavBarTabs } from "@constants/app";
 import TodoItem from "@components/TodoItem/TodoItem";
@@ -17,14 +17,11 @@ const TodosList: FC = () => {
     searchValue: state.todos.searchValue,
   }));
 
-  const filteredTodos = todos
-    .filter((todo: ITodoDto) => todo.title.toLowerCase().includes(searchValue))
-    .reverse();
-  const [showedTodos, setShowedTodos] = useState<ITodoDto[]>(filteredTodos);
+  const [showedTodos, setShowedTodos] = useState<ITodoDto[]>(todos);
   const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
-  const activeTodos = filteredTodos.filter((todo) => !todo.isCompleted);
-  const completedTodos = filteredTodos.filter((todo) => todo.isCompleted);
+  const activeTodos = todos.filter((todo) => !todo.isCompleted);
+  const completedTodos = todos.filter((todo) => todo.isCompleted);
 
   function handleTabClick(tab: string) {
     setActiveTab(tab);
@@ -35,13 +32,13 @@ const TodosList: FC = () => {
     if (confirmed) {
       dispatch(deleteAllCompletedTodos());
       setActiveTab(NavBarTabs.All);
-      setShowedTodos(filteredTodos);
+      setShowedTodos(todos);
     }
   }
 
   useEffect(() => {
     if (activeTab === NavBarTabs.All) {
-      setShowedTodos(filteredTodos);
+      setShowedTodos(todos);
     } else if (activeTab === NavBarTabs.Active) {
       setShowedTodos(activeTodos);
     } else if (activeTab === NavBarTabs.Completed) {
@@ -52,15 +49,15 @@ const TodosList: FC = () => {
   useEffect(() => {
     if (
       todos.length > prevTodosLength ||
-      (todos.length < prevTodosLength && !filteredTodos.length)
+      (todos.length < prevTodosLength && !todos.length)
     ) {
       setActiveTab(NavBarTabs.All);
       setPrevTodosLength(todos.length);
-      dispatch(searchTodos(""));
+      // dispatch(setSearchValue(""));
     }
   }, [todos.length]);
 
-  if (!filteredTodos.length) {
+  if (!todos.length) {
     return <div className="todos-list__empty-page">No todos...</div>;
   }
 

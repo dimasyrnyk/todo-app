@@ -14,6 +14,25 @@ export class TodoService {
     return todos.map((todo) => new TodoDto(todo));
   }
 
+  async searchTodos(
+    searchTerm: string,
+    isCompleted: boolean,
+    userId: string,
+  ): Promise<TodoDto[]> {
+    const query = this.todoModel.find({
+      creator: userId,
+      title: { $regex: searchTerm, $options: 'i' },
+    });
+
+    if (typeof isCompleted !== 'undefined') {
+      query.where('isCompleted', isCompleted);
+    }
+
+    const todos = await query.exec();
+
+    return todos.map((todo) => new TodoDto(todo));
+  }
+
   async create(createTodo: CreateTodoDto): Promise<TodoDto> {
     const createdTodo = await this.todoModel.create(createTodo);
     const todoDto = new TodoDto(createdTodo);

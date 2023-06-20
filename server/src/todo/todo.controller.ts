@@ -8,10 +8,10 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { Todo } from './schemas/todo.schema';
 import { TodoService } from './todo.service';
 import { UserRequest } from 'src/types/user-request.interface';
 import { TokenAuthGuard } from 'src/token/token.guard';
@@ -28,6 +28,18 @@ export class TodoController {
   getUserTodos(@Req() request: UserRequest): Promise<TodoDto[]> {
     const userId = request.user.id;
     return this.todosServise.getUserTodos(userId);
+  }
+
+  @UseGuards(TokenAuthGuard)
+  @Get('todos/search')
+  @HttpCode(HttpStatus.OK)
+  searchTodos(
+    @Query('searchTerm') searchTerm: string,
+    @Query('isCompleted') isCompleted: boolean,
+    @Req() request: UserRequest,
+  ): Promise<TodoDto[]> {
+    const userId = request.user.id;
+    return this.todosServise.searchTodos(searchTerm, isCompleted, userId);
   }
 
   @UseGuards(TokenAuthGuard)
