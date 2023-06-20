@@ -6,7 +6,7 @@ import "./AuthForm.scss";
 import { AppDispatch, RootState } from "@store/index";
 import { authSignIn } from "@store/auth/ActionCreators";
 import { ILoginUserDto } from "@store/types/auth";
-import { validationSignIn } from "@utils/validationSchema";
+import { validationSignIn } from "@utils/authValidationSchema";
 import AppLoader from "@components/AppLoader/AppLoader";
 import AuthInput from "@components/Inputs/AuthInput";
 import AuthInputPassword from "@components/Inputs/AuthInputPassword";

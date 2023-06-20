@@ -4,7 +4,7 @@ import { Form, useFormik, FormikProvider } from "formik";
 import "./AuthForm.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { authSignUp } from "@store/auth/ActionCreators";
-import { validationSignUp } from "@utils/validationSchema";
+import { validationSignUp } from "@utils/authValidationSchema";
 import { ICreateUser, USER_PICTURE } from "@constants/auth";
 import AppLoader from "@components/AppLoader/AppLoader";
 import AuthInput from "@components/Inputs/AuthInput";
