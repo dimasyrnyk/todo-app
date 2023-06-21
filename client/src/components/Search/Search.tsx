@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
 import "./Search.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
@@ -14,9 +14,14 @@ const Search: FC = () => {
   const dispatch = useAppDispatch();
   const { searchValue } = useAppSelector((state) => state.todos);
   const debouncedValue = useDebounce(searchValue, 500);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
   useEffect(() => {
-    dispatch(searchTodos({ searchTerm: debouncedValue }));
+    if (isMounted) {
+      dispatch(searchTodos({ searchTerm: debouncedValue.trim() }));
+    } else {
+      setIsMounted(true);
+    }
   }, [debouncedValue]);
 
   function handleSearch(value: string = searchValue) {

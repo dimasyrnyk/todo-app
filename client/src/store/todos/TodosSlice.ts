@@ -43,7 +43,7 @@ export const todosSlice = createSlice({
         createTodo.fulfilled,
         (state, action: PayloadAction<ITodoDto>) => ({
           ...state,
-          todos: [...state.todos, action.payload],
+          todos: [action.payload, ...state.todos],
         })
       )
       .addCase(

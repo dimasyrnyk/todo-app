@@ -53,7 +53,6 @@ const TodosList: FC = () => {
     ) {
       setActiveTab(NavBarTabs.All);
       setPrevTodosLength(todos.length);
-      // dispatch(setSearchValue(""));
     }
   }, [todos.length]);
 

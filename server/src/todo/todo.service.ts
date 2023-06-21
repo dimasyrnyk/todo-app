@@ -11,7 +11,7 @@ export class TodoService {
 
   async getUserTodos(id: string): Promise<TodoDto[]> {
     const todos = await this.todoModel.find({ creator: id }).exec();
-    return todos.map((todo) => new TodoDto(todo));
+    return todos.map((todo) => new TodoDto(todo)).reverse();
   }
 
   async searchTodos(
@@ -30,7 +30,7 @@ export class TodoService {
 
     const todos = await query.exec();
 
-    return todos.map((todo) => new TodoDto(todo));
+    return todos.map((todo) => new TodoDto(todo)).reverse();
   }
 
   async create(createTodo: CreateTodoDto): Promise<TodoDto> {

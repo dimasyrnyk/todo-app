@@ -11,7 +11,7 @@ export const getUserTodos = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await clientApi("/api/user-todos");
-      return response.data.reverse();
+      return response.data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       const errorMessage = error.response
