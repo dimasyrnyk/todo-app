@@ -5,3 +5,8 @@ export interface TodosState {
   searchValue: string;
   isLoading: boolean;
 }
+
+export interface ISearchParams {
+  searchTerm: string;
+  isCompleted?: boolean;
+}

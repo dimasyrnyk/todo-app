@@ -11,7 +11,26 @@ export class TodoService {
 
   async getUserTodos(id: string): Promise<TodoDto[]> {
     const todos = await this.todoModel.find({ creator: id }).exec();
-    return todos.map((todo) => new TodoDto(todo));
+    return todos.map((todo) => new TodoDto(todo)).reverse();
+  }
+
+  async searchTodos(
+    searchTerm: string,
+    isCompleted: boolean,
+    userId: string,
+  ): Promise<TodoDto[]> {
+    const query = this.todoModel.find({
+      creator: userId,
+      title: { $regex: searchTerm, $options: 'i' },
+    });
+
+    if (typeof isCompleted !== 'undefined') {
+      query.where('isCompleted', isCompleted);
+    }
+
+    const todos = await query.exec();
+
+    return todos.map((todo) => new TodoDto(todo)).reverse();
   }
 
   async create(createTodo: CreateTodoDto): Promise<TodoDto> {

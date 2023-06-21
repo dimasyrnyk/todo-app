@@ -11,6 +11,7 @@ import TodoInput from "@components/Inputs/TodoInput";
 import Search from "@components/Search/Search";
 import PrimaryBtn from "@components/Buttons/PrimaryBtn/PrimaryBtn";
 import PlusIcon from "@components/Icons/PlusIcon";
+import { setSearchValue } from "@store/todos/TodosSlice";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +31,7 @@ const Header: FC = () => {
 
       dispatch(createTodo(newItem));
       setValue("");
+      dispatch(setSearchValue(""));
     }
   }
 

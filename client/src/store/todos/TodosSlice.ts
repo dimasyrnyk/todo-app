@@ -7,6 +7,7 @@ import {
   deleteTodo,
   editTodo,
   getUserTodos,
+  searchTodos,
 } from "./ActionCreators";
 
 const initialState: TodosState = {
@@ -19,7 +20,7 @@ export const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    searchTodos(state, action: PayloadAction<string>) {
+    setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
     },
   },
@@ -42,7 +43,7 @@ export const todosSlice = createSlice({
         createTodo.fulfilled,
         (state, action: PayloadAction<ITodoDto>) => ({
           ...state,
-          todos: [...state.todos, action.payload],
+          todos: [action.payload, ...state.todos],
         })
       )
       .addCase(
@@ -64,10 +65,25 @@ export const todosSlice = createSlice({
       .addCase(deleteAllCompletedTodos.fulfilled, (state) => ({
         ...state,
         todos: state.todos.filter((todo) => !todo.isCompleted),
+      }))
+      .addCase(
+        searchTodos.fulfilled,
+        (state, action: PayloadAction<ITodoDto[]>) => ({
+          ...state,
+          todos: action.payload,
+          isLoading: false,
+        })
+      )
+      .addCase(searchTodos.pending, (state) => ({
+        ...state,
+        isLoading: true,
+      }))
+      .addCase(searchTodos.rejected, (state) => ({
+        ...state,
+        isLoading: false,
       }));
   },
 });
-
-export const { searchTodos } = todosSlice.actions;
+export const { setSearchValue } = todosSlice.actions;
 
 export default todosSlice.reducer;
