@@ -3,7 +3,11 @@ import { useDispatch } from "react-redux";
 
 import "./TodoItem.scss";
 import { AppDispatch } from "@store/index";
-import { deleteTodo, editTodo } from "@store/todos/ActionCreators";
+import {
+  deleteTodo,
+  editTodo,
+  completeTodo,
+} from "@store/todos/ActionCreators";
 import { ThemeContext } from "@context/ThemeContext";
 import { ITodoDto } from "@constants/todo";
 import TodoBtn from "@components/Buttons/TodoBtn/TodoBtn";
@@ -39,7 +43,7 @@ const TodoItem: FC<Props> = ({ todo }) => {
       ...todo,
       isCompleted: !todo.isCompleted,
     };
-    dispatch(editTodo(newItem));
+    dispatch(completeTodo(newItem));
   }
 
   function handleRemove() {

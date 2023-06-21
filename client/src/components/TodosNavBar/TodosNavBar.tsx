@@ -1,6 +1,7 @@
 import { FC, useContext } from "react";
 
 import "./TodosNavBar.scss";
+import { ActiveTab } from "@store/types/todos";
 import { ThemeContext } from "@context/ThemeContext";
 import { NavBarTabs } from "@constants/app";
 import TodosNavBarTab from "./TodosNavBarTab";
@@ -8,7 +9,7 @@ import TodosNavBarTab from "./TodosNavBarTab";
 type Props = {
   activeTab: string;
   showRemoveButton: boolean;
-  handleClick: (tabName: string) => void;
+  handleClick: (tabName: ActiveTab) => void;
   handleRemove: () => void;
 };
 

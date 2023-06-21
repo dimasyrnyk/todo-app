@@ -4,6 +4,7 @@ import { Todo } from './schemas/todo.schema';
 import { Model } from 'mongoose';
 import { TodoDto } from './dto/todo.dto';
 import { CreateTodoDto } from './dto/create-todo.dto';
+import { IDBQuery } from 'src/types/db-query.interface';
 
 @Injectable()
 export class TodoService {
@@ -15,20 +16,21 @@ export class TodoService {
   }
 
   async searchTodos(
-    searchTerm: string,
+    searchTerm: string = '',
     isCompleted: boolean,
     userId: string,
   ): Promise<TodoDto[]> {
-    const query = this.todoModel.find({
-      creator: userId,
-      title: { $regex: searchTerm, $options: 'i' },
-    });
+    const query: IDBQuery = { creator: userId };
 
-    if (typeof isCompleted !== 'undefined') {
-      query.where('isCompleted', isCompleted);
+    if (searchTerm !== '') {
+      query.title = { $regex: searchTerm, $options: 'i' };
     }
 
-    const todos = await query.exec();
+    if (typeof isCompleted !== 'undefined') {
+      query.isCompleted = isCompleted;
+    }
+
+    const todos = await this.todoModel.find(query).exec();
 
     return todos.map((todo) => new TodoDto(todo)).reverse();
   }

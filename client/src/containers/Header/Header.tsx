@@ -2,16 +2,16 @@ import { FC, useState } from "react";
 
 import "./Header.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
+import { setActiveTab, setSearchValue } from "@store/todos/TodosSlice";
 import { createTodo } from "@store/todos/ActionCreators";
 import { ICreateTodoDto } from "@constants/todo";
-import { InputPlaceholder } from "@constants/app";
+import { InputPlaceholder, NavBarTabs } from "@constants/app";
 import { getDate } from "@utils/dateUtils";
 import TodoModal from "@components/TodoModal/TodoModal";
 import TodoInput from "@components/Inputs/TodoInput";
 import Search from "@components/Search/Search";
 import PrimaryBtn from "@components/Buttons/PrimaryBtn/PrimaryBtn";
 import PlusIcon from "@components/Icons/PlusIcon";
-import { setSearchValue } from "@store/todos/TodosSlice";
 
 const Header: FC = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +32,7 @@ const Header: FC = () => {
       dispatch(createTodo(newItem));
       setValue("");
       dispatch(setSearchValue(""));
+      dispatch(setActiveTab(NavBarTabs.All));
     }
   }
 

@@ -62,6 +62,25 @@ export const editTodo = createAsyncThunk(
   }
 );
 
+export const completeTodo = createAsyncThunk(
+  "todos/completeTodo",
+  async (todo: ITodoDto, thunkAPI) => {
+    try {
+      const response = await clientApi.patch(`/api/todos/${todo.id}`, todo);
+      thunkAPI.dispatch(appShowAlert({ text: AlertMessage.TODO_COMPLETED }));
+      return response.data;
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      const errorMessage = error.response
+        ? error.response.data.message
+        : AlertMessage.TRY_AGAIN;
+
+      thunkAPI.dispatch(appShowAlert({ text: errorMessage, isError: true }));
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
+
 export const deleteTodo = createAsyncThunk(
   "todos/deleteTodo",
   async (id: string, thunkAPI) => {

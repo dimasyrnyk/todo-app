@@ -1,36 +1,37 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 
 import "./Search.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { searchTodos } from "@store/todos/ActionCreators";
 import { setSearchValue } from "@store/todos/TodosSlice";
-import { InputPlaceholder } from "@constants/app";
-import { useDebounce } from "src/hooks/useDebbounce";
+import { InputPlaceholder, NavBarTabs } from "@constants/app";
 import TodoInput from "@components/Inputs/TodoInput";
 import CloseBtn from "@components/Buttons/CloseBtn/CloseBtn";
 import SearchIcon from "@components/Icons/SearchIcon";
+import { getSearchParams } from "@utils/getSearchParams";
 
 const Search: FC = () => {
   const dispatch = useAppDispatch();
   const { searchValue } = useAppSelector((state) => state.todos);
-  const debouncedValue = useDebounce(searchValue, 500);
-  const [isMounted, setIsMounted] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (isMounted) {
-      dispatch(searchTodos({ searchTerm: debouncedValue.trim() }));
-    } else {
-      setIsMounted(true);
-    }
-  }, [debouncedValue]);
+  const [timer, setTimer] = useState<NodeJS.Timeout | null>(null);
 
   function handleSearch(value: string = searchValue) {
     dispatch(setSearchValue(value));
+    const params = getSearchParams(value);
+
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    const newTimer = setTimeout(() => {
+      dispatch(searchTodos(params));
+    }, 500);
+    setTimer(newTimer);
   }
 
   function handleSearchReset() {
     dispatch(setSearchValue(""));
-    dispatch(searchTodos({ searchTerm: "" }));
+    dispatch(searchTodos({}));
   }
 
   return (
