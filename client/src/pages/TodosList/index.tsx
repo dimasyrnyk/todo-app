@@ -15,33 +15,32 @@ import { ModalMessage } from "@constants/auth";
 
 const TodosList: FC = () => {
   const dispatch = useAppDispatch();
-  const { todos, activeTab } = useAppSelector((state) => state.todos);
+  const { todos, activeTab, searchValue } = useAppSelector(
+    (state) => state.todos
+  );
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
+  const params = searchValue ? { searchTerm: searchValue } : {};
 
   useEffect(() => {
     if (activeTab === NavBarTabs.All) {
-      dispatch(searchTodos({}));
+      dispatch(searchTodos({ ...params }));
     } else if (activeTab === NavBarTabs.Active) {
-      dispatch(searchTodos({ isCompleted: false }));
+      dispatch(searchTodos({ ...params, isCompleted: false }));
     } else if (activeTab === NavBarTabs.Completed) {
-      dispatch(searchTodos({ isCompleted: true }));
+      dispatch(searchTodos({ ...params, isCompleted: true }));
     }
+    setPrevTodosLength(0);
   }, [activeTab]);
 
   useEffect(() => {
-    if (isRedirectToAll()) {
+    if (!todos.length && prevTodosLength) {
       dispatch(setActiveTab(NavBarTabs.All));
+    }
+    if (todos.length) {
       setPrevTodosLength(todos.length);
     }
   }, [todos.length]);
-
-  function isRedirectToAll() {
-    return (
-      todos.length > prevTodosLength ||
-      (todos.length < prevTodosLength && !todos.length)
-    );
-  }
 
   function handleTabClick(tab: ActiveTab) {
     dispatch(setActiveTab(tab));

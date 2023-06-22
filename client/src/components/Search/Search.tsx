@@ -30,8 +30,9 @@ const Search: FC = () => {
   }
 
   function handleSearchReset() {
+    const params = getSearchParams();
     dispatch(setSearchValue(""));
-    dispatch(searchTodos({}));
+    dispatch(searchTodos(params));
   }
 
   return (
