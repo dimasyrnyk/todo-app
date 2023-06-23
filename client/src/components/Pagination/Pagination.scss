@@ -1,0 +1,84 @@
+@use "@styles/colors" as *;
+
+/* ---------- MEDIA SCREEN -- MOBILE ---------- */
+@media (max-width: 650px) {
+  .paginate {
+    width: 50%;
+    order: 2;
+
+    &__container {
+      .products-list__quantity {
+        width: 50%;
+        order: 3;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .load-more__button {
+    width: 100%;
+    order: 1;
+    margin-bottom: 30px;
+  }
+}
+
+/* ---------- MEDIA SCREEN -- TABLET && DESKTOP ---------- */
+@media screen and (min-width: 651px) {
+  .load-more__button {
+    width: 214px;
+  }
+}
+
+.paginate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  & > span {
+    color: $secondary_gray;
+    font-size: 0.75rem;
+  }
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+  &__pages {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    & > li {
+      cursor: pointer;
+      padding: 2px 5px;
+
+      &:hover {
+        background-color: $primary_lightgray;
+        border-radius: 12px;
+      }
+    }
+
+    .active {
+      color: $primary_orange;
+    }
+  }
+
+  &__button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+}
+
+.load-more__button {
+  align-self: center;
+  gap: 6px;
+}
+
+.button-icon {
+  filter: brightness(0) invert(1);
+}

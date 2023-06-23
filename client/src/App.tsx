@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { getUserTodos } from "@store/todos/ActionCreators";
 import { ThemeContext } from "@context/ThemeContext";
 import PrivateRoute from "@utils/routes/PrivateRoute";
-import TodosList from "@pages/TodosList";
+import TodosPage from "@pages/TodosPage";
 import SignIn from "@pages/SignIn";
 import SignUp from "@pages/SignUp";
 import Header from "@containers/Header/Header";
@@ -41,7 +41,7 @@ const App: FC = () => {
                   isAuth={isAuth}
                   redirectTo="/signin"
                 >
-                  <TodosList />
+                  <TodosPage />
                 </PrivateRoute>
               }
             />

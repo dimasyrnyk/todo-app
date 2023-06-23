@@ -38,3 +38,9 @@ export enum AlertMessage {
   TODO_DELETED = "Todo has been deleted",
   COMPLETED_TODO_DELETED = "All completed todos has been deleted",
 }
+
+export const CURRENT_PAGE = 1;
+export const ITEMS_PER_PAGE = 10;
+export const PAGE_NUMBER_LIMIT = 5;
+export const MIN_PAGE_NUMBER_LIMIT = 0;
+export const MAX_PAGE_NUMBER_LIMIT = 5;

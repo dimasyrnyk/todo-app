@@ -1,11 +1,11 @@
 import { FC, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./NavBar.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { authSignOut } from "@store/auth/AuthSlice";
 import { ThemeContext } from "@context/ThemeContext";
 import ThemeSwitcher from "@components/ThemeSwitcher/ThemeSwitcher";
-import { useNavigate } from "react-router-dom";
 
 const NavBar: FC = () => {
   const { theme } = useContext(ThemeContext);

@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 
-import "./TodosList.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import {
   deleteAllCompletedTodos,
@@ -9,11 +8,11 @@ import {
 import { setActiveTab } from "@store/todos/TodosSlice";
 import { ActiveTab } from "@store/types/todos";
 import { NavBarTabs } from "@constants/app";
-import TodoItem from "@components/TodoItem/TodoItem";
 import TodosNavBar from "@components/TodosNavBar/TodosNavBar";
 import { ModalMessage } from "@constants/auth";
+import TodosList from "@components/TodosList/TodosList";
 
-const TodosList: FC = () => {
+const TodosPage: FC = () => {
   const dispatch = useAppDispatch();
   const { todos, activeTab, searchValue } = useAppSelector(
     (state) => state.todos
@@ -21,29 +20,6 @@ const TodosList: FC = () => {
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
   const params = searchValue ? { searchTerm: searchValue } : {};
-
-  useEffect(() => {
-    if (activeTab === NavBarTabs.All) {
-      dispatch(searchTodos({ ...params }));
-    } else {
-      dispatch(
-        searchTodos({
-          ...params,
-          isCompleted: activeTab === NavBarTabs.Completed,
-        })
-      );
-    }
-    setPrevTodosLength(0);
-  }, [activeTab]);
-
-  useEffect(() => {
-    if (!todos.length && prevTodosLength) {
-      dispatch(setActiveTab(NavBarTabs.All));
-    }
-    if (todos.length) {
-      setPrevTodosLength(todos.length);
-    }
-  }, [todos.length]);
 
   function handleTabClick(tab: ActiveTab) {
     dispatch(setActiveTab(tab));
@@ -57,9 +33,25 @@ const TodosList: FC = () => {
     }
   }
 
-  if (!todos.length && activeTab === NavBarTabs.All) {
-    return <div className="todos-list__empty-page">No todos...</div>;
-  }
+  useEffect(() => {
+    if (activeTab === NavBarTabs.All) {
+      dispatch(searchTodos({ ...params }));
+    } else if (activeTab === NavBarTabs.Active) {
+      dispatch(searchTodos({ ...params, isCompleted: false }));
+    } else if (activeTab === NavBarTabs.Completed) {
+      dispatch(searchTodos({ ...params, isCompleted: true }));
+    }
+    setPrevTodosLength(0);
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (!todos.length && prevTodosLength) {
+      dispatch(setActiveTab(NavBarTabs.All));
+    }
+    if (todos.length) {
+      setPrevTodosLength(todos.length);
+    }
+  }, [todos.length]);
 
   return (
     <>
@@ -69,22 +61,9 @@ const TodosList: FC = () => {
         handleClick={handleTabClick}
         handleRemove={handleRemoveTodos}
       />
-      <ul>
-        {todos.length ? (
-          todos.map((i) => (
-            <TodoItem
-              key={i.id}
-              todo={i}
-            />
-          ))
-        ) : (
-          <div className="todos-list__empty-page">
-            No {activeTab.toLowerCase()} todos
-          </div>
-        )}
-      </ul>
+      <TodosList todos={todos} />
     </>
   );
 };
 
-export default TodosList;
+export default TodosPage;
