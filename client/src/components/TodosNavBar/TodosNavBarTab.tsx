@@ -1,11 +1,12 @@
 import { FC } from "react";
 
 import "./TodosNavBar.scss";
+import { ActiveTab } from "@store/types/todos";
 
 type Props = {
   activeTab: string;
-  tabName: string;
-  handleClick: (tabName: string) => void;
+  tabName: ActiveTab;
+  handleClick: (tabName: ActiveTab) => void;
 };
 
 const NavBarTab: FC<Props> = ({ activeTab, tabName, handleClick }) => {

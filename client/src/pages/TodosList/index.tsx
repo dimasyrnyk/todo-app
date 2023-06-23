@@ -2,9 +2,12 @@ import { FC, useEffect, useState } from "react";
 
 import "./TodosList.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
-import { deleteAllCompletedTodos } from "@store/todos/ActionCreators";
-import { setSearchValue } from "@store/todos/TodosSlice";
-import { ITodoDto } from "@constants/todo";
+import {
+  deleteAllCompletedTodos,
+  searchTodos,
+} from "@store/todos/ActionCreators";
+import { setActiveTab } from "@store/todos/TodosSlice";
+import { ActiveTab } from "@store/types/todos";
 import { NavBarTabs } from "@constants/app";
 import TodoItem from "@components/TodoItem/TodoItem";
 import TodosNavBar from "@components/TodosNavBar/TodosNavBar";
@@ -12,51 +15,49 @@ import { ModalMessage } from "@constants/auth";
 
 const TodosList: FC = () => {
   const dispatch = useAppDispatch();
-  const { todos, searchValue } = useAppSelector((state) => ({
-    todos: state.todos.todos,
-    searchValue: state.todos.searchValue,
-  }));
-
-  const [showedTodos, setShowedTodos] = useState<ITodoDto[]>(todos);
-  const [activeTab, setActiveTab] = useState<string>(NavBarTabs.All);
+  const { todos, activeTab, searchValue } = useAppSelector(
+    (state) => state.todos
+  );
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
-  const activeTodos = todos.filter((todo) => !todo.isCompleted);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
+  const params = searchValue ? { searchTerm: searchValue } : {};
 
-  function handleTabClick(tab: string) {
-    setActiveTab(tab);
+  useEffect(() => {
+    if (activeTab === NavBarTabs.All) {
+      dispatch(searchTodos({ ...params }));
+    } else {
+      dispatch(
+        searchTodos({
+          ...params,
+          isCompleted: activeTab === NavBarTabs.Completed,
+        })
+      );
+    }
+    setPrevTodosLength(0);
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (!todos.length && prevTodosLength) {
+      dispatch(setActiveTab(NavBarTabs.All));
+    }
+    if (todos.length) {
+      setPrevTodosLength(todos.length);
+    }
+  }, [todos.length]);
+
+  function handleTabClick(tab: ActiveTab) {
+    dispatch(setActiveTab(tab));
   }
 
   function handleRemoveTodos() {
     const confirmed = window.confirm(ModalMessage.REMOVE_ALL_COMPLETED);
     if (confirmed) {
       dispatch(deleteAllCompletedTodos());
-      setActiveTab(NavBarTabs.All);
-      setShowedTodos(todos);
+      dispatch(setActiveTab(NavBarTabs.All));
     }
   }
 
-  useEffect(() => {
-    if (activeTab === NavBarTabs.All) {
-      setShowedTodos(todos);
-    } else if (activeTab === NavBarTabs.Active) {
-      setShowedTodos(activeTodos);
-    } else if (activeTab === NavBarTabs.Completed) {
-      setShowedTodos(completedTodos);
-    }
-  }, [todos, activeTab, searchValue]);
-
-  useEffect(() => {
-    if (
-      todos.length > prevTodosLength ||
-      (todos.length < prevTodosLength && !todos.length)
-    ) {
-      setActiveTab(NavBarTabs.All);
-      setPrevTodosLength(todos.length);
-    }
-  }, [todos.length]);
-
-  if (!todos.length) {
+  if (!todos.length && activeTab === NavBarTabs.All) {
     return <div className="todos-list__empty-page">No todos...</div>;
   }
 
@@ -69,8 +70,8 @@ const TodosList: FC = () => {
         handleRemove={handleRemoveTodos}
       />
       <ul>
-        {showedTodos.length ? (
-          showedTodos.map((i) => (
+        {todos.length ? (
+          todos.map((i) => (
             <TodoItem
               key={i.id}
               todo={i}

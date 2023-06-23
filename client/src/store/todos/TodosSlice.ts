@@ -1,7 +1,8 @@
 import { ITodoDto } from "@constants/todo";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { TodosState } from "@store/types/todos";
+import { ActiveTab, TodosState } from "@store/types/todos";
 import {
+  completeTodo,
   createTodo,
   deleteAllCompletedTodos,
   deleteTodo,
@@ -9,9 +10,11 @@ import {
   getUserTodos,
   searchTodos,
 } from "./ActionCreators";
+import { NavBarTabs } from "@constants/app";
 
 const initialState: TodosState = {
   todos: [],
+  activeTab: NavBarTabs.All,
   searchValue: "",
   isLoading: false,
 };
@@ -22,6 +25,9 @@ export const todosSlice = createSlice({
   reducers: {
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
+    },
+    setActiveTab(state, action: PayloadAction<ActiveTab>) {
+      state.activeTab = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -56,6 +62,18 @@ export const todosSlice = createSlice({
         })
       )
       .addCase(
+        completeTodo.fulfilled,
+        (state, action: PayloadAction<ITodoDto>) => ({
+          ...state,
+          todos:
+            state.activeTab === NavBarTabs.All
+              ? state.todos.map((todo) =>
+                  todo.id === action.payload.id ? action.payload : todo
+                )
+              : state.todos.filter((todo) => todo.id !== action.payload.id),
+        })
+      )
+      .addCase(
         deleteTodo.fulfilled,
         (state, action: PayloadAction<string>) => ({
           ...state,
@@ -84,6 +102,6 @@ export const todosSlice = createSlice({
       }));
   },
 });
-export const { setSearchValue } = todosSlice.actions;
+export const { setSearchValue, setActiveTab } = todosSlice.actions;
 
 export default todosSlice.reducer;
