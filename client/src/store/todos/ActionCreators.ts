@@ -5,6 +5,8 @@ import { AlertMessage } from "@constants/app";
 import clientApi from "src/middleware/ClientAPI";
 import { ICreateTodoDto, ITodoDto } from "@constants/todo";
 import { ISearchParams } from "@store/types/todos";
+import { store } from "..";
+import { getSearchParams } from "@utils/getSearchParams";
 
 export const getUserTodos = createAsyncThunk(
   "todos/getUserTodos",
@@ -122,8 +124,9 @@ export const deleteAllCompletedTodos = createAsyncThunk(
 
 export const searchTodos = createAsyncThunk(
   "todos/searchTodos",
-  async (params: ISearchParams, thunkAPI) => {
+  async (_, thunkAPI) => {
     try {
+      const params = getSearchParams();
       const response = await clientApi.get("/api/todos/search", { params });
       return response.data;
     } catch (err) {

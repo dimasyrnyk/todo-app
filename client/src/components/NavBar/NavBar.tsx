@@ -5,6 +5,7 @@ import "./NavBar.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { authSignOut } from "@store/auth/AuthSlice";
 import { ThemeContext } from "@context/ThemeContext";
+import { AppRoutes } from "@constants/app";
 import ThemeSwitcher from "@components/ThemeSwitcher/ThemeSwitcher";
 
 const NavBar: FC = () => {
@@ -17,7 +18,7 @@ const NavBar: FC = () => {
     if (user) {
       dispatch(authSignOut());
     } else {
-      navigate("/signin");
+      navigate(AppRoutes.SIGN_IN);
     }
   };
 

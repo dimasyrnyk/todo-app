@@ -39,6 +39,12 @@ export enum AlertMessage {
   COMPLETED_TODO_DELETED = "All completed todos has been deleted",
 }
 
+export enum AppRoutes {
+  HOME = "/",
+  SIGN_IN = "/signin",
+  SIGN_UP = "/signup",
+}
+
 export const CURRENT_PAGE = 1;
 export const ITEMS_PER_PAGE = 10;
 export const PAGE_NUMBER_LIMIT = 5;

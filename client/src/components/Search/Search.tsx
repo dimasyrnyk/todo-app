@@ -17,22 +17,20 @@ const Search: FC = () => {
 
   function handleSearch(value: string = searchValue) {
     dispatch(setSearchValue(value));
-    const params = getSearchParams(value);
 
     if (timer) {
       clearTimeout(timer);
     }
 
     const newTimer = setTimeout(() => {
-      dispatch(searchTodos(params));
+      dispatch(searchTodos());
     }, 500);
     setTimer(newTimer);
   }
 
-  function handleSearchReset() {
-    const params = getSearchParams();
-    dispatch(setSearchValue(""));
-    dispatch(searchTodos(params));
+  async function handleSearchReset() {
+    await dispatch(setSearchValue(""));
+    dispatch(searchTodos());
   }
 
   return (

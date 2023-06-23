@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { getUserTodos } from "@store/todos/ActionCreators";
 import { ThemeContext } from "@context/ThemeContext";
 import PrivateRoute from "@utils/routes/PrivateRoute";
+import { AppRoutes } from "@constants/app";
 import TodosPage from "@pages/TodosPage";
 import SignIn from "@pages/SignIn";
 import SignUp from "@pages/SignUp";
@@ -31,22 +32,22 @@ const App: FC = () => {
       <div className="app__container background text">
         <Alert />
         <NavBar />
-        {pathname === "/" && <Header />}
+        {pathname === AppRoutes.HOME && <Header />}
         <main className="main__container">
           <Routes>
             <Route
-              path="/"
+              path={AppRoutes.HOME}
               element={
                 <PrivateRoute
                   isAuth={isAuth}
-                  redirectTo="/signin"
+                  redirectTo={AppRoutes.SIGN_IN}
                 >
                   <TodosPage />
                 </PrivateRoute>
               }
             />
             <Route
-              path="/signup"
+              path={AppRoutes.SIGN_UP}
               element={
                 <PrivateRoute isAuth={!isAuth}>
                   <SignUp />
@@ -54,7 +55,7 @@ const App: FC = () => {
               }
             />
             <Route
-              path="/signin"
+              path={AppRoutes.SIGN_IN}
               element={
                 <PrivateRoute isAuth={!isAuth}>
                   <SignIn />
@@ -65,7 +66,7 @@ const App: FC = () => {
               path="*"
               element={
                 <Navigate
-                  to="/"
+                  to={AppRoutes.HOME}
                   replace
                 />
               }

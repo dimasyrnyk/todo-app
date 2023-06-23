@@ -19,7 +19,6 @@ const TodosPage: FC = () => {
   );
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
-  const params = searchValue ? { searchTerm: searchValue } : {};
 
   function handleTabClick(tab: ActiveTab) {
     dispatch(setActiveTab(tab));
@@ -34,13 +33,7 @@ const TodosPage: FC = () => {
   }
 
   useEffect(() => {
-    if (activeTab === NavBarTabs.All) {
-      dispatch(searchTodos({ ...params }));
-    } else if (activeTab === NavBarTabs.Active) {
-      dispatch(searchTodos({ ...params, isCompleted: false }));
-    } else if (activeTab === NavBarTabs.Completed) {
-      dispatch(searchTodos({ ...params, isCompleted: true }));
-    }
+    dispatch(searchTodos());
     setPrevTodosLength(0);
   }, [activeTab]);
 
