@@ -25,10 +25,13 @@ const TodosList: FC = () => {
   useEffect(() => {
     if (activeTab === NavBarTabs.All) {
       dispatch(searchTodos({ ...params }));
-    } else if (activeTab === NavBarTabs.Active) {
-      dispatch(searchTodos({ ...params, isCompleted: false }));
-    } else if (activeTab === NavBarTabs.Completed) {
-      dispatch(searchTodos({ ...params, isCompleted: true }));
+    } else {
+      dispatch(
+        searchTodos({
+          ...params,
+          isCompleted: activeTab === NavBarTabs.Completed,
+        })
+      );
     }
     setPrevTodosLength(0);
   }, [activeTab]);
