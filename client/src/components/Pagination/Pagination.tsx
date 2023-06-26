@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 
 import "./Pagination.scss";
 import PaginationButton from "./PaginationButton";
@@ -14,10 +14,10 @@ import {
 type Props = {
   todos: ITodoDto[];
   setTodos: (todos: ITodoDto[]) => void;
-  setPage: (page: number) => void;
+  scrollToTopRef: RefObject<HTMLDivElement>;
 };
 
-function Pagination({ todos, setTodos, setPage }: Props) {
+function Pagination({ todos, setTodos, scrollToTopRef }: Props) {
   const [currentPage, setCurrentPage] = useState<number>(CURRENT_PAGE);
   const [itemsPerPage, setItemsPerPage] = useState<number>(ITEMS_PER_PAGE);
 
@@ -41,7 +41,6 @@ function Pagination({ todos, setTodos, setPage }: Props) {
   const currentItems = todos.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
-    setPage(CURRENT_PAGE);
     setCurrentPage(CURRENT_PAGE);
     setItemsPerPage(ITEMS_PER_PAGE);
     setMaxPageNumberLimit(MAX_PAGE_NUMBER_LIMIT);
@@ -52,10 +51,18 @@ function Pagination({ todos, setTodos, setPage }: Props) {
     setTodos(currentItems);
   }, [currentPage, itemsPerPage, todos]);
 
+  useEffect(() => {
+    if (scrollToTopRef.current) {
+      scrollToTopRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [currentPage]);
+
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const element = e.target as HTMLElement;
     const id = element.getAttribute("id") as string;
-    setPage(+id);
     setCurrentPage(+id);
   };
 
@@ -79,7 +86,6 @@ function Pagination({ todos, setTodos, setPage }: Props) {
   const handleNextbtn = (pageAmount: number) => {
     const isPage = currentPage + pageAmount < pagesCount;
     const newPage = isPage ? currentPage + pageAmount : pagesCount;
-    setPage(newPage);
     setCurrentPage(newPage);
 
     if (currentPage + pageAmount > maxPageNumberLimit) {
@@ -90,7 +96,6 @@ function Pagination({ todos, setTodos, setPage }: Props) {
 
   const handlePrevbtn = (pageAmount: number) => {
     const newPage = currentPage - pageAmount;
-    setPage(newPage);
     setCurrentPage(newPage);
 
     if (currentPage - pageAmount <= minPageNumberLimit) {

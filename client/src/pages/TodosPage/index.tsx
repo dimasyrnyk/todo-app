@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import {
@@ -19,6 +19,7 @@ const TodosPage: FC = () => {
   );
   const [prevTodosLength, setPrevTodosLength] = useState<number>(todos.length);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
+  const scrollToTopRef = useRef<HTMLDivElement>(null);
 
   function handleTabClick(tab: ActiveTab) {
     dispatch(setActiveTab(tab));
@@ -47,15 +48,18 @@ const TodosPage: FC = () => {
   }, [todos.length]);
 
   return (
-    <>
+    <div ref={scrollToTopRef}>
       <TodosNavBar
         activeTab={activeTab}
         showRemoveButton={!!completedTodos.length}
         handleClick={handleTabClick}
         handleRemove={handleRemoveTodos}
       />
-      <TodosList todos={todos} />
-    </>
+      <TodosList
+        todos={todos}
+        scrollToTopRef={scrollToTopRef}
+      />
+    </div>
   );
 };
 
