@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./SignIn.scss";
 import SignInForm from "@components/AuthForms/SignInForm";
+import { AppRoutes } from "@constants/app";
 
 const SignIn: FC = () => {
   return (
@@ -11,7 +12,7 @@ const SignIn: FC = () => {
       <SignInForm />
       <p className="signin__nav">
         <span>Don't have an account?</span>
-        <Link to="/signup">Sign Up</Link>
+        <Link to={AppRoutes.SIGN_UP}>Sign Up</Link>
       </p>
     </div>
   );

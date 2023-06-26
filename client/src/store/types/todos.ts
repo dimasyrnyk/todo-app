@@ -17,8 +17,3 @@ export interface ISearchParams {
   searchTerm?: string;
   isCompleted?: boolean;
 }
-
-export const SearchParams = {
-  Active: { isCompleted: false },
-  Completed: { isCompleted: true },
-};

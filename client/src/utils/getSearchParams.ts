@@ -1,15 +1,17 @@
 import { NavBarTabs } from "@constants/app";
 import { store } from "@store/index";
-import { SearchParams } from "@store/types/todos";
+import { ISearchParams } from "@store/types/todos";
 
-export const getSearchParams = (value: string = "") => {
-  const activeTab = store.getState().todos.activeTab;
+export const getSearchParams = () => {
+  const { activeTab, searchValue } = store.getState().todos;
 
-  let params = value ? { searchTerm: value.trim() } : {};
+  let params: ISearchParams = searchValue
+    ? { searchTerm: searchValue.trim() }
+    : {};
 
   params =
     activeTab !== NavBarTabs.All
-      ? { ...params, ...SearchParams[activeTab] }
+      ? { ...params, isCompleted: activeTab === NavBarTabs.Completed }
       : params;
 
   return params;

@@ -4,6 +4,7 @@ import "./Alert.scss";
 import { useAppDispatch, useAppSelector } from "src/hooks/redux";
 import { AlertColor } from "@constants/app";
 import { appHideAlert } from "@store/app/AppSlice";
+import CloseBtn from "@components/Buttons/CloseBtn/CloseBtn";
 
 const Alert: FC = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +16,7 @@ const Alert: FC = () => {
 
     if (alert) {
       timeoutId = setTimeout(() => {
-        dispatch(appHideAlert());
+        hadleCloseAlert();
       }, 3000);
     }
 
@@ -26,11 +27,27 @@ const Alert: FC = () => {
     };
   }, [alert, dispatch]);
 
+  const hadleCloseAlert = () => {
+    dispatch(appHideAlert());
+  };
+
   if (!alert) {
     return null;
   }
 
-  return <div className={"alert__text_" + classes}>{alert.text}</div>;
+  return (
+    <div className={"alert alert__" + classes}>
+      <div className="alert__body">
+        <p className="alert__message">{alert.text}</p>
+        <button
+          className={"alert__btn alert__btn_" + classes}
+          onClick={hadleCloseAlert}
+        >
+          skip
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default Alert;
